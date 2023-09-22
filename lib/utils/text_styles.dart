@@ -57,6 +57,14 @@ static TextStyle titleTextStyle(){
 
     );
   }
+   static TextStyle h5Style(){
+    return const TextStyle(
+      color: ColorConstant.blackColor,
+      fontSize: Constant.constant18 ,
+      fontWeight: FontWeight.w400,
+
+    );
+  }
 
      static TextStyle stepTextStyle(){
     return  TextStyle(

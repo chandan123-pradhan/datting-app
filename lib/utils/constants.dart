@@ -5,5 +5,6 @@ class Constant{
   static const double fontSize24=24;
   static const double h2Size=14;
   static const double constant16=16;
+  static const double constant18=18;
 
 }

@@ -33,6 +33,17 @@ class TextWidgets {
     );
   }
 
+  static Widget h5Text({required String text}) {
+    return SizedBox(
+      //height: 24,
+      child: Text(
+        text,
+        textAlign: TextAlign.center,
+        style: TextsStyle.h5Style(),
+      ),
+    );
+  }
+
   static Widget stepTextTag({required String text}) {
     return SizedBox(
       //height: 24,

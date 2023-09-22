@@ -1,6 +1,8 @@
 import 'package:dating_app/bottom_sheets/non_binary_bottom_sheet.dart';
 import 'package:dating_app/screens/auth_pages/verify_otp_page.dart';
-import 'package:dating_app/screens/profile_setup_pages/widgets/choose_intrest_view.dart';
+import 'package:dating_app/screens/dashboard_screens/dashbaord_screen.dart';
+import 'package:dating_app/screens/profile_setup_pages/views/choose_intrest_view.dart';
+import 'package:dating_app/screens/profile_setup_pages/views/upload_photos_view.dart';
 import 'package:dating_app/utils/color_constant.dart';
 import 'package:dating_app/utils/constants.dart';
 import 'package:dating_app/utils/image_utils.dart';
@@ -214,34 +216,32 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
                                   alignment: Alignment.center,
                                   children: [
                                     Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(15),
-                                          border: selectedGender == 'man'
-                                              ? Border.all(
-                                                  width: 1,
-                                                  color: ColorConstant.linkColor)
-                                              : Border.all(
-                                                  width: 1,
-                                                  color: Colors.transparent)),
-                                      height: 144,
-                                      width:
-                                          MediaQuery.of(context).size.width / 2.8,
-                                      alignment: Alignment.center,
-                                      child: 
-                                          Image.asset(
-                                        ImageUtils.man_icon,
-                                        height: 56,
-                                        width: 56,
-                                      
-                                        
-                                      )
-                                    ),
-                              
-                               Positioned(
-                                      bottom: 20,
-                                      child: TextWidgets.blackTextTitle(text: StringUtils.MALE)),
-                                   
-                                 ],
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                            border: selectedGender == 'man'
+                                                ? Border.all(
+                                                    width: 1,
+                                                    color:
+                                                        ColorConstant.linkColor)
+                                                : Border.all(
+                                                    width: 1,
+                                                    color: Colors.transparent)),
+                                        height: 144,
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                2.8,
+                                        alignment: Alignment.center,
+                                        child: Image.asset(
+                                          ImageUtils.man_icon,
+                                          height: 56,
+                                          width: 56,
+                                        )),
+                                    Positioned(
+                                        bottom: 20,
+                                        child: TextWidgets.blackTextTitle(
+                                            text: StringUtils.MALE)),
+                                  ],
                                 ),
                               ),
                               InkWell(
@@ -255,17 +255,19 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
                                   children: [
                                     Container(
                                       decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(15),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
                                           border: selectedGender == 'women'
                                               ? Border.all(
                                                   width: 1,
-                                                  color: ColorConstant.linkColor)
+                                                  color:
+                                                      ColorConstant.linkColor)
                                               : Border.all(
                                                   width: 1,
                                                   color: Colors.transparent)),
                                       height: 144,
-                                      width:
-                                          MediaQuery.of(context).size.width / 2.8,
+                                      width: MediaQuery.of(context).size.width /
+                                          2.8,
                                       alignment: Alignment.center,
                                       child: Image.asset(
                                         ImageUtils.women_icon,
@@ -273,11 +275,10 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
                                         width: 56,
                                       ),
                                     ),
-                              
-                              Positioned(
-                                      bottom: 20,
-                                      child: TextWidgets.blackTextTitle(text: StringUtils.FEMALE)),
-                              
+                                    Positioned(
+                                        bottom: 20,
+                                        child: TextWidgets.blackTextTitle(
+                                            text: StringUtils.FEMALE)),
                                   ],
                                 ),
                               ),
@@ -292,19 +293,18 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
                                 selectedGender = 'others';
                               });
                               showModalBottomSheet(
-                                //barrierColor: Colors.,
-                                isScrollControlled: true,
-                                elevation: 0.0,
-                                enableDrag: true,
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(20),
-                                    topRight: Radius.circular(20)
-                                  )
-                                ),
-                                context: context, builder: (context){
-                                return const NonBinaryBottomSheetDialog();
-                              });
+                                  //barrierColor: Colors.,
+                                  isScrollControlled: true,
+                                  elevation: 0.0,
+                                  enableDrag: true,
+                                  shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(20),
+                                          topRight: Radius.circular(20))),
+                                  context: context,
+                                  builder: (context) {
+                                    return const NonBinaryBottomSheetDialog();
+                                  });
                             },
                             child: Stack(
                               alignment: Alignment.center,
@@ -317,9 +317,11 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
                                               width: 1,
                                               color: ColorConstant.linkColor)
                                           : Border.all(
-                                              width: 1, color: Colors.transparent)),
+                                              width: 1,
+                                              color: Colors.transparent)),
                                   height: 144,
-                                  width: MediaQuery.of(context).size.width / 2.8,
+                                  width:
+                                      MediaQuery.of(context).size.width / 2.8,
                                   alignment: Alignment.center,
                                   child: Image.asset(
                                     ImageUtils.other_icon,
@@ -327,11 +329,10 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
                                     width: 56,
                                   ),
                                 ),
-                            
-                             Positioned(
-                                      bottom: 20,
-                                      child: TextWidgets.blackTextTitle(text: StringUtils.NON_BINARY)),
-                              
+                                Positioned(
+                                    bottom: 20,
+                                    child: TextWidgets.blackTextTitle(
+                                        text: StringUtils.NON_BINARY)),
                               ],
                             ),
                           ),
@@ -341,6 +342,7 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
               ),
             ),
             Visibility(visible: currentstep == 4, child: ChooseIntrestView()),
+            Visibility(visible: currentstep == 5, child: UploadPhotosPage()),
             Expanded(
                 child: Padding(
               padding: const EdgeInsets.fromLTRB(30, 0, 20, 40),
@@ -363,6 +365,15 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
                           setState(() {
                             if (currentstep != 5) {
                               currentstep++;
+                            } else {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return DashboardScreen();
+                                  },
+                                ),
+                              );
                             }
                           });
                         },

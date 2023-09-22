@@ -14,4 +14,20 @@ class StringUtils{
   static const String NON_BINARY='Non-binary';
   static const String ADD_MORE_ABOUT_YOUR_GENDER='Add more about\nyour gender';
   static const String GENDER_DESCRIPTION='You can choose whether to show this\non your profile at the next step';
+   static const String Intersex_Woman='Intersex woman';
+  static const String TRANS_WOMAN='Trans woman';
+  static const String TRANSFEMINING='Transfeminine';
+  static const String WomanAndNonBinary='Woman and Nonbinary';
+  static const String CIS_WOMAN='Cis woman';
+  static const String TELL_US_IF_WE_ARE_MISSING='Tell us if we’re missing something';
+  static const String SaveAndClose='Save and close';
+  static const String WALLET='Wallet';
+ ///Newly added
+  static const String interests ='Interests';
+  static const String uploadYourPhotos ='Upload Your Photos';
+  static const String youAreVerified ='You\'re Verified';
+  static const String youAreVerifiedSubTitle ='Your account is verified, Let\'s start making friends';
+  static const String getStarted ='Get Started';
+
+
 }

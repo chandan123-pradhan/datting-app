@@ -33,6 +33,8 @@ dependencies:
   country_code_picker: ^3.0.0
   pinput: ^3.0.1
   percent_indicator: ^4.2.3
+  # image_picker: ^1.0.4
+  # cached_network_image: ^3.2.3
 
 
   # The following adds the Cupertino Icons font to your application.
