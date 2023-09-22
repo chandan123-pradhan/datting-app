@@ -39,12 +39,30 @@ static TextStyle h3Style(){
     );
 }
 
+static TextStyle titleTextStyle(){
+    return const TextStyle(
+      color: ColorConstant.whiteColor,
+      fontSize: Constant.constant16 ,
+      fontWeight: FontWeight.w600,
+
+    );
+}
+
 
    static TextStyle descriptionStyle(){
     return const TextStyle(
       color: ColorConstant.descriptiveColor,
       fontSize: Constant.descriptiveTextSize ,
-      fontWeight: FontWeight.w500,
+      fontWeight: FontWeight.w400,
+
+    );
+  }
+
+     static TextStyle stepTextStyle(){
+    return  TextStyle(
+      color: ColorConstant.stepTextColor,
+      fontSize: 35,
+      fontWeight: FontWeight.w400,
 
     );
   }

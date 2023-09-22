@@ -8,4 +8,10 @@ class StringUtils{
   static const String WHATS_YOUR_FULL_NAME='What is your full name?';
   static const String FULL_NAME='Full name';
   static const String WHATS_YOUR_BIRTHDAY="What's Your Birthday";
+  static const String Whats_YOUR_GENDER='What is your gender?';
+  static const String MALE='Man';
+  static const String FEMALE='Female';
+  static const String NON_BINARY='Non-binary';
+  static const String ADD_MORE_ABOUT_YOUR_GENDER='Add more about\nyour gender';
+  static const String GENDER_DESCRIPTION='You can choose whether to show this\non your profile at the next step';
 }

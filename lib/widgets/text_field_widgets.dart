@@ -108,6 +108,7 @@ class TextFieldWidgets {
 static Widget inputField(
       {required BuildContext context,
       required String hintText,
+      required TextInputType textInputType,
       required TextEditingController textFieldController}) {
     return Container(
         height: 45,
@@ -121,7 +122,7 @@ static Widget inputField(
           child: TextFormField(
                   controller: textFieldController,
                   style: TextsStyle.descriptionStyle(),
-                  keyboardType: TextInputType.number,
+                  keyboardType: textInputType,
                   decoration: InputDecoration(
                     isCollapsed: true,
                     focusColor: Colors.transparent,

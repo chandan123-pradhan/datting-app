@@ -14,15 +14,11 @@ class TextWidgets {
     );
   }
 
-
- static Widget h2Tag({required String text}) {
+  static Widget h2Tag({required String text}) {
     return SizedBox(
       height: 30,
-      child: Text(
-        text,
-        textAlign: TextAlign.center,
-        style: TextsStyle.h4Style()
-      ),
+      child:
+          Text(text, textAlign: TextAlign.center, style: TextsStyle.h4Style()),
     );
   }
 
@@ -37,6 +33,17 @@ class TextWidgets {
     );
   }
 
+  static Widget stepTextTag({required String text}) {
+    return SizedBox(
+      //height: 24,
+      child: Text(
+        text,
+        textAlign: TextAlign.center,
+        style: TextsStyle.stepTextStyle(),
+      ),
+    );
+  }
+
   static Widget bottonsTitleWidget({required String text}) {
     return SizedBox(
       child: Text(
@@ -47,8 +54,20 @@ class TextWidgets {
     );
   }
 
+   static Widget blackTextTitle({required String text}) {
+    return SizedBox(
+      child: Text(
+        text,
+        textAlign: TextAlign.center,
+        style: TextsStyle.titleTextStyle().apply(color: ColorConstant.primaryColor,)
+      ),
+    );
+  }
+
   static Widget linkTextWidget(
-      {required String text, required String linkText, required Function onTap }) {
+      {required String text,
+      required String linkText,
+      required Function onTap}) {
     return SizedBox(
       height: 28,
       child: Row(
@@ -57,11 +76,15 @@ class TextWidgets {
           Text(
             text,
             textAlign: TextAlign.center,
-            style: TextsStyle.h2Style().apply(color: ColorConstant.blackColor),
+            style: TextsStyle.h2Style().apply(
+              color: ColorConstant.blackColor,
+            ),
           ),
-          const SizedBox(width: 5,),
+          const SizedBox(
+            width: 5,
+          ),
           InkWell(
-            onTap: (){
+            onTap: () {
               onTap();
             },
             child: Text(
