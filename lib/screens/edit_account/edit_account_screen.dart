@@ -30,7 +30,9 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
             children: [
               CommonAppBar(
                 title: StringUtils.editProfile,
-                onEdit: () {},
+                onEdit: () {
+                  
+                },
                 onSetting: () {},
               ),
 
