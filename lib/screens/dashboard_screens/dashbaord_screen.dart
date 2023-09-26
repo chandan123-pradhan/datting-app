@@ -1,6 +1,12 @@
 import 'dart:math';
 
+import 'package:dating_app/screens/account/account_screen.dart';
+import 'package:dating_app/screens/dashboard_screens/maches_screen.dart';
+// import 'package:dating_app/screens/dashboard_screens /message/message_screen.dart';
+// import 'package:dating_app/screens/messages_screens/messages_screen.dart';
 import 'package:dating_app/screens/dashboard_screens/wallet_page.dart';
+import 'package:dating_app/screens/messages_screens/messages_screen.dart';
+import 'package:dating_app/screens/settings_screens/settings_page.dart';
 import 'package:dating_app/utils/color_constant.dart';
 import 'package:dating_app/utils/image_utils.dart';
 import 'package:dating_app/widgets/dashboard_widgets.dart';
@@ -17,11 +23,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
   int currentIndex=0;
 
   List<Widget>pages=[
-    Container(),
+    AccountScreen(),
     WalletPage(),
     Container(),
-    Container(),
-    Container()
+    MatchesScreen(),
+    MessagesScreen()
   ];
   @override
   Widget build(BuildContext context) {

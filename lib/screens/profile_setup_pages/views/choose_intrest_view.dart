@@ -74,7 +74,7 @@ class _ChooseIntrestViewState extends State<ChooseIntrestView> {
                           horizontal: 20.0, vertical: 10.0),
                       decoration: BoxDecoration(
                           color: selected[index]
-                              ? ColorConstant.linkColor
+                              ? ColorConstant.descriptiveColor
                               : Colors.white,
                           borderRadius: BorderRadius.circular(35.0),
                           border: Border.all(

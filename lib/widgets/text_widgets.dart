@@ -33,13 +33,24 @@ class TextWidgets {
     );
   }
 
-  static Widget h5Text({required String text}) {
+  static Widget h5Text({required String text,Color? color}) {
     return SizedBox(
       //height: 24,
       child: Text(
         text,
         textAlign: TextAlign.center,
-        style: TextsStyle.h5Style(),
+        style: TextsStyle.h5Style().apply(color: color)
+      ),
+    );
+  }
+
+   static Widget h5LinkText({required String text}) {
+    return SizedBox(
+      //height: 24,
+      child: Text(
+        text,
+        textAlign: TextAlign.center,
+        style: TextsStyle.h5Style().apply(color: ColorConstant.primaryColor),
       ),
     );
   }
@@ -64,6 +75,7 @@ class TextWidgets {
       ),
     );
   }
+
 
    static Widget blackTextTitle({required String text}) {
     return SizedBox(

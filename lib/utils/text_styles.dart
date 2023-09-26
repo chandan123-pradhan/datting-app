@@ -57,11 +57,28 @@ static TextStyle titleTextStyle(){
 
     );
   }
+
+  static TextStyle smallTextStyle(){
+    return const TextStyle(
+      color: ColorConstant.descriptiveColor,
+      fontSize: 12 ,
+      fontWeight: FontWeight.w400,
+
+    );
+  }
    static TextStyle h5Style(){
     return const TextStyle(
       color: ColorConstant.blackColor,
       fontSize: Constant.constant18 ,
       fontWeight: FontWeight.w400,
+
+    );
+  }
+  static TextStyle h5boldStyle(){
+    return const TextStyle(
+      color: ColorConstant.blackColor,
+      fontSize: Constant.constant18 ,
+      fontWeight: FontWeight.w600,
 
     );
   }
@@ -72,6 +89,16 @@ static TextStyle titleTextStyle(){
       fontSize: 35,
       fontWeight: FontWeight.w400,
 
+    );
+  }
+}
+
+
+class TextStyles{
+  static TextStyle commonAppbarTitleStyle(){
+    return TextStyle(
+fontWeight: FontWeight.w700,
+fontSize: Constant.customAppBarTitleSize,
     );
   }
 }

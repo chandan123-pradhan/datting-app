@@ -1,5 +1,6 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:dating_app/utils/color_constant.dart';
+import 'package:dating_app/utils/constants.dart';
 import 'package:dating_app/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
@@ -11,7 +12,7 @@ class TextFieldWidgets {
     return Container(
         height: 45,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(Constant.normalCardBorderRadius),
             border: Border.all(width: 1, color: ColorConstant.borderColor)),
         child: Row(
           children: [
@@ -23,7 +24,7 @@ class TextFieldWidgets {
                   CountryCodePicker(
                     padding: EdgeInsets.zero,
                     onChanged: print,
-
+    
                     initialSelection: 'IN',
                     favorite: const ['+91', 'IN'],
                     //textStyle: TextsStyle.descriptionStyle(),
