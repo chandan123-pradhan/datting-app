@@ -1,3 +1,4 @@
+import 'package:dating_app/utils/string_utils.dart';
 import 'package:dating_app/widgets/text_field_widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +25,8 @@ class _EditAccountDetailState extends State<EditAccountDetail> {
                 child: TextFieldWidgets.inputField(
                   context: context,
                   textFieldController: nameController,
-                  hintText: '',
+                  hintText: StringUtils.editName,
+                  
                   textInputType: TextInputType.text,
                 )),
             Padding(

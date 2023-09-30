@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 
 class TextFieldWidgets {
+  
   static Widget mobileNumberInputTextField(
       {required BuildContext context,
       required TextEditingController textFieldController}) {
@@ -103,10 +104,7 @@ class TextFieldWidgets {
     );
   }
 
-
-
-
-static Widget inputField(
+  static Widget inputField(
       {required BuildContext context,
       required String hintText,
       required TextInputType textInputType,
@@ -140,8 +138,5 @@ static Widget inputField(
           
         );
   }
-
-
-
 
 }

@@ -9,57 +9,61 @@ class CommonAppBar extends StatelessWidget {
   final bool? isShowDivider;
   final bool? editShow;
   final bool? settingShow;
+  final bool? isBack;
   final onEdit;
   final onSetting;
   const CommonAppBar(
-      {super.key, required this.title, this.isShowDivider = false,this.editShow=false,this.settingShow=false, this.onEdit,required this.onSetting});
+      {super.key,
+      required this.title,
+      this.isShowDivider = false,
+      this.editShow = false,
+      this.settingShow = false,
+      this.isBack = false,
+      this.onEdit,
+      required this.onSetting});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
+    return AppBar(
+      backgroundColor: ColorConstant.scaffoldBgColor,
+      elevation: 0,
+      leading: isBack == true
+          ? Padding(
+              padding: const EdgeInsets.only(left: Constant.mainPagePadding),
+              child: BottonWidgets.backBottonWidget(onTap: () {
+                Navigator.pop(context);
+              }),
+            )
+          : Container(),
+      automaticallyImplyLeading: false,
+      centerTitle: true,
+      title: Text(
+        title ?? "",
+        style: TextStyles.commonAppbarTitleStyle(),
+      ),
+      actions: [
+        if (editShow == true)
+          InkWell(
+            onTap: onEdit,
+            child: Icon(
+              Icons.edit_outlined,
+              color: ColorConstant.primaryColor,
+            ),
+          ),
         SizedBox(
-          height: Constant.customAppBarHeight,
-          width: MediaQuery.of(context).size.width / 1,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              BottonWidgets.backBottonWidget(onTap: () {}),
-              Text(
-                title ?? "",
-                style: TextStyles.commonAppbarTitleStyle(),
-              ),
-              Row(
-                children:  [
-                  if(editShow==true)
-                  InkWell(
-                    onTap: onEdit,
-                    child: Icon(
-                      Icons.edit_outlined,
-                      color: ColorConstant.primaryColor,
-                    ),
-                  ),
-                  SizedBox(
-                    width: Constant.maximumPadding,
-                  ),
-
-                  if(editShow==true)
-                                   InkWell(
-                    onTap: onSetting,
-                    child: Icon(
-                      Icons.settings_outlined,
-                      color: ColorConstant.primaryColor,
-                    ),
-                  )
-                ],
-              )
-            ],
-          ),
+          width: Constant.maximumPadding,
         ),
-        if (isShowDivider == true)
-          const Divider(
-            color: ColorConstant.tinnyPrimaryColor,
+        if (settingShow == true)
+          InkWell(
+            onTap: onSetting,
+            child: Icon(
+              Icons.settings_outlined,
+              color: ColorConstant.primaryColor,
+            ),
           ),
+        SizedBox(
+          width: Constant.maximumPadding,
+        ),
       ],
     );
   }

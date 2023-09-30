@@ -43,16 +43,15 @@ class ProfileCardView extends StatelessWidget {
               ),
               Image.asset(
                 ImageUtils.shieldTickButton,
-                height: 22,
-                width: 22,
+                height: 18,
+                width: 18,
               ),
             ],
           ),
         ),
-                          const SizedBox(
-                    height: Constant.maximumPadding,
-                  ),
-
+        const SizedBox(
+          height: Constant.maximumPadding,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -70,12 +69,13 @@ class ProfileCardView extends StatelessWidget {
                 ],
               ),
               child: Padding(
-                padding: const EdgeInsets.all(Constant.mainContainerContentPadding),
+                padding:
+                    const EdgeInsets.all(Constant.mainContainerContentPadding),
                 child: Row(children: [
                   Image.asset(
                     ImageUtils.walletIcon,
-                    height: 50,
-                    width: 50,
+                    height: 40,
+                    width: 40,
                     color: ColorConstant.primaryColor,
                   ),
                   const SizedBox(
@@ -84,7 +84,7 @@ class ProfileCardView extends StatelessWidget {
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const[
+                      children: const [
                         Text(
                           StringUtils.yourWallet,
                           style: TextStyle(
@@ -92,16 +92,15 @@ class ProfileCardView extends StatelessWidget {
                               fontWeight: FontWeight.w500,
                               color: ColorConstant.blackColor),
                         ),
-                         SizedBox(
+                        SizedBox(
                           height: 5.0,
                         ),
-                         Text(
+                        Text(
                           "${StringUtils.yourWalletSubTitleOne}320 ${StringUtils.yourWalletSubTitleTwo}",
                           style: TextStyle(
-                            color: ColorConstant.primaryColor,
-                            fontSize: 11.0,
-                            overflow: TextOverflow.clip
-                          ),
+                              color: ColorConstant.primaryColor,
+                              fontSize: 11.0,
+                              overflow: TextOverflow.clip),
                           maxLines: 2,
                         ),
                       ],
@@ -111,7 +110,7 @@ class ProfileCardView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: Constant.maximumPadding),
-                    Container(
+            Container(
               width: deviceSize.width / 2.2,
               decoration: BoxDecoration(
                 color: ColorConstant.cardBgColor,
@@ -125,12 +124,13 @@ class ProfileCardView extends StatelessWidget {
                 ],
               ),
               child: Padding(
-                padding: const EdgeInsets.all(Constant.mainContainerContentPadding),
+                padding:
+                    const EdgeInsets.all(Constant.mainContainerContentPadding),
                 child: Row(children: [
                   Image.asset(
                     ImageUtils.playCircle,
-                    height: 40,
-                    width: 40,
+                    height: 35,
+                    width: 35,
                     color: ColorConstant.primaryColor,
                   ),
                   const SizedBox(
@@ -139,7 +139,7 @@ class ProfileCardView extends StatelessWidget {
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children:const [
+                      children: const [
                         Text(
                           StringUtils.getFreeCoins,
                           style: TextStyle(
@@ -147,11 +147,11 @@ class ProfileCardView extends StatelessWidget {
                               fontWeight: FontWeight.w500,
                               color: ColorConstant.blackColor),
                         ),
-                         SizedBox(
+                        SizedBox(
                           height: 5.0,
                         ),
-                         Text(
-                          StringUtils.getFreeCoinsSubTitle ,
+                        Text(
+                          StringUtils.getFreeCoinsSubTitle,
                           style: TextStyle(
                             color: ColorConstant.primaryColor,
                             fontSize: 11.0,
@@ -163,7 +163,7 @@ class ProfileCardView extends StatelessWidget {
                 ]),
               ),
             ),
-           ],
+          ],
         ),
       ],
     );

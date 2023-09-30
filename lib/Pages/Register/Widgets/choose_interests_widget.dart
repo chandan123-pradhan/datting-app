@@ -1,18 +1,20 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'package:dating_app/utils/color_constant.dart';
+import 'package:dating_app/Configurations/theme_configuration.dart';
+import 'package:dating_app/Utilities/size_constants.dart';
+import 'package:dating_app/Utilities/string_constants.dart';
 import 'package:dating_app/utils/string_utils.dart';
 import 'package:dating_app/widgets/text_widgets.dart';
 import 'package:flutter/material.dart';
 
-class ChooseIntrestView extends StatefulWidget {
-  const ChooseIntrestView({super.key});
+class ChooseInterestsWidget extends StatefulWidget {
+  const ChooseInterestsWidget({super.key});
 
   @override
-  _ChooseIntrestViewState createState() => _ChooseIntrestViewState();
+  _ChooseInterestsWidgetState createState() => _ChooseInterestsWidgetState();
 }
 
-class _ChooseIntrestViewState extends State<ChooseIntrestView> {
+class _ChooseInterestsWidgetState extends State<ChooseInterestsWidget> {
   List<String> options = [
     '💃 Dancing',
     '🎮 Gaming',
@@ -51,9 +53,15 @@ class _ChooseIntrestViewState extends State<ChooseIntrestView> {
         padding: const EdgeInsets.all(15.0),
         child: Column(
           children: [
-            TextWidgets.h2Tag(text: StringUtils.interests),
             const SizedBox(
-              height: 30,
+              height: SizeConstants.mediumPadding,
+            ),
+            Text(
+              StringConstants.interests,
+              style: ThemeConfiguration.registerHeadingTextStyle(),
+            ),
+            const SizedBox(
+              height: SizeConstants.bigPadding,
             ),
             Center(
               child: Wrap(
@@ -71,23 +79,25 @@ class _ChooseIntrestViewState extends State<ChooseIntrestView> {
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 20.0, vertical: 10.0),
+                        horizontal: SizeConstants.mainPagePadding,
+                        vertical: SizeConstants.smallPadding,
+                      ),
                       decoration: BoxDecoration(
                           color: selected[index]
-                              ? ColorConstant.descriptiveColor
+                              ? ThemeConfiguration.primaryColor
                               : Colors.white,
                           borderRadius: BorderRadius.circular(35.0),
                           border: Border.all(
                             color: !selected[index]
-                                ? ColorConstant.primaryColor
-                                : Colors.white,
+                                ? ThemeConfiguration.primaryColor
+                                : ThemeConfiguration.scaffoldBgColor,
                           )),
                       child: Text(
                         option,
                         style: TextStyle(
                           color: selected[index]
-                              ? ColorConstant.whiteColor
-                              : ColorConstant.primaryColor,
+                              ? ThemeConfiguration.scaffoldBgColor
+                              : ThemeConfiguration.primaryColor,
                           fontWeight: FontWeight.w500,
                         ),
                       ),

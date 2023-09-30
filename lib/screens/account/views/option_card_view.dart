@@ -8,6 +8,7 @@ class OptionCardView extends StatelessWidget {
   final Widget? widget;
   final bool? isWidgetShow;
   final bool? isShowEditIcon;
+  final onEdit;
 
   const OptionCardView({
     super.key,
@@ -15,7 +16,8 @@ class OptionCardView extends StatelessWidget {
     required this.title,
     required this.widget,
     required this.isWidgetShow,
-     this.isShowEditIcon=false,
+    this.isShowEditIcon = false,
+    this.onEdit,
   });
 
   @override
@@ -45,15 +47,18 @@ class OptionCardView extends StatelessWidget {
               ),
           ],
         ),
-    Visibility(
-      visible: isShowEditIcon==true,
-      child: const Positioned(
-        right: 0,
-        top: 0,
-        child: 
-       
-      Icon(Icons.edit_outlined,color: ColorConstant.primaryColor,size:15)),
-    )  ],
+        Visibility(
+          visible: isShowEditIcon == true,
+          child: Positioned(
+              right: 0,
+              top: 0,
+              child: InkWell(
+                onTap: onEdit,
+                child: Icon(Icons.edit_outlined,
+                    color: ColorConstant.primaryColor, size: 15),
+              )),
+        )
+      ],
     );
   }
 }

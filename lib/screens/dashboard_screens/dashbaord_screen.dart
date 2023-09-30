@@ -1,5 +1,8 @@
 import 'dart:math';
 
+import 'package:dating_app/Pages/Account/View/account_view.dart';
+import 'package:dating_app/Pages/Messages/View/message_view.dart';
+import 'package:dating_app/Pages/YourMatches/View/your_matches_view.dart';
 import 'package:dating_app/screens/account/account_screen.dart';
 import 'package:dating_app/screens/dashboard_screens/maches_screen.dart';
 // import 'package:dating_app/screens/dashboard_screens /message/message_screen.dart';
@@ -20,14 +23,14 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  int currentIndex=0;
+  int currentIndex = 0;
 
-  List<Widget>pages=[
-    AccountScreen(),
+  List<Widget> pages = [
+    AccountView(),
     WalletPage(),
     Container(),
-    MatchesScreen(),
-    MessagesScreen()
+    YourMatchesView(),
+    MessageView()
   ];
   @override
   Widget build(BuildContext context) {
@@ -68,62 +71,55 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       InkWell(
-                        onTap: (){
+                        onTap: () {
                           setState(() {
-                            currentIndex=0;
+                            currentIndex = 0;
                           });
                         },
                         child: bottomBarItemWidget(
-                            isSelected: currentIndex==0?true:false, 
-                            
-                            
+                            isSelected: currentIndex == 0 ? true : false,
                             img: ImageUtils.first_tab_icon),
                       ),
                       InkWell(
-                        onTap: (){
+                        onTap: () {
                           setState(() {
-                            currentIndex=1;
+                            currentIndex = 1;
                           });
                         },
                         child: bottomBarItemWidget(
-                           isSelected: currentIndex==1?true:false, 
-                          
-                          
-                           img: ImageUtils.second_tab_icon),
+                            isSelected: currentIndex == 1 ? true : false,
+                            img: ImageUtils.second_tab_icon),
                       ),
- InkWell(
-                        onTap: (){
-                          setState(() {
-                            currentIndex=2;
-                          });
-                        },
-                        child: bottomBarItemWidget(
-                            isSelected: currentIndex==2?true:false, 
-                            
-                             img: ImageUtils.third_tab_icon),
-                     ),
                       InkWell(
-                        onTap: (){
+                        onTap: () {
                           setState(() {
-                            currentIndex=3;
+                            currentIndex = 2;
                           });
                         },
                         child: bottomBarItemWidget(
-                           isSelected: currentIndex==3?true:false, 
-                            
-                             img: ImageUtils.fourth_tab_icon),
+                            isSelected: currentIndex == 2 ? true : false,
+                            img: ImageUtils.third_tab_icon),
                       ),
-                     InkWell(
-                        onTap: (){
+                      InkWell(
+                        onTap: () {
                           setState(() {
-                            currentIndex=4;
+                            currentIndex = 3;
                           });
                         },
-                        child:bottomBarItemWidget(
-                             isSelected: currentIndex==4?true:false, 
-                            
-                             img: ImageUtils.fifth_tab_icon),
-                    ),
+                        child: bottomBarItemWidget(
+                            isSelected: currentIndex == 3 ? true : false,
+                            img: ImageUtils.fourth_tab_icon),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            currentIndex = 4;
+                          });
+                        },
+                        child: bottomBarItemWidget(
+                            isSelected: currentIndex == 4 ? true : false,
+                            img: ImageUtils.fifth_tab_icon),
+                      ),
                     ],
                   ),
                 ),

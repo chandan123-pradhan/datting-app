@@ -26,8 +26,6 @@ class BottonWidgets{
     );
   }
 
-
-
  static Widget mainBottonWithIcon({required String title,required BuildContext context, required Function onPressed,required String icon}){
     return InkWell(
       onTap: (){
@@ -58,7 +56,6 @@ class BottonWidgets{
     );
   }
 
-
 static Widget backBottonWidget({required Function onTap}){
   return  InkWell(
     onTap: (){
@@ -71,6 +68,5 @@ static Widget backBottonWidget({required Function onTap}){
                     ),
   );
 }
-
 
 }

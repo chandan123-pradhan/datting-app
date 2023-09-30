@@ -63,9 +63,9 @@ class _VerifyOptState extends State<VerifyOpt> {
                       title: StringUtils.VERIFY,
                       context: context,
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context){
-                          return const ProfileSetupPage();
-                        }));
+                        // Navigator.push(context, MaterialPageRoute(builder: (context){
+                        //   return const ProfileSetupPage();
+                        // }));
                       }),
                   const SizedBox(
                     height: 10,
