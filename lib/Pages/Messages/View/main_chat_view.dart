@@ -68,7 +68,7 @@ class _MainChatViewState extends State<MainChatView> {
                         SizedBox(
                           height: MediaQuery.of(context).size.height / 1.3,
                           width: MediaQuery.of(context).size.width / 1,
-                          child: const SingleChildScrollView(
+                          child:  SingleChildScrollView(
                             child: Padding(
                               padding:
                                   EdgeInsets.all(SizeConstants.mainPagePadding),

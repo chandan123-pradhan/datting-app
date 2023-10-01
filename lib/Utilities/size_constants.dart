@@ -19,4 +19,5 @@ class SizeConstants {
   static const double genderContainerSize = 144.0;
   static const double aboutFieldHeight = 150.0;
   static const double chatPageBottomPadding = 110.0;
+  static const double msgIconHeight = 24.0;
 }

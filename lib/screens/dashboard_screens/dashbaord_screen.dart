@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:dating_app/Pages/Account/View/account_view.dart';
+import 'package:dating_app/Pages/InterestedInYou/View/interested_in_you_view.dart';
 import 'package:dating_app/Pages/Messages/View/message_view.dart';
 import 'package:dating_app/Pages/YourMatches/View/your_matches_view.dart';
 import 'package:dating_app/screens/account/account_screen.dart';
@@ -27,7 +28,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   List<Widget> pages = [
     AccountView(),
-    WalletPage(),
+    InterestedInYouView(),
     Container(),
     YourMatchesView(),
     MessageView()

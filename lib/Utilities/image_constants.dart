@@ -27,4 +27,9 @@ class ImageConstants {
   static const nextBtn = "assets/icons/next_btn.png";
   static const otherChat = "assets/images/other_chat.png";
   static const myChat = "assets/images/my_chat.png";
+  static const chatIcon = 'assets/icons/message_icon.png';
+  static const interedInYouAppBar = 'assets/images/interestedinyou.png';
+    static const profileCardBg = 'assets/images/profileCardBG.png';
+    static const girlDummy = 'assets/images/girlDummy.png';
+
 }

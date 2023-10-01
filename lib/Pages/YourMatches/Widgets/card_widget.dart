@@ -1,6 +1,8 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:dating_app/Configurations/theme_configuration.dart';
+import 'package:dating_app/Pages/Messages/View/main_chat_view.dart';
+import 'package:dating_app/Utilities/image_constants.dart';
 import 'package:dating_app/Utilities/size_constants.dart';
 import 'package:flutter/material.dart';
 
@@ -46,43 +48,22 @@ Widget CardWidget(
                       title,
                       style: ThemeConfiguration.msgNameTextStyle(),
                     ),
-                    Text(
-                      "11:30 PM",
-                      style: ThemeConfiguration.tinnyTextStyle(),
-                    ),
+                     InkWell(
+                      onTap: (){
+                          Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return const MainChatView();
+                        }));
+                      },
+                       child: Image.asset(
+                     ImageConstants.chatIcon,
+                               height: SizeConstants.msgIconHeight,
+                               width: SizeConstants.msgIconHeight,
+                             ),
+                     ),
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Greate! Thank you so much',
-                      style: ThemeConfiguration.commonTextStyle(
-                        12.0,
-                        FontWeight.w600,
-                        ThemeConfiguration.primaryColor,
-                      ),
-                    ),
-                    Container(
-                      decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: ThemeConfiguration.primaryColor),
-                      child: Padding(
-                        padding:
-                            const EdgeInsets.all(SizeConstants.smallPadding),
-                        child: Text(
-                          '1',
-                          style: ThemeConfiguration.commonTextStyle(
-                            8.0,
-                            FontWeight.w600,
-                            ThemeConfiguration.buttonTextColor,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-              ],
+            ],
             ),
           )
         ],

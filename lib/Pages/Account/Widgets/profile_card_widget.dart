@@ -128,7 +128,7 @@ class ProfileCardWidget extends StatelessWidget {
                   const SizedBox(
                     width: SizeConstants.mediumPadding,
                   ),
-                  const Expanded(
+                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

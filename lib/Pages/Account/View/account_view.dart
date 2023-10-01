@@ -34,7 +34,7 @@ class _AccountViewState extends State<AccountView> {
             settingShow: true,
           ),
         ),
-        body: const SingleChildScrollView(
+        body:  SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.all(SizeConstants.mainPagePadding),
             child: Column(children: [
