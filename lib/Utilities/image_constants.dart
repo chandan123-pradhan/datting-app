@@ -31,5 +31,6 @@ class ImageConstants {
   static const interedInYouAppBar = 'assets/images/interestedinyou.png';
     static const profileCardBg = 'assets/images/profileCardBG.png';
     static const girlDummy = 'assets/images/girlDummy.png';
-
+  static const heartCircle = 'assets/icons/close-circle.png';
+  static const crossCircle = 'assets/icons/heart-round.png';
 }
