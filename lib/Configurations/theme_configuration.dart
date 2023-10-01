@@ -18,6 +18,7 @@ class ThemeConfiguration {
   static const Color primaryLightColor = Color(0xffE485C6);
   static const Color mainChatPageBg = Color(0xffF2EDF1);
   static const Color dullTextColor = Color(0xff979797);
+  static const Color border2Color = Color(0xffA08595);
 
   ///Font
   static const String mainFont = "Nunito";

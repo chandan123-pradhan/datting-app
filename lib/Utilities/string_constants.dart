@@ -32,6 +32,9 @@ class StringConstants {
   //Matches
   static const String matches = "Your Matches";
 
+  //Profile Detail
+  static const String about = "About";
+  static const String interest = "Interest";
   //Account
   static const String profile = "Profile";
   static const String personalDetail = "Personal Detail";
