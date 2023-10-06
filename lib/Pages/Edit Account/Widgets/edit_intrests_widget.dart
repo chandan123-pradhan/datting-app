@@ -1,19 +1,20 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'package:dating_app/Configurations/theme_configuration.dart';
+import 'package:dating_app/Utilities/image_constants.dart';
+import 'package:dating_app/Utilities/size_constants.dart';
+import 'package:dating_app/Utilities/string_constants.dart';
 import 'package:dating_app/common_widgets/common_app_bar.dart';
-import 'package:dating_app/utils/color_constant.dart';
-import 'package:dating_app/utils/string_utils.dart';
-import 'package:dating_app/widgets/text_widgets.dart';
 import 'package:flutter/material.dart';
 
-class EditInterestView extends StatefulWidget {
-  const EditInterestView({super.key});
+class EditInterestWidget extends StatefulWidget {
+  const EditInterestWidget({super.key});
 
   @override
-  _EditInterestViewState createState() => _EditInterestViewState();
+  _EditInterestWidgetState createState() => _EditInterestWidgetState();
 }
 
-class _EditInterestViewState extends State<EditInterestView> {
+class _EditInterestWidgetState extends State<EditInterestWidget> {
   List<String> options = [
     '💃 Dancing',
     '🎮 Gaming',
@@ -48,11 +49,11 @@ class _EditInterestViewState extends State<EditInterestView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorConstant.scaffoldBgColor,
+      backgroundColor: ThemeConfiguration.scaffoldBgColor,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(50.0),
         child: CommonAppBar(
-          title: StringUtils.interests,
+          title: StringConstants.interests,
           onEdit: () {
             // Navigator.push(
             //   context,
@@ -68,13 +69,16 @@ class _EditInterestViewState extends State<EditInterestView> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.all(SizeConstants.mainPagePadding),
           child: Column(
             children: [
+              const SizedBox(
+                height: SizeConstants.maximumPadding,
+              ),
               Center(
                 child: Wrap(
-                  spacing: 10.0,
-                  runSpacing: 10.0,
+                  spacing: SizeConstants.mainPagePadding,
+                  runSpacing: SizeConstants.mainPagePadding,
                   children: options.asMap().entries.map((entry) {
                     int index = entry.key;
                     String option = entry.value;
@@ -87,29 +91,42 @@ class _EditInterestViewState extends State<EditInterestView> {
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 10.0),
+                          horizontal: SizeConstants.mediumPadding,
+                          vertical: SizeConstants.smallPadding,
+                        ),
                         decoration: BoxDecoration(
                             color: selected[index]
-                                ? ColorConstant.descriptiveColor
-                                : Colors.white,
+                                ? ThemeConfiguration.descriptiveColor
+                                : Colors.transparent,
                             borderRadius: BorderRadius.circular(35.0),
                             border: Border.all(
                               color: !selected[index]
-                                  ? ColorConstant.primaryColor
+                                  ? ThemeConfiguration.primaryColor
                                   : Colors.white,
                             )),
                         child: Text(
                           option,
                           style: TextStyle(
                             color: selected[index]
-                                ? ColorConstant.whiteColor
-                                : ColorConstant.primaryColor,
+                                ? ThemeConfiguration.whiteColor
+                                : ThemeConfiguration.primaryColor,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
                     );
                   }).toList(),
+                ),
+              ),
+              const SizedBox(
+                height: SizeConstants.aboutFieldHeight,
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Image.asset(
+                  ImageConstants.saveBtn,
+                  height: SizeConstants.buttonHeight,
+                  width: MediaQuery.of(context).size.width / 1,
                 ),
               ),
             ],

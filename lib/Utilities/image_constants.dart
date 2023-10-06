@@ -9,7 +9,7 @@ class ImageConstants {
   static const String thirdTabIcon = 'assets/icons/third_tab_icon.png';
   static const String fourthTabIcon = 'assets/icons/fourth_tab_icon.png';
   static const String fifthTabIcon = 'assets/icons/fifth_tab_icon.png';
-  static const String walletIcon = 'assets/icons/wallet.png';
+  static const String walletIcon = 'assets/icons/wallet_icon.png';
   static const String backButton = 'assets/icons/Back.png';
   static const profilePicEditButton = 'assets/icons/profilePicEditButton.png';
   static const editButton = 'assets/icons/edit.png';
@@ -29,8 +29,16 @@ class ImageConstants {
   static const myChat = "assets/images/my_chat.png";
   static const chatIcon = 'assets/icons/message_icon.png';
   static const interedInYouAppBar = 'assets/images/interestedinyou.png';
-    static const profileCardBg = 'assets/images/profileCardBG.png';
-    static const girlDummy = 'assets/images/girlDummy.png';
+  static const profileCardBg = 'assets/images/profileCardBG.png';
+  static const girlDummy = 'assets/images/girlDummy.png';
   static const heartCircle = 'assets/icons/close-circle.png';
   static const crossCircle = 'assets/icons/heart-round.png';
+  static const itAMatchView = 'assets/images/its-a-match.png';
+  static const pupil = 'assets/images/pupil.png';
+  static const chatNowBtn = 'assets/images/chat-now.png';
+  static const keepSearchingBtn = 'assets/images/keep-searching.png';
+  static const addCoinsBtn = 'assets/images/add-coins-btn.png';
+  static const coinsIcon = 'assets/icons/coin.png';
+  static const approachBtn = 'assets/images/approach-btn.png';
+  static const saveBtn = 'assets/images/save-btn.png';
 }

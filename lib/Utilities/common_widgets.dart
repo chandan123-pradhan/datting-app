@@ -220,7 +220,7 @@ class CommonWidgets {
         ImageConstants.backButton,
         height: SizeConstants.backButtonSize,
         width: SizeConstants.backButtonSize,
-        color: Colors.white,
+        color: ThemeConfiguration.buttonColor,
       ),
     );
   }

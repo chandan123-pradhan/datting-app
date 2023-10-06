@@ -54,4 +54,20 @@ class StringConstants {
   static const String editName = "Edit Name";
   static const String editNumber = "Edit Number";
   static const String editBio = "Edit Bio";
+
+  //Wallet and popup
+  static const String availableCoins = "Available coins in the wallet";
+  static const String insufficientBalance = "Insufficient balance!";
+  static const String needCoins1 = "Need ";
+  static const String needCoins2 = "more coins to";
+  static const String approach = "approach";
+  static const String addCoins = "Add coins";
+  static const String coinsDeduct =
+      "Coins will be deducted from your wallet to approach ";
+
+  //Wallet and popup
+  static const String wallet = "Wallet";
+  static const String walletSubtitle =
+      "More the number of coins you have,the more  number of candidates you will  be able tto approc’";
+  static const String buyCoins = "Buy Coins";
 }

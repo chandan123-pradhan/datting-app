@@ -1,10 +1,9 @@
+import 'package:dating_app/Configurations/theme_configuration.dart';
+import 'package:dating_app/Utilities/image_constants.dart';
+import 'package:dating_app/Utilities/size_constants.dart';
+import 'package:dating_app/Utilities/string_constants.dart';
 import 'package:dating_app/screens/account/views/button_view.dart';
 import 'package:dating_app/screens/account/views/option_card_view.dart';
-import 'package:dating_app/utils/color_constant.dart';
-import 'package:dating_app/utils/constants.dart';
-import 'package:dating_app/utils/image_utils.dart';
-import 'package:dating_app/utils/string_utils.dart';
-import 'package:dating_app/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 
 class ProfileBodyCard extends StatelessWidget {
@@ -31,74 +30,80 @@ class ProfileBodyCard extends StatelessWidget {
       child: Container(
         width: deviceSize.width / 1,
         decoration: BoxDecoration(
-          color: ColorConstant.whiteColor,
-          border: Border.all(color: ColorConstant.primaryColor),
-          borderRadius: BorderRadius.circular(Constant.normalCardBorderRadius),
+          color: ThemeConfiguration.whiteColor,
+          border: Border.all(color: ThemeConfiguration.primaryColor),
+          borderRadius:
+              BorderRadius.circular(SizeConstants.normalCardBorderRadius),
         ),
         child: Padding(
           padding: const EdgeInsets.all(
-              Constant.mainPagePadding + Constant.mediumPadding),
+              SizeConstants.mainPagePadding + SizeConstants.mediumPadding),
           child: Column(children: [
             OptionCardView(
               title: 'Kaushiki Kumari',
               isWidgetShow: false,
-              image: ImageUtils.accountIcon,
+              image: ImageConstants.accountIcon,
               widget: null,
               isShowEditIcon: isFromEdit ?? false,
             ),
             const SizedBox(
-              height: Constant.maximumPadding + Constant.mediumPadding,
+              height:
+                  SizeConstants.maximumPadding + SizeConstants.mediumPadding,
             ),
             OptionCardView(
               title: '+91 1223344556',
               isWidgetShow: false,
-              image: ImageUtils.callIcon,
+              image: ImageConstants.callIcon,
               widget: null,
               isShowEditIcon: isFromEdit ?? false,
             ),
             const SizedBox(
-              height: Constant.maximumPadding + Constant.mediumPadding,
+              height:
+                  SizeConstants.maximumPadding + SizeConstants.mediumPadding,
             ),
             OptionCardView(
               title: '',
               isWidgetShow: true,
-              image: ImageUtils.accountEditIcon,
+              image: ImageConstants.accountEditIcon,
               isShowEditIcon: isFromEdit ?? false,
-              widget: Column(
+              widget: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
-                    StringUtils.yourBio,
-                    style: TextStyle(color: ColorConstant.descriptiveColor),
+                    StringConstants.yourBio,
+                    style:
+                        TextStyle(color: ThemeConfiguration.descriptiveColor),
                   ),
                   SizedBox(
-                    height: Constant.smallPadding,
+                    height: SizeConstants.smallPadding,
                   ),
                   Text(
                     'A good listner. I love having a good talk to know each other\'s side.',
-                    style:
-                        TextStyle(color: ColorConstant.commonAppBarTitleColor),
+                    style: TextStyle(
+                        color: ThemeConfiguration.commonAppBarTitleColor),
                   )
                 ],
               ),
             ),
             const SizedBox(
-              height: Constant.maximumPadding + Constant.mediumPadding,
+              height:
+                  SizeConstants.maximumPadding + SizeConstants.mediumPadding,
             ),
             OptionCardView(
               title: '',
               isWidgetShow: true,
-              image: ImageUtils.heartIcon,
+              image: ImageConstants.heartIcon,
               isShowEditIcon: isFromEdit ?? false,
               widget: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    StringUtils.yourIntrest,
-                    style: TextStyle(color: ColorConstant.descriptiveColor),
+                    StringConstants.yourIntrest,
+                    style:
+                        TextStyle(color: ThemeConfiguration.descriptiveColor),
                   ),
                   const SizedBox(
-                    height: Constant.mediumPadding,
+                    height: SizeConstants.mediumPadding,
                   ),
                   Center(
                     child: Wrap(
@@ -112,16 +117,16 @@ class ProfileBodyCard extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 10.0, vertical: 5.0),
                           decoration: BoxDecoration(
-                              color: ColorConstant.tinnyPrimaryColor
+                              color: ThemeConfiguration.primaryLightColor
                                   .withOpacity(0.3),
                               borderRadius: BorderRadius.circular(35.0),
                               border: Border.all(
-                                color: ColorConstant.primaryColor,
+                                color: ThemeConfiguration.primaryColor,
                               )),
                           child: Text(
                             option,
                             style: const TextStyle(
-                                color: ColorConstant.descriptiveColor,
+                                color: ThemeConfiguration.descriptiveColor,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 11),
                           ),
@@ -133,22 +138,24 @@ class ProfileBodyCard extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: Constant.maximumPadding + Constant.mediumPadding,
+              height:
+                  SizeConstants.maximumPadding + SizeConstants.mediumPadding,
             ),
             OptionCardView(
               title: '',
               isWidgetShow: true,
-              image: ImageUtils.basicIcon,
+              image: ImageConstants.basicIcon,
               isShowEditIcon: isFromEdit ?? false,
               widget: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    StringUtils.myBasic,
-                    style: TextStyle(color: ColorConstant.descriptiveColor),
+                    StringConstants.myBasic,
+                    style:
+                        TextStyle(color: ThemeConfiguration.descriptiveColor),
                   ),
                   const SizedBox(
-                    height: Constant.mediumPadding,
+                    height: SizeConstants.mediumPadding,
                   ),
                   Center(
                     child: Wrap(
@@ -162,16 +169,16 @@ class ProfileBodyCard extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 10.0, vertical: 5.0),
                           decoration: BoxDecoration(
-                              color: ColorConstant.tinnyPrimaryColor
+                              color: ThemeConfiguration.primaryLightColor
                                   .withOpacity(0.3),
                               borderRadius: BorderRadius.circular(35.0),
                               border: Border.all(
-                                color: ColorConstant.primaryColor,
+                                color: ThemeConfiguration.primaryColor,
                               )),
                           child: Text(
                             myBasics,
                             style: const TextStyle(
-                                color: ColorConstant.descriptiveColor,
+                                color: ThemeConfiguration.descriptiveColor,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 11),
                           ),
@@ -183,37 +190,40 @@ class ProfileBodyCard extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: Constant.maximumPadding + Constant.mediumPadding,
+              height:
+                  SizeConstants.maximumPadding + SizeConstants.mediumPadding,
             ),
             OptionCardView(
               title: '',
               isWidgetShow: true,
-              image: ImageUtils.photoIcon,
+              image: ImageConstants.photoIcon,
               isShowEditIcon: isFromEdit ?? false,
               widget: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    StringUtils.photos,
-                    style: TextStyle(color: ColorConstant.descriptiveColor),
+                    StringConstants.photos,
+                    style:
+                        TextStyle(color: ThemeConfiguration.descriptiveColor),
                   ),
                   const SizedBox(
-                    height: Constant.mediumPadding,
+                    height: SizeConstants.mediumPadding,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
-                        height: MediaQuery.of(context).size.height / 5,
-                        width: MediaQuery.of(context).size.width / 2.8,
+                        height: MediaQuery.of(context).size.height / 4,
+                        width: MediaQuery.of(context).size.width / 3,
                         decoration: BoxDecoration(
                             border: Border.all(
-                                color: ColorConstant.tinnyPrimaryColor),
-                            borderRadius: BorderRadius.circular(15)),
+                                color: ThemeConfiguration.primaryLightColor),
+                            borderRadius: BorderRadius.circular(
+                                SizeConstants.normalCardBorderRadius)),
                         child: Padding(
                           padding: const EdgeInsets.all(50.0),
                           child: InkWell(
-                            child: Image.asset(ImageUtils.galleryAddIcon),
+                            child: Image.asset(ImageConstants.galleryAddIcon),
                           ),
                         ),
                       ),
@@ -222,18 +232,21 @@ class ProfileBodyCard extends StatelessWidget {
                         children: [
                           for (var i = 3; i < 5; i++)
                             Container(
-                              height: MediaQuery.of(context).size.width / 5,
-                              width: MediaQuery.of(context).size.width / 3 - 20,
+                              height:
+                                  MediaQuery.of(context).size.height / 4.2 / 2,
+                              width: MediaQuery.of(context).size.width / 3.5,
                               decoration: BoxDecoration(
                                   border: Border.all(
-                                      color: ColorConstant.tinnyPrimaryColor),
-                                  borderRadius: BorderRadius.circular(15)),
+                                      color:
+                                          ThemeConfiguration.primaryLightColor),
+                                  borderRadius: BorderRadius.circular(
+                                      SizeConstants.normalCardBorderRadius)),
                               child: InkWell(
                                 // onTap: _pickImage,
                                 child: Padding(
                                   padding: const EdgeInsets.all(35.0),
                                   child: Image.asset(
-                                    ImageUtils.galleryAddIcon,
+                                    ImageConstants.galleryAddIcon,
                                     fit: BoxFit.fill,
                                   ),
                                 ),
@@ -250,7 +263,7 @@ class ProfileBodyCard extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: Constant.maximumPadding + Constant.mediumPadding,
+              height: SizeConstants.maximumPadding,
             ),
             ButtonView(),
           ]),

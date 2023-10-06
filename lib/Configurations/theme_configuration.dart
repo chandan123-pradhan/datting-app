@@ -4,6 +4,7 @@ class ThemeConfiguration {
   static const Color primaryColor = Color(0xffB14E92);
   static const Color commonAppBarBgColor = Color(0xffFFF5FB);
   static const Color scaffoldBgColor = Color(0xffFFF5FB);
+  static const Color whiteColor = Colors.white;
   static const Color commonAppBarTitleColor = Color(0xff422938);
   static const Color cardBgColor = Color(0xffffffff);
   static final Color cardShadowColor = Colors.grey.shade300;
@@ -19,6 +20,7 @@ class ThemeConfiguration {
   static const Color mainChatPageBg = Color(0xffF2EDF1);
   static const Color dullTextColor = Color(0xff979797);
   static const Color border2Color = Color(0xffA08595);
+  static const Color coinCardBGColor = Color(0xffCDB1C4);
 
   ///Font
   static const String mainFont = "Nunito";
