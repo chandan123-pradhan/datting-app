@@ -30,8 +30,8 @@ Widget CardWidget(
         children: [
           Image.asset(
             img,
-            height: SizeConstants.backButtonSize,
-            width: SizeConstants.backButtonSize,
+            height: 52,
+            width:52,
           ),
           const SizedBox(
             width: SizeConstants.mainPagePadding,

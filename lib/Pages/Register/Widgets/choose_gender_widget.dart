@@ -49,10 +49,10 @@ class _ChooseGenderWidgetState extends State<ChooseGenderWidget> {
                   _genderWomenView(),
                 ],
               ),
-              const SizedBox(
-                height: SizeConstants.bigPadding,
-              ),
-              _genderOthersView(),
+              // const SizedBox(
+              //   height: SizeConstants.bigPadding,
+              // ),
+              // _genderOthersView(),
             ],
           ))
     ]);
@@ -159,18 +159,18 @@ class _ChooseGenderWidgetState extends State<ChooseGenderWidget> {
         setState(() {
           selectedGender = 'others';
         });
-        showModalBottomSheet(
-            isScrollControlled: true,
-            elevation: 0.0,
-            enableDrag: true,
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20))),
-            context: context,
-            builder: (context) {
-              return const NonBinaryBottomSheetDialog();
-            });
+        // showModalBottomSheet(
+        //     isScrollControlled: true,
+        //     elevation: 0.0,
+        //     enableDrag: true,
+        //     shape: const RoundedRectangleBorder(
+        //         borderRadius: BorderRadius.only(
+        //             topLeft: Radius.circular(20),
+        //             topRight: Radius.circular(20))),
+        //     context: context,
+        //     builder: (context) {
+        //       return const NonBinaryBottomSheetDialog();
+        //     });
       },
       child: Stack(
         alignment: Alignment.center,

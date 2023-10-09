@@ -136,7 +136,7 @@ class _WalletViewState extends State<WalletView> {
                     const SizedBox(
                       width: SizeConstants.mediumPadding,
                     ),
-                    const Expanded(
+                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

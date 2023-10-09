@@ -23,6 +23,8 @@ class StringConstants {
   static const String uploadYourphotos = "Upload your photos";
   static const String aboutYourSelf = "About your self...";
   static const String aboutYourSelfHint = "Write here...";
+  static const String jobDescriptions= "Job Description...";
+  static const String jobDescriptionsHint = "Write here...";
 
   //Message
   static const String messages = "Messages";
@@ -70,4 +72,20 @@ class StringConstants {
   static const String walletSubtitle =
       "More the number of coins you have,the more  number of candidates you will  be able tto approc’";
   static const String buyCoins = "Buy Coins";
-}
+
+  //settings
+  static const String settings = "Settings";
+  static const String notifications =
+      "Notifications";
+  static const String notificationSettingSubTitle = "Allow notifications on your device";
+
+
+
+  //otp
+  static const String otp = "Verify Login";
+  static const String otpSubtitle1 =
+      "Enter OTP code we sent to ";
+  static const String otpSubtitle2 =
+      " This code will expired in ";
+      static const String verify="Verify";
+  }

@@ -1,11 +1,8 @@
 import 'package:dating_app/Configurations/theme_configuration.dart';
-import 'package:dating_app/Pages/Messages/View/main_chat_view.dart';
-import 'package:dating_app/Pages/Messages/Widgets/message_box_widget.dart';
 import 'package:dating_app/Pages/YourMatches/View/its_match_view.dart';
 import 'package:dating_app/Pages/YourMatches/Widgets/card_widget.dart';
 import 'package:dating_app/Utilities/size_constants.dart';
 import 'package:dating_app/Utilities/string_constants.dart';
-import 'package:dating_app/screens/messages_screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 
 class YourMatchesView extends StatefulWidget {

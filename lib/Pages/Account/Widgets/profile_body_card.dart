@@ -1,3 +1,6 @@
+import 'package:dating_app/Configurations/theme_configuration.dart';
+import 'package:dating_app/Pages/Account/Widgets/account_button_widget.dart';
+import 'package:dating_app/Utilities/size_constants.dart';
 import 'package:dating_app/screens/account/views/button_view.dart';
 import 'package:dating_app/screens/account/views/option_card_view.dart';
 import 'package:dating_app/utils/color_constant.dart';
@@ -31,8 +34,8 @@ class ProfileBodyCard extends StatelessWidget {
       child: Container(
         width: deviceSize.width / 1,
         decoration: BoxDecoration(
-          color: ColorConstant.whiteColor,
-          border: Border.all(color: ColorConstant.primaryColor),
+          color: ThemeConfiguration.whiteColor,
+          border: Border.all(color: ThemeConfiguration.primaryColor),
           borderRadius: BorderRadius.circular(Constant.normalCardBorderRadius),
         ),
         child: Padding(
@@ -69,15 +72,16 @@ class ProfileBodyCard extends StatelessWidget {
                 children: const [
                   Text(
                     StringUtils.yourBio,
-                    style: TextStyle(color: ColorConstant.descriptiveColor),
+                    style:
+                        TextStyle(color: ThemeConfiguration.descriptiveColor),
                   ),
                   SizedBox(
                     height: Constant.smallPadding,
                   ),
                   Text(
                     'A good listner. I love having a good talk to know each other\'s side.',
-                    style:
-                        TextStyle(color: ColorConstant.commonAppBarTitleColor),
+                    style: TextStyle(
+                        color: ThemeConfiguration.commonAppBarTitleColor),
                   )
                 ],
               ),
@@ -95,39 +99,46 @@ class ProfileBodyCard extends StatelessWidget {
                 children: [
                   const Text(
                     StringUtils.yourIntrest,
-                    style: TextStyle(color: ColorConstant.descriptiveColor),
+                    style:
+                        TextStyle(color: ThemeConfiguration.descriptiveColor),
                   ),
                   const SizedBox(
                     height: Constant.mediumPadding,
                   ),
-                  Center(
-                    child: Wrap(
-                      spacing: 10.0,
-                      runSpacing: 10.0,
-                      children: options.asMap().entries.map((entry) {
-                        int index = entry.key;
-                        String option = entry.value;
-
-                        return Container(
+                  GridView.builder(
+                    itemCount: options.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            childAspectRatio: 3,
+                            mainAxisSpacing: SizeConstants.mediumPadding,
+                            crossAxisSpacing: SizeConstants.mediumPadding),
+                    itemBuilder: (context, index) {
+                      return Center(
+                        child: Container(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 10.0, vertical: 5.0),
                           decoration: BoxDecoration(
-                              color: ColorConstant.tinnyPrimaryColor
+                              color: ThemeConfiguration.primaryLightColor
                                   .withOpacity(0.3),
                               borderRadius: BorderRadius.circular(35.0),
                               border: Border.all(
-                                color: ColorConstant.primaryColor,
+                                color: ThemeConfiguration.primaryColor,
                               )),
-                          child: Text(
-                            option,
-                            style: const TextStyle(
-                                color: ColorConstant.descriptiveColor,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 11),
+                          child: Center(
+                            child: Text(
+                              options[index],
+                              style: const TextStyle(
+                                  color: ThemeConfiguration.descriptiveColor,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 11),
+                            ),
                           ),
-                        );
-                      }).toList(),
-                    ),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
@@ -145,39 +156,46 @@ class ProfileBodyCard extends StatelessWidget {
                 children: [
                   const Text(
                     StringUtils.myBasic,
-                    style: TextStyle(color: ColorConstant.descriptiveColor),
+                    style:
+                        TextStyle(color: ThemeConfiguration.descriptiveColor),
                   ),
                   const SizedBox(
                     height: Constant.mediumPadding,
                   ),
-                  Center(
-                    child: Wrap(
-                      spacing: 10.0,
-                      runSpacing: 10.0,
-                      children: myBasics.asMap().entries.map((entry) {
-                        int index = entry.key;
-                        String myBasics = entry.value;
-
-                        return Container(
+                  GridView.builder(
+                    itemCount: myBasics.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            childAspectRatio: 3,
+                            mainAxisSpacing: SizeConstants.mediumPadding,
+                            crossAxisSpacing: SizeConstants.mediumPadding),
+                    itemBuilder: (context, index) {
+                      return Center(
+                        child: Container(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 10.0, vertical: 5.0),
                           decoration: BoxDecoration(
-                              color: ColorConstant.tinnyPrimaryColor
+                              color: ThemeConfiguration.primaryLightColor
                                   .withOpacity(0.3),
                               borderRadius: BorderRadius.circular(35.0),
                               border: Border.all(
-                                color: ColorConstant.primaryColor,
+                                color: ThemeConfiguration.primaryColor,
                               )),
-                          child: Text(
-                            myBasics,
-                            style: const TextStyle(
-                                color: ColorConstant.descriptiveColor,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 11),
+                          child: Center(
+                            child: Text(
+                              myBasics[index],
+                              style: const TextStyle(
+                                  color: ThemeConfiguration.descriptiveColor,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 11),
+                            ),
                           ),
-                        );
-                      }).toList(),
-                    ),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
@@ -195,7 +213,8 @@ class ProfileBodyCard extends StatelessWidget {
                 children: [
                   const Text(
                     StringUtils.photos,
-                    style: TextStyle(color: ColorConstant.descriptiveColor),
+                    style:
+                        TextStyle(color: ThemeConfiguration.descriptiveColor),
                   ),
                   const SizedBox(
                     height: Constant.mediumPadding,
@@ -203,44 +222,64 @@ class ProfileBodyCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        height: MediaQuery.of(context).size.height / 5,
-                        width: MediaQuery.of(context).size.width / 2.8,
+                      Expanded(
+                        child: Container(
                         decoration: BoxDecoration(
-                            border: Border.all(
-                                color: ColorConstant.tinnyPrimaryColor),
-                            borderRadius: BorderRadius.circular(15)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(50.0),
-                          child: InkWell(
-                            child: Image.asset(ImageUtils.galleryAddIcon),
+                              border: Border.all(
+                                  color: ThemeConfiguration.primaryLightColor),
+                              borderRadius: BorderRadius.circular(15)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(50.0),
+                            child: InkWell(
+                              child: Image.asset(ImageUtils.galleryAddIcon),
+                            ),
                           ),
                         ),
                       ),
+                      const SizedBox(width: SizeConstants.mediumPadding,),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          for (var i = 3; i < 5; i++)
-                            Container(
-                              height: MediaQuery.of(context).size.width / 5,
-                              width: MediaQuery.of(context).size.width / 3 - 20,
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: ColorConstant.tinnyPrimaryColor),
-                                  borderRadius: BorderRadius.circular(15)),
-                              child: InkWell(
-                                // onTap: _pickImage,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(35.0),
-                                  child: Image.asset(
-                                    ImageUtils.galleryAddIcon,
-                                    fit: BoxFit.fill,
-                                  ),
+                          Container(
+                            height: MediaQuery.of(context).size.width / 4.7,
+                            width: MediaQuery.of(context).size.width / 4.7,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color:
+                                        ThemeConfiguration.primaryLightColor),
+                                borderRadius: BorderRadius.circular(15)),
+                            child: InkWell(
+                              // onTap: _pickImage,
+                              child: Padding(
+                                padding: const EdgeInsets.all(35.0),
+                                child: Image.asset(
+                                  ImageUtils.galleryAddIcon,
+                                  fit: BoxFit.fill,
                                 ),
                               ),
                             ),
+                          ),
                           const SizedBox(
-                            height: 5.0,
+                            height: SizeConstants.mediumPadding,
+                          ),
+                          Container(
+                            height: MediaQuery.of(context).size.width / 4.7,
+                            width: MediaQuery.of(context).size.width / 4.7,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color:
+                                        ThemeConfiguration.primaryLightColor),
+                                borderRadius: BorderRadius.circular(15)),
+                            child: InkWell(
+                              // onTap: _pickImage,
+                              child: Padding(
+                                padding: const EdgeInsets.all(35.0),
+                                child: Image.asset(
+                                  ImageUtils.galleryAddIcon,
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       )
@@ -252,7 +291,6 @@ class ProfileBodyCard extends StatelessWidget {
             const SizedBox(
               height: Constant.maximumPadding + Constant.mediumPadding,
             ),
-            ButtonView(),
           ]),
         ),
       ),

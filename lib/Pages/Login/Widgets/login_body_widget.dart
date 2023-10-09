@@ -15,14 +15,18 @@ class LoginBodyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(SizeConstants.mainPagePadding),
-        child: Column(
-          children: [
-            LoginHeaderWidget(mobileNumberController: mobileNumberController),
-            LoginBottomWidget(onTapLogin: onTapLogin)
-          ],
+    return Center(
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(SizeConstants.mainPagePadding),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              LoginHeaderWidget(mobileNumberController: mobileNumberController),
+              const SizedBox(height: SizeConstants.maximumPadding+SizeConstants.maximumPadding,),
+              LoginBottomWidget(onTapLogin: onTapLogin)
+            ],
+          ),
         ),
       ),
     );

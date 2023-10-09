@@ -1,7 +1,7 @@
+import 'package:dating_app/Utilities/common_widgets.dart';
 import 'package:dating_app/utils/color_constant.dart';
 import 'package:dating_app/utils/constants.dart';
 import 'package:dating_app/utils/text_styles.dart';
-import 'package:dating_app/widgets/botton_widget.dart';
 import 'package:flutter/material.dart';
 
 class CommonAppBar extends StatelessWidget {
@@ -30,7 +30,7 @@ class CommonAppBar extends StatelessWidget {
       leading: isBack == true
           ? Padding(
               padding: const EdgeInsets.only(left: Constant.mainPagePadding),
-              child: BottonWidgets.backBottonWidget(onTap: () {
+              child: CommonWidgets.backBottonWidget(onTap: () {
                 Navigator.pop(context);
               }),
             )

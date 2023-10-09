@@ -1,6 +1,6 @@
+import 'package:dating_app/Configurations/theme_configuration.dart';
 import 'package:dating_app/Pages/Login/Widgets/login_body_widget.dart';
-import 'package:dating_app/screens/auth_pages/verify_otp_page.dart';
-import 'package:dating_app/utils/color_constant.dart';
+import 'package:dating_app/Pages/Otp/View/otp_view.dart';
 import 'package:flutter/material.dart';
 
 class LoginView extends StatefulWidget {
@@ -15,21 +15,23 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorConstant.backgroundColor,
-      body: LoginBodyWidget(
-        mobileNumberController: mobileNumberController,
-        onTapLogin: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) {
-                return VerifyOpt(
-                  mobileNumber: mobileNumberController.text,
-                );
-              },
-            ),
-          );
-        },
+      backgroundColor: ThemeConfiguration.scaffoldBgColor,
+      body: Center(
+        child: LoginBodyWidget(
+          mobileNumberController: mobileNumberController,
+          onTapLogin: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return OtpView(
+                    mobileNumber: mobileNumberController.text,
+                  );
+                },
+              ),
+            );
+          },
+        ),
       ),
     );
   }

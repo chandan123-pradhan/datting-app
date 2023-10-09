@@ -116,22 +116,26 @@ class _ChooseBirthdayWidgetState extends State<ChooseBirthdayWidget> {
                         width: 0.5,
                         color: ThemeConfiguration.primaryLightColor)),
                 alignment: Alignment.center,
-                child: DropdownButton<String>(
-                  underline: Container(),
-                  value: selectedYear,
-                  hint: Text('YEAR'),
-                  items: widget.yearList
-                      ?.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (newValue) {
-                    setState(() {
-                      selectedYear = newValue!;
-                    });
-                  },
+                child: SizedBox(  height: SizeConstants.buttonHeight,
+                
+                  child: DropdownButton<String>(
+                    
+                    underline: Container(),
+                    value: selectedYear,
+                    hint: Text('YEAR'),
+                    items: widget.yearList
+                        ?.map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    onChanged: (newValue) {
+                      setState(() {
+                        selectedYear = newValue!;
+                      });
+                    },
+                  ),
                 ),
               )
             ],

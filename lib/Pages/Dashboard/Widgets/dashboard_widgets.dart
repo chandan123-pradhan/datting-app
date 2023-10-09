@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 Widget bottomBarItemWidget({required bool isSelected,required String img}){
     return    Container(
-                        height: 40,
+                        height: 60,
                         decoration:  BoxDecoration(
                             shape: BoxShape.circle,
                             color: 

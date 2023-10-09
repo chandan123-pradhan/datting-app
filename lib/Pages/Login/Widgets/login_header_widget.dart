@@ -1,4 +1,5 @@
 import 'package:dating_app/Configurations/theme_configuration.dart';
+import 'package:dating_app/Pages/Login/Widgets/login_bottom_widget.dart';
 import 'package:dating_app/Utilities/common_widgets.dart';
 import 'package:dating_app/Utilities/size_constants.dart';
 import 'package:dating_app/Utilities/string_constants.dart';
@@ -15,6 +16,7 @@ class LoginHeaderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const SizedBox(
           height: SizeConstants.mediumPadding,
@@ -38,6 +40,7 @@ class LoginHeaderWidget extends StatelessWidget {
           child: CommonWidgets.mobileNumberInputTextField(
               context: context, textFieldController: mobileNumberController),
         ),
+            
       ],
     );
   }

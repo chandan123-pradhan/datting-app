@@ -145,36 +145,42 @@ class _EditAccountViewState extends State<EditAccountView> {
                       const SizedBox(
                         height: SizeConstants.mediumPadding,
                       ),
-                      Center(
-                        child: Wrap(
-                          spacing: 10.0,
-                          runSpacing: 10.0,
-                          children: options.asMap().entries.map((entry) {
-                            int index = entry.key;
-                            String option = entry.value;
-
-                            return Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10.0, vertical: 5.0),
-                              decoration: BoxDecoration(
-                                  color: ThemeConfiguration.primaryLightColor
-                                      .withOpacity(0.3),
-                                  borderRadius: BorderRadius.circular(35.0),
-                                  border: Border.all(
-                                    color: ThemeConfiguration.primaryColor,
-                                  )),
-                              child: Text(
-                                option,
-                                style: const TextStyle(
-                                    color: ThemeConfiguration.descriptiveColor,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 11),
-                              ),
-                            );
-                          }).toList(),
+    GridView.builder(
+                    itemCount: options.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            childAspectRatio: 3,
+                            mainAxisSpacing: SizeConstants.mediumPadding,
+                            crossAxisSpacing: SizeConstants.mediumPadding),
+                    itemBuilder: (context, index) {
+                      return Center(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10.0, vertical: 5.0),
+                          decoration: BoxDecoration(
+                              color: ThemeConfiguration.primaryLightColor
+                                  .withOpacity(0.3),
+                              borderRadius: BorderRadius.circular(35.0),
+                              border: Border.all(
+                                color: ThemeConfiguration.primaryColor,
+                              )),
+                          child: Center(
+                            child: Text(
+                              options[index],
+                              style: const TextStyle(
+                                  color: ThemeConfiguration.descriptiveColor,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 11),
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
+                      );
+                    },
+                  ),
+                 ],
                   ),
                 ),
               ),
@@ -203,36 +209,42 @@ class _EditAccountViewState extends State<EditAccountView> {
                       const SizedBox(
                         height: SizeConstants.mediumPadding,
                       ),
-                      Center(
-                        child: Wrap(
-                          spacing: 10.0,
-                          runSpacing: 10.0,
-                          children: myBasics.asMap().entries.map((entry) {
-                            int index = entry.key;
-                            String myBasics = entry.value;
-
-                            return Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10.0, vertical: 5.0),
-                              decoration: BoxDecoration(
-                                  color: ThemeConfiguration.primaryLightColor
-                                      .withOpacity(0.3),
-                                  borderRadius: BorderRadius.circular(35.0),
-                                  border: Border.all(
-                                    color: ThemeConfiguration.primaryColor,
-                                  )),
-                              child: Text(
-                                myBasics,
-                                style: const TextStyle(
-                                    color: ThemeConfiguration.descriptiveColor,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 11),
-                              ),
-                            );
-                          }).toList(),
+                      GridView.builder(
+                    itemCount: myBasics.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            childAspectRatio: 3,
+                            mainAxisSpacing: SizeConstants.mediumPadding,
+                            crossAxisSpacing: SizeConstants.mediumPadding),
+                    itemBuilder: (context, index) {
+                      return Center(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10.0, vertical: 5.0),
+                          decoration: BoxDecoration(
+                              color: ThemeConfiguration.primaryLightColor
+                                  .withOpacity(0.3),
+                              borderRadius: BorderRadius.circular(35.0),
+                              border: Border.all(
+                                color: ThemeConfiguration.primaryColor,
+                              )),
+                          child: Center(
+                            child: Text(
+                              myBasics[index],
+                              style: const TextStyle(
+                                  color: ThemeConfiguration.descriptiveColor,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 11),
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
+                      );
+                    },
+                  ),
+                 ],
                   ),
                 ),
               ),
@@ -261,57 +273,73 @@ class _EditAccountViewState extends State<EditAccountView> {
                       const SizedBox(
                         height: SizeConstants.mediumPadding,
                       ),
-                      Row(
+                     Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Container(
+                        decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: ThemeConfiguration.primaryLightColor),
+                              borderRadius: BorderRadius.circular(15)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(50.0),
+                            child: InkWell(
+                              child: Image.asset(ImageConstants.galleryAddIcon),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: SizeConstants.mediumPadding,),
+                      Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            height: MediaQuery.of(context).size.height / 5,
-                            width: MediaQuery.of(context).size.width / 2.8,
+                            height: MediaQuery.of(context).size.width / 4.3,
+                            width: MediaQuery.of(context).size.width / 4.3,
                             decoration: BoxDecoration(
                                 border: Border.all(
                                     color:
                                         ThemeConfiguration.primaryLightColor),
                                 borderRadius: BorderRadius.circular(15)),
-                            child: Padding(
-                              padding: const EdgeInsets.all(50.0),
-                              child: InkWell(
-                                child:
-                                    Image.asset(ImageConstants.galleryAddIcon),
+                            child: InkWell(
+                              // onTap: _pickImage,
+                              child: Padding(
+                                padding: const EdgeInsets.all(35.0),
+                                child: Image.asset(
+                                  ImageConstants.galleryAddIcon,
+                                  fit: BoxFit.fill,
+                                ),
                               ),
                             ),
                           ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              for (var i = 3; i < 5; i++)
-                                Container(
-                                  height: MediaQuery.of(context).size.width / 5,
-                                  width: MediaQuery.of(context).size.width / 3 -
-                                      20,
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: ThemeConfiguration
-                                              .primaryLightColor),
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: InkWell(
-                                    // onTap: _pickImage,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(35.0),
-                                      child: Image.asset(
-                                        ImageConstants.galleryAddIcon,
-                                        fit: BoxFit.fill,
-                                      ),
-                                    ),
-                                  ),
+                          const SizedBox(
+                            height: SizeConstants.mediumPadding,
+                          ),
+                          Container(
+                            height: MediaQuery.of(context).size.width / 4.3,
+                            width: MediaQuery.of(context).size.width / 4.3,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color:
+                                        ThemeConfiguration.primaryLightColor),
+                                borderRadius: BorderRadius.circular(15)),
+                            child: InkWell(
+                              // onTap: _pickImage,
+                              child: Padding(
+                                padding: const EdgeInsets.all(35.0),
+                                child: Image.asset(
+                                  ImageConstants.galleryAddIcon,
+                                  fit: BoxFit.fill,
                                 ),
-                              const SizedBox(
-                                height: 5.0,
                               ),
-                            ],
-                          )
+                            ),
+                          ),
                         ],
-                      ),
+                      )
                     ],
+                  ),
+                ],
                   ),
                 ),
               ),

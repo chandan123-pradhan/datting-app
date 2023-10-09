@@ -14,35 +14,34 @@ class LoginBottomWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-        child: Padding(
+    return Padding(
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 40),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          CommonWidgets.mainBotton(
-              title: StringConstants.login,
-              context: context,
-              onPressed: onTapLogin),
-          const SizedBox(
-            height: SizeConstants.maximumPadding,
-          ),
-          CommonWidgets.linkTextWidget(
-              linkText: StringConstants.signup,
-              text: StringConstants.dontHaveAnAccount,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return const RegisterView();
-                    },
-                  ),
-                );
-              })
-        ],
+    mainAxisAlignment: MainAxisAlignment.center,
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+      CommonWidgets.mainBotton(
+          title: StringConstants.login,
+          context: context,
+          onPressed: onTapLogin),
+      const SizedBox(
+        height: SizeConstants.maximumPadding,
       ),
-    ));
+      CommonWidgets.linkTextWidget(
+          linkText: StringConstants.signup,
+          text: StringConstants.dontHaveAnAccount,
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return const RegisterView();
+                },
+              ),
+            );
+          })
+    ],
+      ),
+    );
   }
 }

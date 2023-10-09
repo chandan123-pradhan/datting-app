@@ -2,10 +2,10 @@ import 'package:dating_app/Configurations/theme_configuration.dart';
 import 'package:dating_app/Utilities/size_constants.dart';
 import 'package:dating_app/Utilities/string_constants.dart';
 import 'package:dating_app/utils/image_utils.dart';
-import 'package:dating_app/utils/string_utils.dart';
-import 'package:dating_app/widgets/text_widgets.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
+
+import 'package:image_picker/image_picker.dart';
 // import 'package:image_picker/image_picker.dart';
 // import 'package:cached_network_image/cached_network_image.dart';
 
@@ -17,18 +17,27 @@ class UploadPhotosWidget extends StatefulWidget {
 }
 
 class _UploadPhotosWidgetState extends State<UploadPhotosWidget> {
-  List<File> images = [];
+  final List<String> imageUrls = [];
+  final picker = ImagePicker();
 
-  // Future<void> _pickImage() async {
-  //   final imagePicker = ImagePicker();
-  //   final pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
+  Future<void> _pickImage() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        imageUrls.add(pickedFile.path);
+      });
+    }
+  }
 
-  //   if (pickedFile != null) {
-  //     setState(() {
-  //       images.add(File(pickedFile.path));
-  //     });
-  //   }
-  // }
+  Future<void> _takePhoto() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.camera);
+    if (pickedFile != null) {
+      setState(() {
+        imageUrls.add(pickedFile.path);
+      });
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -67,13 +76,14 @@ class _UploadPhotosWidgetState extends State<UploadPhotosWidget> {
                                   color: ThemeConfiguration.primaryLightColor),
                               borderRadius: BorderRadius.circular(
                                   SizeConstants.mainPagePadding)),
-                          child: images.isNotEmpty
+                          child: imageUrls.isNotEmpty
                               ? Image.file(
-                                  images.first,
-                                  fit: BoxFit.cover,
-                                )
+                File(imageUrls[0]),
+                fit: BoxFit.cover,
+              )
+
                               : InkWell(
-                                  // onTap: _pickImage,
+                                   onTap: _pickImage,
                                   child: Image.asset(ImageUtils.galleryAddIcon),
                                 ),
                         ),
@@ -111,13 +121,13 @@ class _UploadPhotosWidgetState extends State<UploadPhotosWidget> {
                                             .primaryLightColor),
                                     borderRadius: BorderRadius.circular(
                                         SizeConstants.mainPagePadding)),
-                                child: images.length > i + 1
-                                    ? Image.file(
-                                        images[i + 1],
-                                        fit: BoxFit.cover,
-                                      )
+                                child: imageUrls.length > i + 1
+                                    ?Image.file(
+                File(imageUrls[0+i+1]),
+                fit: BoxFit.cover,
+              )
                                     : InkWell(
-                                        // onTap: _pickImage,
+                                        onTap: _pickImage,
                                         child: Padding(
                                           padding: const EdgeInsets.all(35.0),
                                           child: Image.asset(
@@ -148,13 +158,13 @@ class _UploadPhotosWidgetState extends State<UploadPhotosWidget> {
                                 color: ThemeConfiguration.primaryLightColor),
                             borderRadius: BorderRadius.circular(
                                 SizeConstants.mainPagePadding)),
-                        child: images.length > i + 1
+                        child: imageUrls.length > i + 1
                             ? Image.file(
-                                images[i + 1],
-                                fit: BoxFit.cover,
-                              )
+                File(imageUrls[0+i+1]),
+                fit: BoxFit.cover,
+              )
                             : InkWell(
-                                // onTap: _pickImage,
+                                onTap: _pickImage,
                                 child: Padding(
                                   padding: const EdgeInsets.all(40.0),
                                   child: Image.asset(

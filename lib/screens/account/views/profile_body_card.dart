@@ -66,7 +66,7 @@ class ProfileBodyCard extends StatelessWidget {
               isWidgetShow: true,
               image: ImageConstants.accountEditIcon,
               isShowEditIcon: isFromEdit ?? false,
-              widget: const Column(
+              widget:  Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
@@ -265,7 +265,6 @@ class ProfileBodyCard extends StatelessWidget {
             const SizedBox(
               height: SizeConstants.maximumPadding,
             ),
-            ButtonView(),
           ]),
         ),
       ),

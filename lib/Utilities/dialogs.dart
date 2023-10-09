@@ -160,7 +160,7 @@ class Dialogs {
                         const SizedBox(
                           width: SizeConstants.mediumPadding,
                         ),
-                        const Expanded(
+                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -354,7 +354,7 @@ class Dialogs {
                         const SizedBox(
                           width: SizeConstants.mediumPadding,
                         ),
-                        const Expanded(
+                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

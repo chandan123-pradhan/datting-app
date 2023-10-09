@@ -3,8 +3,6 @@
 import 'package:dating_app/Configurations/theme_configuration.dart';
 import 'package:dating_app/Utilities/size_constants.dart';
 import 'package:dating_app/Utilities/string_constants.dart';
-import 'package:dating_app/utils/string_utils.dart';
-import 'package:dating_app/widgets/text_widgets.dart';
 import 'package:flutter/material.dart';
 
 class ChooseInterestsWidget extends StatefulWidget {
@@ -85,7 +83,7 @@ class _ChooseInterestsWidgetState extends State<ChooseInterestsWidget> {
                       decoration: BoxDecoration(
                           color: selected[index]
                               ? ThemeConfiguration.primaryColor
-                              : Colors.white,
+                              : Colors.transparent,
                           borderRadius: BorderRadius.circular(35.0),
                           border: Border.all(
                             color: !selected[index]

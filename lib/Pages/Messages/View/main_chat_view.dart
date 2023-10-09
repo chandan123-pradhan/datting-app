@@ -1,6 +1,7 @@
 import 'package:dating_app/Configurations/theme_configuration.dart';
 import 'package:dating_app/Pages/Messages/Widgets/other_card_widget.dart';
 import 'package:dating_app/Pages/Messages/Widgets/reply_card_widget.dart';
+import 'package:dating_app/Pages/ProfileDetail/View/profile_detail_view.dart';
 import 'package:dating_app/Utilities/common_widgets.dart';
 import 'package:dating_app/Utilities/image_constants.dart';
 import 'package:dating_app/Utilities/size_constants.dart';
@@ -26,10 +27,17 @@ class _MainChatViewState extends State<MainChatView> {
         backgroundColor: ThemeConfiguration.primaryColor,
         title: Row(
           children: [
-            Image.asset(
-              "assets/icons/person_icon.png",
-              height: SizeConstants.backButtonSize,
-              width: SizeConstants.backButtonSize,
+            InkWell(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const ProfileDetail();
+                }));
+              },
+              child: Image.asset(
+                "assets/icons/person_icon.png",
+                height: SizeConstants.backButtonSize,
+                width: SizeConstants.backButtonSize,
+              ),
             ),
             const SizedBox(
               width: SizeConstants.mainPagePadding,
@@ -68,7 +76,7 @@ class _MainChatViewState extends State<MainChatView> {
                         SizedBox(
                           height: MediaQuery.of(context).size.height / 1.3,
                           width: MediaQuery.of(context).size.width / 1,
-                          child:  SingleChildScrollView(
+                          child: SingleChildScrollView(
                             child: Padding(
                               padding:
                                   EdgeInsets.all(SizeConstants.mainPagePadding),

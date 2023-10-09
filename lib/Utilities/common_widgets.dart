@@ -3,9 +3,10 @@ import 'package:dating_app/Configurations/theme_configuration.dart';
 import 'package:dating_app/Utilities/image_constants.dart';
 import 'package:dating_app/Utilities/size_constants.dart';
 import 'package:dating_app/Utilities/string_constants.dart';
-import 'package:dating_app/utils/color_constant.dart';
 import 'package:dating_app/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:pinput/pinput.dart';
+
 
 class CommonWidgets {
   ///Text fields
@@ -44,7 +45,7 @@ class CommonWidgets {
                 const Icon(
                   Icons.keyboard_arrow_down_rounded,
                   size: 20,
-                  color: ColorConstant.descriptiveColor,
+                  color: ThemeConfiguration.descriptiveColor,
                 )
               ],
             ),
@@ -73,43 +74,43 @@ class CommonWidgets {
         ));
   }
 
-  // static Widget otpTextField({
-  //   required int inputFieldLength,
-  // }) {
-  //   final defaultPinTheme = PinTheme(
-  //     width: 48,
-  //     height: 48,
-  //     margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-  //     textStyle: TextsStyle.h1Style(),
-  //     decoration: BoxDecoration(
-  //         border: Border.all(color: ColorConstant.primaryColor),
-  //         borderRadius: BorderRadius.circular(10),
-  //         color: ColorConstant.whiteColor),
-  //   );
+  static Widget otpTextField({
+    required int inputFieldLength,
+  }) {
+    final defaultPinTheme = PinTheme(
+      width: 48,
+      height: 48,
+      margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+      textStyle: ThemeConfiguration.commonTextStyle(28.0, FontWeight.w700, ThemeConfiguration.commonAppBarTitleColor),
+      decoration: BoxDecoration(
+          border: Border.all(color: ThemeConfiguration.primaryColor),
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.transparent),
+    );
 
-  //   final focusedPinTheme = defaultPinTheme.copyDecorationWith(
-  //       border: Border.all(color: ColorConstant.primaryColor),
-  //       borderRadius: BorderRadius.circular(10),
-  //       color: ColorConstant.whiteColor);
+    final focusedPinTheme = defaultPinTheme.copyDecorationWith(
+        border: Border.all(color: ThemeConfiguration.primaryColor),
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.transparent);
 
-  //   final submittedPinTheme = defaultPinTheme.copyWith(
-  //     decoration:
-  //         defaultPinTheme.decoration!.copyWith(color: ColorConstant.whiteColor),
-  //   );
+    final submittedPinTheme = defaultPinTheme.copyWith(
+      decoration:
+          defaultPinTheme.decoration!.copyWith(color: Colors.transparent),
+    );
 
-  //   return Pinput(
-  //     length: inputFieldLength,
-  //     defaultPinTheme: defaultPinTheme,
-  //     focusedPinTheme: focusedPinTheme,
-  //     submittedPinTheme: submittedPinTheme,
-  //     // validator: (s) {
-  //     //   return s == '1234' ? null : 'Pin is incorrect';
-  //     // },
-  //     pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
-  //     showCursor: true,
-  //     onCompleted: (pin) => print(pin),
-  //   );
-  // }
+    return Pinput(
+      length: inputFieldLength,
+      defaultPinTheme: defaultPinTheme,
+      focusedPinTheme: focusedPinTheme,
+      submittedPinTheme: submittedPinTheme,
+      // validator: (s) {
+      //   return s == '1234' ? null : 'Pin is incorrect';
+      // },
+      pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
+      showCursor: true,
+      onCompleted: (pin) => print(pin),
+    );
+  }
 
   static Widget inputField(
       {required BuildContext context,
@@ -121,7 +122,7 @@ class CommonWidgets {
       decoration: BoxDecoration(
           borderRadius:
               BorderRadius.circular(SizeConstants.textFieldCardBorderRadius),
-          border: Border.all(width: 0.5, color: ColorConstant.borderColor)),
+          border: Border.all(width: 0.5, color: ThemeConfiguration.borderColor)),
       alignment: Alignment.center,
       child: Padding(
         padding: const EdgeInsets.only(
@@ -158,7 +159,7 @@ class CommonWidgets {
       decoration: BoxDecoration(
           borderRadius:
               BorderRadius.circular(SizeConstants.mainContainerContentPadding),
-          border: Border.all(width: 0.5, color: ColorConstant.borderColor)),
+          border: Border.all(width: 0.5, color: ThemeConfiguration.borderColor)),
       alignment: Alignment.center,
       child: Padding(
         padding:

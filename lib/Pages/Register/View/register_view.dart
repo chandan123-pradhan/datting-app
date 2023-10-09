@@ -1,14 +1,15 @@
+import 'package:dating_app/Configurations/theme_configuration.dart';
+import 'package:dating_app/Pages/Dashboard/View/dashboard_view.dart';
 import 'package:dating_app/Pages/Register/Widgets/choose_birthday_widget.dart';
 import 'package:dating_app/Pages/Register/Widgets/choose_gender_widget.dart';
 import 'package:dating_app/Pages/Register/Widgets/choose_interests_widget.dart';
 import 'package:dating_app/Pages/Register/Widgets/register_info_widget.dart';
 import 'package:dating_app/Pages/Register/Widgets/upload_photos_widget.dart';
 import 'package:dating_app/Pages/Register/Widgets/write_about_widget.dart';
+import 'package:dating_app/Pages/Register/Widgets/write_job_description_widget.dart';
 import 'package:dating_app/Utilities/common_widgets.dart';
 import 'package:dating_app/Utilities/image_constants.dart';
 import 'package:dating_app/Utilities/size_constants.dart';
-import 'package:dating_app/screens/dashboard_screens/dashbaord_screen.dart';
-import 'package:dating_app/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
@@ -22,12 +23,38 @@ class RegisterView extends StatefulWidget {
 class _RegisterViewState extends State<RegisterView> {
   TextEditingController fullNameController = TextEditingController();
   TextEditingController aboutController = TextEditingController();
+  TextEditingController jobDescriptionsController = TextEditingController();
   int currentstep = 1;
   List<int> days = List<int>.generate(31, (index) => index + 1);
   List<int> months = List<int>.generate(12, (index) => index + 1);
   int? selectedDays;
   int? selectedMonth;
   List<String> yearList = [
+    '1970',
+    '1971',
+    '1972',
+    '1973',
+    '1974',
+    '1975',
+    '1976',
+    '1977',
+    '1978',
+    '1979',
+    '1980',
+    '1981',
+    '1982',
+    '1983',
+    '1984',
+    '1985',
+    '1986',
+    '1987',
+    '1988',
+    '1989',
+    '1990',
+    '1991',
+    '1992',
+    '1993',
+    '1994',
     '1995',
     '1996',
     '1997',
@@ -40,6 +67,23 @@ class _RegisterViewState extends State<RegisterView> {
     '2004',
     '2005',
     '2006',
+    '2007',
+    '2008',
+    '2009',
+    '2010',
+    '2011',
+    '2012',
+    '2013',
+    '2014',
+    '2015',
+    '2016',
+    '2017',
+    '2018',
+    '2019',
+    '2020',
+    '2021',
+    '2022',
+    '2023',
   ];
   String? selectedYear;
   String selectedGender = 'women';
@@ -47,10 +91,10 @@ class _RegisterViewState extends State<RegisterView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorConstant.backgroundColor,
+      backgroundColor: ThemeConfiguration.scaffoldBgColor,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(SizeConstants.mainPagePadding),
+          padding: const EdgeInsets.fromLTRB(SizeConstants.mainPagePadding,0.0,SizeConstants.mainPagePadding,SizeConstants.mainPagePadding),
           child: Column(
             children: [
               Row(
@@ -65,9 +109,7 @@ class _RegisterViewState extends State<RegisterView> {
                   }),
                 ],
               ),
-              const SizedBox(
-                height: SizeConstants.bigPadding,
-              ),
+              const Spacer(),
               Visibility(
                   visible: currentstep == 1,
                   child: RegisterInfoWidget(
@@ -91,11 +133,17 @@ class _RegisterViewState extends State<RegisterView> {
                   aboutController: aboutController,
                 ),
               ),
+               Visibility(
+                visible: currentstep == 5,
+                child: JobDescriptionWidget(
+                  jobDescriptionsController: jobDescriptionsController,
+                ),
+              ),
               Visibility(
-                  visible: currentstep == 5,
+                  visible: currentstep == 6,
                   child: const ChooseInterestsWidget()),
               Visibility(
-                  visible: currentstep == 6, child: const UploadPhotosWidget()),
+                  visible: currentstep == 7, child: const UploadPhotosWidget()),
               _bottomView(),
             ],
           ),
@@ -116,18 +164,18 @@ class _RegisterViewState extends State<RegisterView> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CommonWidgets.showPageNumberWidget(
-                  linkText: '/6', text: '$currentstep', onTap: () {}),
+                  linkText: '/7', text: '$currentstep', onTap: () {}),
               InkWell(
                 onTap: () {
                   setState(() {
-                    if (currentstep != 6) {
+                    if (currentstep != 7) {
                       currentstep++;
                     } else {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) {
-                            return const DashboardScreen();
+                            return const DashboardView();
                           },
                         ),
                       );
@@ -146,9 +194,9 @@ class _RegisterViewState extends State<RegisterView> {
             height: SizeConstants.mediumPadding,
           ),
           LinearPercentIndicator(
-            percent: currentstep / 6,
-            backgroundColor: ColorConstant.linkColor.withOpacity(0.2),
-            progressColor: ColorConstant.linkColor,
+            percent: currentstep / 7,
+            backgroundColor: ThemeConfiguration.primaryColor.withOpacity(0.2),
+            progressColor: ThemeConfiguration.primaryColor,
             padding: EdgeInsets.zero,
           ),
         ],
