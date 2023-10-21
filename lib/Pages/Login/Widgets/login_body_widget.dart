@@ -8,10 +8,12 @@ class LoginBodyWidget extends StatelessWidget {
     super.key,
     required this.mobileNumberController,
     required this.onTapLogin,
+    this.isFrom="login",
   });
 
   final TextEditingController mobileNumberController;
   final VoidCallback onTapLogin;
+  final String isFrom;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class LoginBodyWidget extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              LoginHeaderWidget(mobileNumberController: mobileNumberController),
+              LoginHeaderWidget(mobileNumberController: mobileNumberController,isFrom: isFrom,),
               const SizedBox(height: SizeConstants.maximumPadding+SizeConstants.maximumPadding,),
               LoginBottomWidget(onTapLogin: onTapLogin)
             ],

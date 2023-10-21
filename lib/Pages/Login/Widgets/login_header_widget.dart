@@ -9,9 +9,11 @@ class LoginHeaderWidget extends StatelessWidget {
   const LoginHeaderWidget({
     super.key,
     required this.mobileNumberController,
+    required this.isFrom,
   });
 
   final TextEditingController mobileNumberController;
+  final String isFrom;
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +24,16 @@ class LoginHeaderWidget extends StatelessWidget {
           height: SizeConstants.mediumPadding,
         ),
         Text(
-          StringConstants.login,
+          isFrom == "signup" ? StringConstants.signup : StringConstants.login,
           style: ThemeConfiguration.headingTextStyle(),
         ),
         const SizedBox(
           height: SizeConstants.mediumPadding,
         ),
         Text(
-          StringConstants.loginSubHeading,
+          isFrom == "signup"
+              ? StringConstants.signupSubHeading
+              : StringConstants.loginSubHeading,
           style: ThemeConfiguration.subHeadingTextStyle(),
         ),
         const SizedBox(
@@ -40,7 +44,6 @@ class LoginHeaderWidget extends StatelessWidget {
           child: CommonWidgets.mobileNumberInputTextField(
               context: context, textFieldController: mobileNumberController),
         ),
-            
       ],
     );
   }

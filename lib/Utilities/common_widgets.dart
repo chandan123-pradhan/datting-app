@@ -7,7 +7,6 @@ import 'package:dating_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 
-
 class CommonWidgets {
   ///Text fields
   ///
@@ -55,7 +54,8 @@ class CommonWidgets {
             Expanded(
               child: TextFormField(
                 controller: textFieldController,
-                style: ThemeConfiguration.hintTextStyle(),
+                style: ThemeConfiguration.commonTextStyle(
+                    15.0, FontWeight.w500, ThemeConfiguration.darkTextColor),
                 keyboardType: TextInputType.number,
                 cursorColor: ThemeConfiguration.descriptiveColor,
                 decoration: InputDecoration(
@@ -76,12 +76,14 @@ class CommonWidgets {
 
   static Widget otpTextField({
     required int inputFieldLength,
+    required Function(String) callBack,
   }) {
     final defaultPinTheme = PinTheme(
       width: 48,
       height: 48,
       margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-      textStyle: ThemeConfiguration.commonTextStyle(28.0, FontWeight.w700, ThemeConfiguration.commonAppBarTitleColor),
+      textStyle: ThemeConfiguration.commonTextStyle(
+          28.0, FontWeight.w700, ThemeConfiguration.commonAppBarTitleColor),
       decoration: BoxDecoration(
           border: Border.all(color: ThemeConfiguration.primaryColor),
           borderRadius: BorderRadius.circular(10),
@@ -99,17 +101,18 @@ class CommonWidgets {
     );
 
     return Pinput(
-      length: inputFieldLength,
-      defaultPinTheme: defaultPinTheme,
-      focusedPinTheme: focusedPinTheme,
-      submittedPinTheme: submittedPinTheme,
-      // validator: (s) {
-      //   return s == '1234' ? null : 'Pin is incorrect';
-      // },
-      pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
-      showCursor: true,
-      onCompleted: (pin) => print(pin),
-    );
+        length: inputFieldLength,
+        defaultPinTheme: defaultPinTheme,
+        focusedPinTheme: focusedPinTheme,
+        submittedPinTheme: submittedPinTheme,
+        // validator: (s) {
+        //   return s == '1234' ? null : 'Pin is incorrect';
+        // },
+        pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
+        showCursor: true,
+        onCompleted: (pin) {
+          callBack(pin);
+        });
   }
 
   static Widget inputField(
@@ -122,7 +125,8 @@ class CommonWidgets {
       decoration: BoxDecoration(
           borderRadius:
               BorderRadius.circular(SizeConstants.textFieldCardBorderRadius),
-          border: Border.all(width: 0.5, color: ThemeConfiguration.borderColor)),
+          border:
+              Border.all(width: 0.5, color: ThemeConfiguration.borderColor)),
       alignment: Alignment.center,
       child: Padding(
         padding: const EdgeInsets.only(
@@ -131,7 +135,8 @@ class CommonWidgets {
         ),
         child: TextFormField(
           controller: textFieldController,
-          style: ThemeConfiguration.hintTextStyle(),
+          style: ThemeConfiguration.commonTextStyle(
+              15.0, FontWeight.w500, ThemeConfiguration.commonAppBarTitleColor),
           keyboardType: textInputType,
           cursorColor: ThemeConfiguration.descriptiveColor,
           decoration: InputDecoration(
@@ -159,7 +164,8 @@ class CommonWidgets {
       decoration: BoxDecoration(
           borderRadius:
               BorderRadius.circular(SizeConstants.mainContainerContentPadding),
-          border: Border.all(width: 0.5, color: ThemeConfiguration.borderColor)),
+          border:
+              Border.all(width: 0.5, color: ThemeConfiguration.borderColor)),
       alignment: Alignment.center,
       child: Padding(
         padding:
@@ -167,7 +173,8 @@ class CommonWidgets {
         child: SizedBox.expand(
           child: TextFormField(
             controller: textFieldController,
-            style: ThemeConfiguration.hintTextStyle(),
+            style: ThemeConfiguration.commonTextStyle(
+                15.0, FontWeight.w500, ThemeConfiguration.commonAppBarTitleColor),
             keyboardType: textInputType,
             cursorColor: ThemeConfiguration.descriptiveColor,
             maxLines: 20,
@@ -191,7 +198,8 @@ class CommonWidgets {
   static Widget mainBotton(
       {required String title,
       required BuildContext context,
-      required Function onPressed}) {
+      required Function onPressed,
+      buttonColor}) {
     return InkWell(
       onTap: () {
         onPressed();
@@ -202,7 +210,7 @@ class CommonWidgets {
           decoration: BoxDecoration(
             borderRadius:
                 BorderRadius.circular(SizeConstants.textFieldCardBorderRadius),
-            color: ThemeConfiguration.buttonColor,
+            color: buttonColor ?? ThemeConfiguration.buttonColor,
           ),
           alignment: Alignment.center,
           child: Text(

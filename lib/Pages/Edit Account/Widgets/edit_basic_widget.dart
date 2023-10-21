@@ -4,7 +4,7 @@ import 'package:dating_app/Configurations/theme_configuration.dart';
 import 'package:dating_app/Utilities/image_constants.dart';
 import 'package:dating_app/Utilities/size_constants.dart';
 import 'package:dating_app/Utilities/string_constants.dart';
-import 'package:dating_app/common_widgets/common_app_bar.dart';
+import 'package:dating_app/CommonWidgets/common_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class EditBasicWidget extends StatefulWidget {

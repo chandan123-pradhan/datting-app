@@ -1,3 +1,4 @@
+import 'package:dating_app/Helper/navigation_helper.dart';
 import 'package:dating_app/Pages/Register/View/register_view.dart';
 import 'package:dating_app/Utilities/common_widgets.dart';
 import 'package:dating_app/Utilities/size_constants.dart';
@@ -31,14 +32,9 @@ class LoginBottomWidget extends StatelessWidget {
           linkText: StringConstants.signup,
           text: StringConstants.dontHaveAnAccount,
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return const RegisterView();
-                },
-              ),
-            );
+            Future.delayed(Duration.zero, () {
+              Navigator.pushNamed(context, NavigationHelper.register);
+            });
           })
     ],
       ),

@@ -6,7 +6,7 @@ import 'package:dating_app/Utilities/common_widgets.dart';
 import 'package:dating_app/Utilities/image_constants.dart';
 import 'package:dating_app/Utilities/size_constants.dart';
 import 'package:dating_app/Utilities/string_constants.dart';
-import 'package:dating_app/common_widgets/common_app_bar.dart';
+import 'package:dating_app/CommonWidgets/common_app_bar.dart';
 import 'package:dating_app/screens/account/views/button_view.dart';
 import 'package:dating_app/Pages/Edit%20Account/Widgets/edit_intrests_widget.dart';
 import 'package:flutter/material.dart';

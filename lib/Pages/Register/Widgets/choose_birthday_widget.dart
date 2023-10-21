@@ -12,26 +12,35 @@ class ChooseBirthdayWidget extends StatefulWidget {
   int? selectedDaysValue;
   int? selectedMonthValue;
   String? selectedYearValue;
+  Function(int)? isChangedDay;
+  Function(int)? isChangedMonth;
+  Function(String)? isChangedYear;
   List<String>? yearList;
-  ChooseBirthdayWidget(
-      {super.key,
-      required this.selectedDaysValue,
-      required this.selectedMonthValue,
-      required this.selectedYearValue,
-      required this.yearList});
+  ChooseBirthdayWidget({
+    super.key,
+    required this.selectedDaysValue,
+    required this.selectedMonthValue,
+    required this.selectedYearValue,
+    required this.yearList,
+    required this.isChangedDay,
+    required this.isChangedMonth,
+    required this.isChangedYear,
+  });
 
   @override
   State<ChooseBirthdayWidget> createState() => _ChooseBirthdayWidgetState();
 }
 
 class _ChooseBirthdayWidgetState extends State<ChooseBirthdayWidget> {
-  var selectedDays;
-  var selectedMonths;
-  var selectedYear;
+  int? selectedDays;
+  int? selectedMonths;
+  String? selectedYear;
   @override
   void initState() {
     super.initState();
     selectedDays = widget.selectedDaysValue;
+    selectedMonths = widget.selectedMonthValue;
+    selectedYear = widget.selectedYearValue;
   }
 
   Widget build(BuildContext context) {
@@ -73,9 +82,7 @@ class _ChooseBirthdayWidgetState extends State<ChooseBirthdayWidget> {
                     );
                   }),
                   onChanged: (newValue) {
-                    setState(() {
-                      selectedDays = newValue!;
-                    });
+                    widget.isChangedDay!(newValue!);
                   },
                 ),
               ),
@@ -100,9 +107,7 @@ class _ChooseBirthdayWidgetState extends State<ChooseBirthdayWidget> {
                     );
                   }),
                   onChanged: (newValue) {
-                    setState(() {
-                      selectedMonths = newValue!;
-                    });
+                    widget.isChangedMonth!(newValue!);
                   },
                 ),
               ),
@@ -116,10 +121,9 @@ class _ChooseBirthdayWidgetState extends State<ChooseBirthdayWidget> {
                         width: 0.5,
                         color: ThemeConfiguration.primaryLightColor)),
                 alignment: Alignment.center,
-                child: SizedBox(  height: SizeConstants.buttonHeight,
-                
+                child: SizedBox(
+                  height: SizeConstants.buttonHeight,
                   child: DropdownButton<String>(
-                    
                     underline: Container(),
                     value: selectedYear,
                     hint: Text('YEAR'),
@@ -131,9 +135,7 @@ class _ChooseBirthdayWidgetState extends State<ChooseBirthdayWidget> {
                       );
                     }).toList(),
                     onChanged: (newValue) {
-                      setState(() {
-                        selectedYear = newValue!;
-                      });
+                      widget.isChangedYear!(newValue!);
                     },
                   ),
                 ),

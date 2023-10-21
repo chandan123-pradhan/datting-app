@@ -8,10 +8,16 @@ import 'package:timer_count_down/timer_count_down.dart';
 class OtpHeaderWidget extends StatefulWidget {
   const OtpHeaderWidget({
     super.key,
-    required this.mobileNumberController,
+    required this.mobileNumber,
+    required this.callBack,
+    required this.updateTimerActiveCallback,
+    required this.timerActive,
   });
 
-  final TextEditingController mobileNumberController;
+  final String mobileNumber;
+  final Function(String) callBack;
+  final Function(bool) updateTimerActiveCallback;
+  final bool timerActive;
 
   @override
   State<OtpHeaderWidget> createState() => _OtpHeaderWidgetState();
@@ -20,7 +26,6 @@ class OtpHeaderWidget extends StatefulWidget {
 class _OtpHeaderWidgetState extends State<OtpHeaderWidget> {
   @override
   Widget build(BuildContext context) {
-    bool? timerEnd = false;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -42,7 +47,7 @@ class _OtpHeaderWidgetState extends State<OtpHeaderWidget> {
               style: ThemeConfiguration.subHeadingTextStyle(),
             ),
             Text(
-              "999999XXXX",
+              widget.mobileNumber.toString(),
               style: ThemeConfiguration.subHeadingTextStyle(),
             ),
           ],
@@ -54,34 +59,27 @@ class _OtpHeaderWidgetState extends State<OtpHeaderWidget> {
               StringConstants.otpSubtitle2,
               style: ThemeConfiguration.subHeadingTextStyle(),
             ),
-            timerEnd == true
-                ? InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text(
-                      "Resend Otp",
-                      style: ThemeConfiguration.subHeadingTextStyle(),
-                    ),
-                  )
-                : Countdown(
-                    seconds: 60,
-                    build: (BuildContext context, double time) =>
-                        Text('00:${time.toStringAsFixed(0)}'),
-                    interval: const Duration(seconds: 1),
-                    onFinished: () {
-                      setState(() {
-                        timerEnd = true;
-                      });
-                      print('Timer is done!');
-                    },
-                  ),
+            Countdown(
+              seconds: widget.timerActive ? 60 : 0,
+              build: (BuildContext context, double time) {
+                if (widget.timerActive) {
+                  return Text('00:${time.toStringAsFixed(0)}');
+                } else {
+                  return const Text('Resend');
+                }
+              },
+              interval: const Duration(seconds: 1),
+              onFinished: (timer) {
+                widget.updateTimerActiveCallback(false);
+              },
+
+            ),
           ],
         ),
         const SizedBox(
           height: SizeConstants.bigPadding,
         ),
-        if (timerEnd == true)
+        if (widget.timerActive == false)
           InkWell(
             onTap: () {
               Navigator.pop(context);
@@ -93,7 +91,11 @@ class _OtpHeaderWidgetState extends State<OtpHeaderWidget> {
           ),
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-          child: CommonWidgets.otpTextField(inputFieldLength: 4),
+          child: CommonWidgets.otpTextField(
+              inputFieldLength: 4,
+              callBack: (pin) {
+                widget.callBack(pin);
+              }),
         ),
       ],
     );

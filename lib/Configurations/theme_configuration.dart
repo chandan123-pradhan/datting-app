@@ -22,6 +22,8 @@ class ThemeConfiguration {
   static const Color border2Color = Color(0xffA08595);
   static const Color coinCardBGColor = Color(0xffCDB1C4);
   static const Color darkTextColor = Color(0xff704860);
+  static final Color errorColor = Colors.red.shade800;
+  static final Color successColor = Colors.green.shade800;
 
   ///Font
   static const String mainFont = "Nunito";

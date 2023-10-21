@@ -21,8 +21,8 @@ class RegisterBodyWidget extends StatelessWidget {
         padding: const EdgeInsets.all(SizeConstants.mainPagePadding),
         child: Column(
           children: [
-            LoginHeaderWidget(mobileNumberController: mobileNumberController),
-            LoginBottomWidget(onTapLogin: onTapLogin)
+            LoginHeaderWidget(mobileNumberController: mobileNumberController,isFrom: "signup",),
+            // LoginBottomWidget(onTapLogin: onTapLogin)
           ],
         ),
       ),

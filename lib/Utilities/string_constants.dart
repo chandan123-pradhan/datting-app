@@ -3,13 +3,15 @@ class StringConstants {
 
   //Login
   static const String login = "Login";
-  static const String loginSubHeading = "Enter your phone number to login";
+  static const String loginSubHeading = "Enter your phone number to Login";
   static const String dontHaveAnAccount = "Don't have an account?";
   static const String signup = "Sign Up";
   static const String phoneNumberHint = "Phone Number";
   static const String requiredValidationMsg = "Required";
-
+  static const String phoneNumberRequiredValidationMsg = "Enter Phone Number First!";
+  static const String otpRequiredValidationMsg = "Enter Otp First!";
   //Register
+  static const String signupSubHeading = "Enter your phone number to Signup";
   static const String whatIsYourName = "What is your full name?";
   static const String fullName = "Full Name";
   static const String fullNameValidMsg = "Enter your full name";
@@ -23,8 +25,10 @@ class StringConstants {
   static const String uploadYourphotos = "Upload your photos";
   static const String aboutYourSelf = "About your self...";
   static const String aboutYourSelfHint = "Write here...";
+  static const String aboutYourSelfValidMsg = "Write Something About YourSelf!";
   static const String jobDescriptions= "Job Description...";
   static const String jobDescriptionsHint = "Write here...";
+  static const String jobDescriptionsValidMsg = "Write Something About Your Profession!";
 
   //Message
   static const String messages = "Messages";

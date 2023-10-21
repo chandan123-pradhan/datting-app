@@ -1,13 +1,14 @@
+import 'dart:developer';
+
 import 'package:dating_app/Configurations/theme_configuration.dart';
+import 'package:dating_app/Helper/navigation_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import 'Pages/Login/View/login_view.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: Colors.transparent, // transparent status bar
+    statusBarColor: Colors.transparent,
   ));
   runApp(const MyApp());
 }
@@ -15,19 +16,17 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Demo',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          fontFamily: ThemeConfiguration.mainFont,
-        ),
-        home:    const LoginView()
-        );
+      title: 'Dating',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        fontFamily: ThemeConfiguration.mainFont,
+      ),
+      onGenerateRoute: NavigationHelper.generateRoute,
+      initialRoute: NavigationHelper.login,
+    );
   }
-
-
 }
