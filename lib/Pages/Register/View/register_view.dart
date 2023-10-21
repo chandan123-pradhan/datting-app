@@ -425,7 +425,7 @@ class _RegisterViewState extends State<RegisterView> {
             height: SizeConstants.mediumPadding,
           ),
           LinearPercentIndicator(
-            percent: currentstep / 7,
+            percent: currentstep / 10,
             backgroundColor: ThemeConfiguration.primaryColor.withOpacity(0.2),
             progressColor: ThemeConfiguration.primaryColor,
             padding: EdgeInsets.zero,

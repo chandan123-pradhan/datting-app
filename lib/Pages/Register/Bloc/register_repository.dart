@@ -12,6 +12,8 @@ abstract class RegisterRepository {
   Future<UserDataModel?> registerGender({String? gender});
   Future<UserDataModel?> registerAbout({String? about});
   Future<UserDataModel?> registerAboutJob({String? job});
+  Future<UserDataModel?> getInterestList();
+  Future<UserDataModel?> registerInterest({List? interest});
 }
 
 class RegisterRepositoryImp extends RegisterRepository {
@@ -117,5 +119,36 @@ class RegisterRepositoryImp extends RegisterRepository {
     }
     return userDataModel;
   }
+
+
+  @override
+  Future<UserDataModel?> getInterestList() async {
+    UserDataModel? userDataModel;
+    try {
+      return userDataModel =
+      await ApiProvider().getInterestList();
+    } catch (e, err) {
+      if (kDebugMode) {
+        print("$e \n $err");
+      }
+    }
+    return userDataModel;
+  }
+
+
+  @override
+  Future<UserDataModel?> registerInterest({List? interest}) async {
+    UserDataModel? userDataModel;
+    try {
+      return userDataModel =
+      await ApiProvider().registerInterest(interest: interest);
+    } catch (e, err) {
+      if (kDebugMode) {
+        print("$e \n $err");
+      }
+    }
+    return userDataModel;
+  }
+
 
 }

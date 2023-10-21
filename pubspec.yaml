@@ -20,10 +20,10 @@ dependencies:
   image_picker: ^1.0.4
   percent_indicator: ^4.2.3
   permission_handler: ^11.0.1
-  pinput: ^3.0.1
+  pinput:
   timer_count_down:
-  fluttertoast: ^8.2.2
-  http: ^1.1.0
+  fluttertoast:
+  http:
   shared_preferences:
 
 dev_dependencies:
