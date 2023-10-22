@@ -490,8 +490,8 @@ Future<UserDataModel?> getUserProfile({List? interest}) async {
 
   ///Cms
 
-  Future<UserDataModel?> getCmsData(String? apiEndPoint) async {
-    UserDataModel userDataModel;
+  Future<RegisterMobileNumberModel?> getCmsData({String? apiEndPoint}) async {
+    RegisterMobileNumberModel userDataModel;
     try {
       var  authToken = await SharedPreferencesHelper.getToken();
       final Map<String, String> headers = {
@@ -510,7 +510,7 @@ Future<UserDataModel?> getUserProfile({List? interest}) async {
         print('Response body: ${response.body}');
       }
       final Map<String, dynamic> jsonMap = json.decode(response.body);
-      userDataModel = UserDataModel.fromJson(jsonMap);
+      userDataModel = RegisterMobileNumberModel.fromJson(jsonMap);
       return userDataModel;
     } catch (error, stacktrace) {
       if (kDebugMode) {

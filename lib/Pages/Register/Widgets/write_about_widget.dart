@@ -10,27 +10,29 @@ class WriteAboutWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(
-          height: SizeConstants.mediumPadding,
-        ),
-        Text(
-          StringConstants.aboutYourSelf,
-          style: ThemeConfiguration.registerHeadingTextStyle(),
-        ),
-        const SizedBox(
-          height: SizeConstants.bigPadding,
-        ),
-        Padding(
-          padding: const EdgeInsets.all(SizeConstants.mainPagePadding),
-          child: CommonWidgets.bigInputField(
-              textInputType: TextInputType.name,
-              hintText: StringConstants.aboutYourSelfHint,
-              context: context,
-              textFieldController: aboutController),
-        ),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          const SizedBox(
+            height: SizeConstants.mediumPadding,
+          ),
+          Text(
+            StringConstants.aboutYourSelf,
+            style: ThemeConfiguration.registerHeadingTextStyle(),
+          ),
+          const SizedBox(
+            height: SizeConstants.bigPadding,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(SizeConstants.mainPagePadding),
+            child: CommonWidgets.bigInputField(
+                textInputType: TextInputType.name,
+                hintText: StringConstants.aboutYourSelfHint,
+                context: context,
+                textFieldController: aboutController),
+          ),
+        ],
+      ),
     );
   }
 }

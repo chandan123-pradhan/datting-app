@@ -1,8 +1,8 @@
 class ApiUrls {
   static const baseUrl = "http://209.38.239.249:3081/app/";
-  static const loginEndPoint = "login";
+  static const loginEndPoint = "user/login";
   static const mobileNumber = "mobile_number";
-  static const otpVerifyEndPoint = "otp-verify";
+  static const otpVerifyEndPoint = "user/otp-verify";
   static const otp = "otp";
   static const registerNumberEndPoint = "user/register_step_one";
   static const registerStepOneEndPoint = "user/register_step_one";

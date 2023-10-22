@@ -1,6 +1,7 @@
 import 'package:dating_app/Configurations/theme_configuration.dart';
 import 'package:dating_app/Helper/loader_helper.dart';
 import 'package:dating_app/Helper/navigation_helper.dart';
+import 'package:dating_app/Helper/shared_preference_helper.dart';
 import 'package:dating_app/Helper/toast_helper.dart';
 import 'package:dating_app/Pages/Dashboard/View/dashboard_view.dart';
 import 'package:dating_app/Pages/Otp/Bloc/otp_bloc.dart';
@@ -53,6 +54,7 @@ class _OtpViewState extends State<OtpView> {
         isLoading = false;
         ToastHelper().showMsg(
             context: context, message: currentState.registerMobileNumberModel?.message ?? '');
+        SharedPreferencesHelper.setIsLogin(true);
         otpBloc?.emit(OtpEmptyState());
         Future.delayed(Duration.zero, () {
           Navigator.pushNamed(context, NavigationHelper.dashboard);

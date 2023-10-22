@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert'; // for encoding/decoding JSON
 
 class SharedPreferencesHelper {
+  static const String isLoginKey = 'isLogin';
   static const String isRegisterKey = 'isRegister';
   static const String tokenKey = 'token';
   static const String userDataKey = 'userData';
@@ -41,5 +42,17 @@ class SharedPreferencesHelper {
       return UserDataModel.fromJson(json.decode(userDataJson));
     }
     return null;
+  }
+
+
+  static Future<bool> setIsLogin(bool? isLogin) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.setBool(isLoginKey,isLogin??false);
+  }
+
+
+  static Future<bool> getIsLogin() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(isLoginKey) ?? false;
   }
 }

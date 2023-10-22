@@ -38,7 +38,6 @@ class _UploadPhotosWidgetState extends State<UploadPhotosWidget> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -77,15 +76,21 @@ class _UploadPhotosWidgetState extends State<UploadPhotosWidget> {
                               borderRadius: BorderRadius.circular(
                                   SizeConstants.mainPagePadding)),
                           child: imageUrls.isNotEmpty
-                              ? Image.file(
-                File(imageUrls[0]),
-                fit: BoxFit.cover,
-              )
-
+                              ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(
+                                      SizeConstants.mainPagePadding - 1),
+                                  child: Image.file(
+                                    File(imageUrls[0]),
+                                    fit: BoxFit.cover,
+                                  ))
                               : InkWell(
-                                   onTap: _pickImage,
-                                  child: Image.asset(ImageUtils.galleryAddIcon),
-                                ),
+                                  onTap: _pickImage,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(
+                                        SizeConstants.mainPagePadding),
+                                    child:
+                                        Image.asset(ImageUtils.galleryAddIcon),
+                                  )),
                         ),
                         Positioned(
                             bottom: SizeConstants.mainPagePadding,
@@ -95,6 +100,21 @@ class _UploadPhotosWidgetState extends State<UploadPhotosWidget> {
                               ImageUtils.changePhotoButton,
                               height: 32,
                               width: 127,
+                            )),
+                         Positioned(
+                            top: SizeConstants.smallPadding,
+                            right: SizeConstants.smallPadding +
+                                SizeConstants.mainPagePadding,
+                            child: InkWell(
+                              onTap: (){
+                                setState(() {
+                                  imageUrls.removeAt(0);
+                                });
+                              },
+                              child: const Icon(
+                                Icons.cancel,
+                                color: ThemeConfiguration.buttonColor,
+                              ),
                             ))
                       ],
                     ),
@@ -105,38 +125,68 @@ class _UploadPhotosWidgetState extends State<UploadPhotosWidget> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           for (var i = 3; i < 5; i++)
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: SizeConstants.mainPagePadding,
-                                  top: SizeConstants.mainPagePadding),
-                              child: Container(
-                                height:
-                                    MediaQuery.of(context).size.width / 3.8 -
+                            Stack(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: SizeConstants.mainPagePadding,
+                                      top: SizeConstants.mainPagePadding),
+                                  child: Container(
+                                    height: MediaQuery.of(context).size.width /
+                                            3.8 -
                                         SizeConstants.mainPagePadding,
-                                width: MediaQuery.of(context).size.width / 3.8 -
-                                    SizeConstants.mainPagePadding,
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: ThemeConfiguration
-                                            .primaryLightColor),
-                                    borderRadius: BorderRadius.circular(
-                                        SizeConstants.mainPagePadding)),
-                                child: imageUrls.length > i + 1
-                                    ?Image.file(
-                File(imageUrls[0+i+1]),
-                fit: BoxFit.cover,
-              )
-                                    : InkWell(
-                                        onTap: _pickImage,
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(35.0),
-                                          child: Image.asset(
-                                            ImageUtils.galleryAddIcon,
-                                            fit: BoxFit.fill,
+                                    width: MediaQuery.of(context).size.width /
+                                            3.8 -
+                                        SizeConstants.mainPagePadding,
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: ThemeConfiguration
+                                                .primaryLightColor),
+                                        borderRadius: BorderRadius.circular(
+                                            SizeConstants.mainPagePadding)),
+                                    child: imageUrls.length > i + 1
+                                        ? ClipRRect(
+                                            borderRadius: BorderRadius.circular(
+                                                SizeConstants.mainPagePadding -
+                                                    1),
+                                            child: Image.file(
+                                              File(imageUrls[0 + i + 1]),
+                                              fit: BoxFit.cover,
+                                            ))
+                                        : InkWell(
+                                            onTap: _pickImage,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(35.0),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        SizeConstants
+                                                            .mainPagePadding),
+                                                child: Image.asset(
+                                                  ImageUtils.galleryAddIcon,
+                                                  fit: BoxFit.fill,
+                                                ),
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                              ),
+                                  ),
+                                ),
+                                 Positioned(
+                                    top: SizeConstants.mainPagePadding +
+                                        SizeConstants.altraSmallPadding,
+                                    right: SizeConstants.altraSmallPadding,
+                                    child:InkWell(
+                                        onTap: (){
+                                          setState(() {
+                                            imageUrls.removeAt(i);
+                                          });
+                                        },
+                                        child: const Icon(
+                                      Icons.cancel,
+                                      color: ThemeConfiguration.buttonColor,
+                                    )))
+                              ],
                             ),
                         ],
                       ),
@@ -147,33 +197,55 @@ class _UploadPhotosWidgetState extends State<UploadPhotosWidget> {
               Column(
                 children: [
                   for (var i = 0; i < 3; i++)
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          bottom: SizeConstants.mainPagePadding, right: 0.0),
-                      child: Container(
-                        height: MediaQuery.of(context).size.width / 3.4,
-                        width: MediaQuery.of(context).size.width / 3.4,
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                color: ThemeConfiguration.primaryLightColor),
-                            borderRadius: BorderRadius.circular(
-                                SizeConstants.mainPagePadding)),
-                        child: imageUrls.length > i + 1
-                            ? Image.file(
-                File(imageUrls[0+i+1]),
-                fit: BoxFit.cover,
-              )
-                            : InkWell(
-                                onTap: _pickImage,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(40.0),
-                                  child: Image.asset(
-                                    ImageUtils.galleryAddIcon,
-                                    fit: BoxFit.fill,
+                    Stack(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              bottom: SizeConstants.mainPagePadding,
+                              right: 0.0),
+                          child: Container(
+                            height: MediaQuery.of(context).size.width / 3.4,
+                            width: MediaQuery.of(context).size.width / 3.4,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color:
+                                        ThemeConfiguration.primaryLightColor),
+                                borderRadius: BorderRadius.circular(
+                                    SizeConstants.mainPagePadding)),
+                            child: imageUrls.length > i + 1
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(
+                                        SizeConstants.mainPagePadding - 1),
+                                    child: Image.file(
+                                      File(imageUrls[0 + i + 1]),
+                                      fit: BoxFit.cover,
+                                    ))
+                                : InkWell(
+                                    onTap: _pickImage,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(40.0),
+                                      child: Image.asset(
+                                        ImageUtils.galleryAddIcon,
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                      ),
+                          ),
+                        ),
+                         Positioned(
+                            top: SizeConstants.altraSmallPadding,
+                            right: SizeConstants.altraSmallPadding,
+                            child: InkWell(
+                                onTap: (){
+                                  setState(() {
+                                    imageUrls.removeAt(i);
+                                  });
+                                },
+                                child:const Icon(
+                              Icons.cancel,
+                              color: ThemeConfiguration.buttonColor,
+                            )))
+                      ],
                     ),
                 ],
               ),

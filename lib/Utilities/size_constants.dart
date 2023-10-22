@@ -23,4 +23,5 @@ class SizeConstants {
   static const double matchProfileCardSize = 80.0;
   static const double walletIconSize = 45.0;
   static const double coinSize = 20.0;
+  static const double smallIconSize = 15.0;
 }

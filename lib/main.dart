@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         fontFamily: ThemeConfiguration.mainFont,
       ),
       onGenerateRoute: NavigationHelper.generateRoute,
-      initialRoute: NavigationHelper.login,
+      initialRoute: NavigationHelper.splash,
     );
   }
 }

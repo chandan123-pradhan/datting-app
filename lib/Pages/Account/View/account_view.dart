@@ -1,4 +1,9 @@
 import 'package:dating_app/Configurations/theme_configuration.dart';
+import 'package:dating_app/Helper/navigation_helper.dart';
+import 'package:dating_app/Helper/toast_helper.dart';
+import 'package:dating_app/Pages/Account/View/Bloc/account_bloc.dart';
+import 'package:dating_app/Pages/Account/View/Bloc/account_event.dart';
+import 'package:dating_app/Pages/Account/View/Bloc/account_state.dart';
 import 'package:dating_app/Pages/Account/Widgets/profile_body_card.dart';
 import 'package:dating_app/Pages/Account/Widgets/profile_card_widget.dart';
 import 'package:dating_app/Pages/Edit%20Account/Views/edit_account_view.dart';
@@ -6,7 +11,9 @@ import 'package:dating_app/Pages/Settings/View/setting_view.dart';
 import 'package:dating_app/Utilities/size_constants.dart';
 import 'package:dating_app/Utilities/string_constants.dart';
 import 'package:dating_app/CommonWidgets/common_app_bar.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AccountView extends StatefulWidget {
   const AccountView({super.key});
@@ -16,8 +23,44 @@ class AccountView extends StatefulWidget {
 }
 
 class _AccountViewState extends State<AccountView> {
+  AccountBloc? accountBloc;
+  bool isLoading = false;
+
+  @override
+  void initState() {
+    accountBloc = context.read<AccountBloc>();
+    accountBloc?.add(GetAccountData());
+    super.initState();
+  }
+  
   @override
   Widget build(BuildContext context) {
+    return _buildUi();
+  }
+
+  _buildUi() {
+    return BlocBuilder<AccountBloc, AccountState>(builder: (context, currentState) {
+      if (kDebugMode) {
+        print(currentState);
+      }
+      if (currentState is AccountInitialState) {
+      } else if (currentState is AccountLoadingState) {
+        isLoading = true;
+      } else if (currentState is AccountSuccessState) {
+        isLoading = false;
+        ToastHelper().showMsg(
+            context: context, message: currentState.userDataModel?.message ?? '');
+        accountBloc?.emit(AccountEmptyState());
+      } else if (currentState is AccountErrorState) {
+        isLoading = false;
+        ToastHelper()
+            .showErrorMsg(context: context, message: currentState.errorMessage);
+      }
+      return _buildMainUi();
+    });
+  }
+
+  _buildMainUi(){
     return Scaffold(
         backgroundColor: ThemeConfiguration.scaffoldBgColor,
         appBar: PreferredSize(
@@ -32,11 +75,9 @@ class _AccountViewState extends State<AccountView> {
               );
             },
             onSetting: () {
-                 Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const SettingsView()),
-              );
+              Future.delayed(Duration.zero, () {
+                Navigator.pushNamed(context, NavigationHelper.setting);
+              });
             },
             editShow: true,
             settingShow: true,
@@ -46,13 +87,13 @@ class _AccountViewState extends State<AccountView> {
           child: Padding(
             padding: const EdgeInsets.all(SizeConstants.mainPagePadding),
             child: Column(children: [
-               ProfileCardWidget(),
-               SizedBox(height: SizeConstants.maximumPadding),
-               ProfileBodyCard(
+              ProfileCardWidget(),
+              SizedBox(height: SizeConstants.maximumPadding),
+              ProfileBodyCard(
                 isFromEdit: false,
               ),
-            
-               SizedBox(
+
+              SizedBox(
                 height: SizeConstants.maximumPadding +
                     SizeConstants.maximumPadding +
                     SizeConstants.maximumPadding +

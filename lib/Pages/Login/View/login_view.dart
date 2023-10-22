@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:dating_app/Configurations/theme_configuration.dart';
 import 'package:dating_app/Helper/loader_helper.dart';
 import 'package:dating_app/Helper/navigation_helper.dart';
+import 'package:dating_app/Helper/shared_preference_helper.dart';
 import 'package:dating_app/Helper/toast_helper.dart';
 import 'package:dating_app/Models/base_model.dart';
 import 'package:dating_app/Pages/Login/Bloc/login_bloc.dart';
@@ -51,7 +52,7 @@ class _LoginViewState extends State<LoginView> {
         isLoading = false;
         ToastHelper().showMsg(
             context: context, message: currentState.baseModel?.message ?? '');
-        loginBloc?.emit(LoginEmptyState());
+       loginBloc?.emit(LoginEmptyState());
         Future.delayed(Duration.zero, () {
           Navigator.pushNamed(context, NavigationHelper.otp, arguments: mobileNumberController.text);
         });

@@ -82,6 +82,12 @@ class StringConstants {
   static const String notifications =
       "Notifications";
   static const String notificationSettingSubTitle = "Allow notifications on your device";
+  static const String logoutDialogTitle = "Confirm LogOut";
+  static const String logoutDialogSubTitle = "Are you sure? You want to LogOut!";
+  static const String deleteAccountDialogTitle = "Delete Account";
+  static const String deleteAccountDialogSubTitle = "Are you sure? You want to Delete Your Account!";
+  static const String yes = "Yes";
+  static const String cancel = "Cancel";
 
 
 

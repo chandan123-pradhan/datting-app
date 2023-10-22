@@ -1,4 +1,7 @@
 import 'package:dating_app/Configurations/theme_configuration.dart';
+import 'package:dating_app/Helper/navigation_helper.dart';
+import 'package:dating_app/Pages/Account/View/Bloc/account_bloc.dart';
+import 'package:dating_app/Pages/Account/View/Bloc/account_repository.dart';
 import 'package:dating_app/Pages/Account/View/account_view.dart';
 import 'package:dating_app/Pages/Dashboard/Widgets/dashboard_widgets.dart';
 import 'package:dating_app/Pages/Map/View/map_view.dart';
@@ -8,6 +11,7 @@ import 'package:dating_app/Utilities/image_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../InterestedInYou/View/interested_in_you_view.dart';
 
@@ -22,7 +26,10 @@ class _DashboardViewState extends State<DashboardView> {
   int currentIndex = 0;
 
   List<Widget> pages = [
-    AccountView(),
+    BlocProvider<AccountBloc>(
+        create: (context) =>
+            AccountBloc(repository: AccountRepositoryImp()),
+        child: const AccountView()),
     InterestedInYouView(),
     MapView(),
     YourMatchesView(),

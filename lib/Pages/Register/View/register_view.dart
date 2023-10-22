@@ -193,7 +193,7 @@ class _RegisterViewState extends State<RegisterView> {
               SizeConstants.mainPagePadding, SizeConstants.mainPagePadding),
           child: Column(
             children: [
-              Row(
+             Row(
                 children: [
                   CommonWidgets.backBottonWidget(onTap: () {
                     if (currentstep == 1) {
@@ -205,94 +205,95 @@ class _RegisterViewState extends State<RegisterView> {
                   }),
                 ],
               ),
-              const Spacer(),
-              Visibility(
-                visible: currentstep == 1,
-                child: RegisterBodyWidget(
-                  mobileNumberController: mobileNumberController,
-                  onTapLogin: () {
-                    if (mobileNumberController.text.isEmpty) {
-                      ToastHelper().showErrorMsg(
-                          context: context,
-                          message:
-                              StringConstants.phoneNumberRequiredValidationMsg);
-                    } else {
-                      if (kDebugMode) {
-                        print(mobileNumberController.text);
+                const Spacer(),
+                Visibility(
+                  visible: currentstep == 1,
+                  child: RegisterBodyWidget(
+                    mobileNumberController: mobileNumberController,
+                    onTapLogin: () {
+                      if (mobileNumberController.text.isEmpty) {
+                        ToastHelper().showErrorMsg(
+                            context: context,
+                            message:
+                            StringConstants.phoneNumberRequiredValidationMsg);
+                      } else {
+                        if (kDebugMode) {
+                          print(mobileNumberController.text);
+                        }
+                        registerBloc?.add(OtpRequestEvent(
+                            int.tryParse(mobileNumberController.text)));
                       }
-                      registerBloc?.add(OtpRequestEvent(
-                          int.tryParse(mobileNumberController.text)));
-                    }
-                  },
+                    },
+                  ),
                 ),
-              ),
-              Visibility(
-                visible: currentstep == 2,
-                child: OtpHeaderWidget(
-                  mobileNumber: mobileNumberController.text.toString(),
-                  callBack: (pin) {
-                    setState(() {
-                      otp = int.tryParse(pin);
-                    });
-                  },
-                  updateTimerActiveCallback: (bool isActive) {
-                    setState(() {
-                      timerActive = isActive;
-                    });
-                  },
-                  timerActive: timerActive,
-                ),
-              ),
-              Visibility(
-                  visible: currentstep == 3,
-                  child: RegisterInfoWidget(
-                      fullNameController: fullNameController)),
-              Visibility(
-                  visible: currentstep == 4,
-                  child: ChooseBirthdayWidget(
-                    selectedDaysValue: selectedDays,
-                    selectedMonthValue: selectedMonth,
-                    selectedYearValue: selectedYear,
-                    yearList: yearList,
-                    isChangedDay: (newValue) {
+                Visibility(
+                  visible: currentstep == 2,
+                  child: OtpHeaderWidget(
+                    mobileNumber: mobileNumberController.text.toString(),
+                    callBack: (pin) {
                       setState(() {
-                        selectedDays = newValue;
+                        otp = int.tryParse(pin);
                       });
                     },
-                    isChangedMonth: (newValue) {
+                    updateTimerActiveCallback: (bool isActive) {
                       setState(() {
-                        selectedMonth = newValue;
+                        timerActive = isActive;
                       });
                     },
-                    isChangedYear: (newValue) {
-                      setState(() {
-                        selectedYear = newValue;
-                      });
-                    },
-                  )),
-              Visibility(
-                  visible: currentstep == 5,
-                  child: ChooseGenderWidget(
-                    selectedGenderValue: selectedGender,
-                  )),
-              Visibility(
-                visible: currentstep == 6,
-                child: WriteAboutWidget(
-                  aboutController: aboutController,
+                    timerActive: timerActive,
+                  ),
                 ),
-              ),
-              Visibility(
-                visible: currentstep == 7,
-                child: JobDescriptionWidget(
-                  jobDescriptionsController: jobDescriptionsController,
+                Visibility(
+                    visible: currentstep == 3,
+                    child: RegisterInfoWidget(
+                        fullNameController: fullNameController)),
+                Visibility(
+                    visible: currentstep == 4,
+                    child: ChooseBirthdayWidget(
+                      selectedDaysValue: selectedDays,
+                      selectedMonthValue: selectedMonth,
+                      selectedYearValue: selectedYear,
+                      yearList: yearList,
+                      isChangedDay: (newValue) {
+                        setState(() {
+                          selectedDays = newValue;
+                        });
+                      },
+                      isChangedMonth: (newValue) {
+                        setState(() {
+                          selectedMonth = newValue;
+                        });
+                      },
+                      isChangedYear: (newValue) {
+                        setState(() {
+                          selectedYear = newValue;
+                        });
+                      },
+                    )),
+                Visibility(
+                    visible: currentstep == 5,
+                    child: ChooseGenderWidget(
+                      selectedGenderValue: selectedGender,
+                    )),
+                Visibility(
+                  visible: currentstep == 6,
+                  child: WriteAboutWidget(
+                    aboutController: aboutController,
+                  ),
                 ),
-              ),
-              Visibility(
-                  visible: currentstep == 8,
-                  child: const ChooseInterestsWidget()),
-              Visibility(
-                  visible: currentstep == 9, child: const UploadPhotosWidget()),
-              _bottomView(),
+                Visibility(
+                  visible: currentstep == 7,
+                  child: JobDescriptionWidget(
+                    jobDescriptionsController: jobDescriptionsController,
+                  ),
+                ),
+                Visibility(
+                    visible: currentstep == 8,
+                    child: const ChooseInterestsWidget()),
+                Visibility(
+                    visible: currentstep == 9, child: const UploadPhotosWidget()),
+
+               _bottomView(),
             ],
           ),
         ),
@@ -312,7 +313,7 @@ class _RegisterViewState extends State<RegisterView> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CommonWidgets.showPageNumberWidget(
-                  linkText: '/10', text: '$currentstep', onTap: () {}),
+                  linkText: '/8', text: '$currentstep', onTap: () {}),
               InkWell(
                 onTap: () {
                   if (currentstep == 1) {
@@ -394,21 +395,23 @@ class _RegisterViewState extends State<RegisterView> {
                       // registerBloc?.add(RegisterAboutEvent(
                       //     jobDescriptionsController.text.toString()));
                     }
+                  }else if (currentstep == 8) {
+                    // if (jobDescriptionsController.text.isEmpty) {
+                    //   ToastHelper().showErrorMsg(
+                    //       context: context,
+                    //       message:
+                    //       StringConstants.jobDescriptionsValidMsg);
+                    // } else {
+                    //   if (kDebugMode) {
+                    //     print(jobDescriptionsController.text);
+                    //   }
+                      currentstep++;
+                      // registerBloc?.add(RegisterAboutEvent(
+                      //     jobDescriptionsController.text.toString()));
+                    // }
+
                   }else {
-                    setState(() {
-                      if (currentstep != 10) {
-                        if (currentstep == 2) {}
-                      } else {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) {
-                        //       return const DashboardView();
-                        //     },
-                        //   ),
-                        // );
-                      }
-                    });
+
                   }
                 },
                 child: isLoading == true
@@ -425,7 +428,7 @@ class _RegisterViewState extends State<RegisterView> {
             height: SizeConstants.mediumPadding,
           ),
           LinearPercentIndicator(
-            percent: currentstep / 10,
+            percent: currentstep / 8,
             backgroundColor: ThemeConfiguration.primaryColor.withOpacity(0.2),
             progressColor: ThemeConfiguration.primaryColor,
             padding: EdgeInsets.zero,

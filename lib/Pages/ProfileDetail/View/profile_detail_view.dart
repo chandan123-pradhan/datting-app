@@ -1,10 +1,18 @@
 import 'dart:io';
 
 import 'package:dating_app/Configurations/theme_configuration.dart';
+import 'package:dating_app/Helper/loader_helper.dart';
+import 'package:dating_app/Helper/navigation_helper.dart';
+import 'package:dating_app/Helper/toast_helper.dart';
+import 'package:dating_app/Pages/ProfileDetail/Bloc/profile_detail_bloc.dart';
+import 'package:dating_app/Pages/ProfileDetail/Bloc/profile_detail_event.dart';
+import 'package:dating_app/Pages/ProfileDetail/Bloc/profile_detail_state.dart';
 import 'package:dating_app/Utilities/image_constants.dart';
 import 'package:dating_app/Utilities/size_constants.dart';
 import 'package:dating_app/Utilities/string_constants.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileDetail extends StatefulWidget {
   const ProfileDetail({super.key});
@@ -27,153 +35,216 @@ class _ProfileDetailState extends State<ProfileDetail> {
     '🍀 Nature',
   ];
   List<File> images = [];
+
+
+  ProfileDetailBloc? profileDetailBloc;
+  bool isLoading = false;
+
+  @override
+  void initState() {
+    profileDetailBloc = context.read<ProfileDetailBloc>();
+    profileDetailBloc?.add(GetProfileDetailData());
+    super.initState();
+  }
+  
+  
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ThemeConfiguration.blackColor,
-      body: Stack(
-        children: [
-          NestedScrollView(
-            headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-              return <Widget>[
-                SliverAppBar(
-                  expandedHeight: MediaQuery.of(context).size.height / 2,
-                  pinned: true,
-                  snap: true,
-                  primary: true,
-                  floating: true,
-                  stretch: true,
-                  excludeHeaderSemantics: true,
-                  backgroundColor: ThemeConfiguration.primaryColor,
-                  elevation: 0,
-                  foregroundColor: ThemeConfiguration.commonAppBarBgColor,
-                  surfaceTintColor: ThemeConfiguration.primaryColor,
-                  flexibleSpace: FlexibleSpaceBar(
-                    background: Stack(
-                      children: [
-                        Container(
-                          decoration: const BoxDecoration(
-                              image: DecorationImage(
-                            image: AssetImage(
-                              ImageConstants.girlDummy,
+    return _buildUi();
+  }
+
+  _buildUi() {
+    return BlocBuilder<ProfileDetailBloc, ProfileDetailState>(builder: (context, currentState) {
+      if (kDebugMode) {
+        print(currentState);
+      }
+      if (currentState is ProfileDetailInitialState) {
+      } else if (currentState is ProfileDetailLoadingState) {
+        isLoading = true;
+      } else if (currentState is ProfileDetailSuccessState) {
+        isLoading = false;
+        ToastHelper().showMsg(
+            context: context, message: currentState.userDataModel?.message ?? '');
+        profileDetailBloc?.emit(ProfileDetailEmptyState());
+       } else if (currentState is ProfileDetailErrorState) {
+        isLoading = false;
+        ToastHelper()
+            .showErrorMsg(context: context, message: currentState.errorMessage);
+      }
+      return _buildMainUi();
+    });
+  }
+
+  _buildMainUi(){
+    return Stack(
+      children: [
+        Scaffold(
+          backgroundColor: ThemeConfiguration.blackColor,
+          body: Stack(
+            children: [
+              NestedScrollView(
+                headerSliverBuilder:
+                    (BuildContext context, bool innerBoxIsScrolled) {
+                  return <Widget>[
+                    SliverAppBar(
+                      expandedHeight: MediaQuery.of(context).size.height / 2,
+                      pinned: true,
+                      snap: true,
+                      primary: true,
+                      floating: true,
+                      stretch: true,
+                      excludeHeaderSemantics: true,
+                      backgroundColor: ThemeConfiguration.primaryColor,
+                      elevation: 0,
+                      foregroundColor: ThemeConfiguration.commonAppBarBgColor,
+                      surfaceTintColor: ThemeConfiguration.primaryColor,
+                      flexibleSpace: FlexibleSpaceBar(
+                        background: Stack(
+                          children: [
+                            Container(
+                              decoration: const BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage(
+                                      ImageConstants.girlDummy,
+                                    ),
+                                    fit: BoxFit.fill,
+                                  )),
                             ),
-                            fit: BoxFit.fill,
-                          )),
-                        ),
-                        Positioned(
-                          left: 0,
-                          right: 0,
-                          bottom: 0,
-                          top: 0,
-                          child: Image.asset(
-                            ImageConstants.profileCardBg,
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                        Padding(
-                            padding: const EdgeInsets.all(
-                                SizeConstants.mainContainerContentPadding +
+                            Positioned(
+                              left: 0,
+                              right: 0,
+                              bottom: 0,
+                              top: 0,
+                              child: Image.asset(
+                                ImageConstants.profileCardBg,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            Padding(
+                                padding: const EdgeInsets.all(
                                     SizeConstants.mainContainerContentPadding +
+                                        SizeConstants.mainContainerContentPadding +
+                                        SizeConstants.mainContainerContentPadding),
+                                child: Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Text(
+                                    'Jenny Cruz, 28',
+                                    style: ThemeConfiguration.commonTextStyle(
+                                      24.0,
+                                      FontWeight.w700,
+                                      ThemeConfiguration.commonAppBarBgColor,
+                                    ),
+                                  ),
+                                )),
+                            Padding(
+                                padding: const EdgeInsets.all(
                                     SizeConstants.mainContainerContentPadding),
-                            child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Text(
-                                'Jenny Cruz, 28',
-                                style: ThemeConfiguration.commonTextStyle(
-                                  24.0,
-                                  FontWeight.w700,
-                                  ThemeConfiguration.commonAppBarBgColor,
+                                child: Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Text(
+                                    'Navi Mumbai',
+                                    style: ThemeConfiguration.commonTextStyle(
+                                      16.0,
+                                      FontWeight.w700,
+                                      ThemeConfiguration.commonAppBarBgColor,
+                                    ),
+                                  ),
+                                )),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ];
+                },
+                body: SingleChildScrollView(
+                  child: Container(
+                      decoration: const BoxDecoration(
+                          color: ThemeConfiguration.scaffoldBgColor,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(
+                                  SizeConstants.textFieldCardBorderRadius),
+                              topRight: Radius.circular(
+                                  SizeConstants.textFieldCardBorderRadius))),
+                      child: Builder(builder: (context) {
+                        return Padding(
+                          padding: const EdgeInsets.all(SizeConstants.bigPadding),
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                _aboutView(),
+                                const SizedBox(
+                                  height: SizeConstants.maximumPadding,
                                 ),
-                              ),
-                            )),
-                        Padding(
-                            padding: const EdgeInsets.all(
-                                SizeConstants.mainContainerContentPadding),
-                            child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Text(
-                                'Navi Mumbai',
-                                style: ThemeConfiguration.commonTextStyle(
-                                  16.0,
-                                  FontWeight.w700,
-                                  ThemeConfiguration.commonAppBarBgColor,
+                                _interestView(),
+                                const SizedBox(
+                                  height: SizeConstants.maximumPadding,
                                 ),
-                              ),
-                            )),
-                             
-                      ],
+                                _myBasicView(),
+                                const SizedBox(
+                                  height: SizeConstants.maximumPadding,
+                                ),
+                                _photosView(),
+                                const SizedBox(
+                                  height: SizeConstants.genderContainerSize,
+                                ),
+                                const SizedBox(
+                                  height: SizeConstants.genderContainerSize,
+                                ),
+                              ]),
+                        );
+                      })),
+                ),
+              ),
+              Positioned(
+                bottom: 20,
+                left: MediaQuery.of(context).size.width / 3,
+                right: MediaQuery.of(context).size.width / 3,
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(
+                          SizeConstants.textFieldCardBorderRadius +
+                              SizeConstants.textFieldCardBorderRadius +
+                              SizeConstants.textFieldCardBorderRadius),
+                      color: ThemeConfiguration.scaffoldBgColor,
+                      boxShadow: [
+                        BoxShadow(
+                            spreadRadius: 1,
+                            color: ThemeConfiguration.primaryColor.withOpacity(0.3),
+                            offset: const Offset(0, 3),
+                            blurRadius: 10)
+                      ]),
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(SizeConstants.mediumPadding),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Image.asset(
+                            ImageConstants.heartCircle,
+                            height: SizeConstants.buttonHeight,
+                            width: SizeConstants.buttonHeight,
+                          ),
+                          const SizedBox(
+                            width: SizeConstants.mediumPadding,
+                          ),
+                          Image.asset(
+                            ImageConstants.crossCircle,
+                            height: SizeConstants.buttonHeight,
+                            width: SizeConstants.buttonHeight,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ];
-            },
-            body: SingleChildScrollView(
-              child: Container(
-                  decoration: const BoxDecoration(
-                      color: ThemeConfiguration.scaffoldBgColor,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(
-                              SizeConstants.textFieldCardBorderRadius),
-                          topRight: Radius.circular(
-                              SizeConstants.textFieldCardBorderRadius))),
-                  child: Builder(builder: (context) {
-                    return Padding(
-                      padding: const EdgeInsets.all(SizeConstants.bigPadding),
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            _aboutView(),
-                            const SizedBox(
-                              height: SizeConstants.maximumPadding,
-                            ),
-                            _interestView(),
-                            const SizedBox(
-                              height: SizeConstants.maximumPadding,
-                            ),
-                            _myBasicView(),
-                            const SizedBox(
-                              height: SizeConstants.maximumPadding,
-                            ),
-                            _photosView(),
-                            const SizedBox(
-                              height: SizeConstants.genderContainerSize,
-                            ),
-                            const SizedBox(
-                              height: SizeConstants.genderContainerSize,
-                            ),
-                          ]),
-                    );
-                  })),
-            ),
+              )
+            ],
           ),
-       Positioned(
-         bottom: 20,
-         left: MediaQuery.of(context).size.width/3,
-         right: MediaQuery.of(context).size.width/3,
-         child: Container(
-           decoration: BoxDecoration(borderRadius:BorderRadius.circular(SizeConstants.textFieldCardBorderRadius+SizeConstants.textFieldCardBorderRadius+SizeConstants.textFieldCardBorderRadius),
-           color: ThemeConfiguration.scaffoldBgColor,
-           boxShadow: [
-             BoxShadow(spreadRadius: 1,
-             color: ThemeConfiguration.primaryColor.withOpacity(0.3),
-             offset: const Offset(0, 3),
-             blurRadius: 10)
-           ]),
-         child: Center(
-           child: Padding(
-             padding: const EdgeInsets.all(SizeConstants.mediumPadding),
-             child: Row(
-               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-               children: [
-                 Image.asset(ImageConstants.heartCircle,height: SizeConstants.buttonHeight,width: SizeConstants.buttonHeight,),
-               const SizedBox(width: SizeConstants.mediumPadding,),
-                 Image.asset(ImageConstants.crossCircle,height: SizeConstants.buttonHeight,width: SizeConstants.buttonHeight,),
-
-               ],),
-           ),
-         ),),
-       ) ],
-      ),
+        ),
+        Visibility(
+          visible: isLoading == true,
+          child: LoaderHelper.pageLoader(),
+        )   ],
     );
   }
 
@@ -371,7 +442,7 @@ class MyBasicWidget extends StatelessWidget {
         ),
         Center(
           child: Wrap(
-            spacing:SizeConstants.mediumPadding,
+            spacing: SizeConstants.mediumPadding,
             children: basic.asMap().entries.map((entry) {
               int index = entry.key;
               String basic = entry.value;
