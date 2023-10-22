@@ -26,78 +26,82 @@ class OtpHeaderWidget extends StatefulWidget {
 class _OtpHeaderWidgetState extends State<OtpHeaderWidget> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const SizedBox(
-          height: SizeConstants.mediumPadding,
-        ),
-        Text(
-          StringConstants.otp,
-          style: ThemeConfiguration.headingTextStyle(),
-        ),
-        const SizedBox(
-          height: SizeConstants.mediumPadding,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              StringConstants.otpSubtitle1,
-              style: ThemeConfiguration.subHeadingTextStyle(),
-            ),
-            Text(
-              widget.mobileNumber.toString(),
-              style: ThemeConfiguration.subHeadingTextStyle(),
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              StringConstants.otpSubtitle2,
-              style: ThemeConfiguration.subHeadingTextStyle(),
-            ),
-            Countdown(
-              seconds: widget.timerActive ? 60 : 0,
-              build: (BuildContext context, double time) {
-                if (widget.timerActive) {
-                  return Text('00:${time.toStringAsFixed(0)}');
-                } else {
-                  return const Text('Resend');
-                }
-              },
-              interval: const Duration(seconds: 1),
-              onFinished: (timer) {
-                widget.updateTimerActiveCallback(false);
-              },
+    return Padding(
+      padding:const  EdgeInsets.symmetric(
 
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: SizeConstants.bigPadding,
-        ),
-        if (widget.timerActive == false)
-          InkWell(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Text(
-              "Resend Otp",
-              style: ThemeConfiguration.subHeadingTextStyle(),
-            ),
+          horizontal:  SizeConstants.mainPagePadding,),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SizedBox(
+            height: SizeConstants.mediumPadding,
           ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-          child: CommonWidgets.otpTextField(
-              inputFieldLength: 4,
-              callBack: (pin) {
-                widget.callBack(pin);
-              }),
-        ),
-      ],
+          Text(
+            StringConstants.otp,
+            style: ThemeConfiguration.headingTextStyle(),
+          ),
+          const SizedBox(
+            height: SizeConstants.mediumPadding,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                StringConstants.otpSubtitle1,
+                style: ThemeConfiguration.subHeadingTextStyle(),
+              ),
+              Text(
+                widget.mobileNumber.toString(),
+                style: ThemeConfiguration.subHeadingTextStyle(),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                StringConstants.otpSubtitle2,
+                style: ThemeConfiguration.subHeadingTextStyle(),
+              ),
+              Countdown(
+                seconds: widget.timerActive ? 60 : 0,
+                build: (BuildContext context, double time) {
+                  if (widget.timerActive) {
+                    return Text('00:${time.toStringAsFixed(0)}');
+                  } else {
+                    return const Text('Resend');
+                  }
+                },
+                interval: const Duration(seconds: 1),
+                onFinished: (timer) {
+                  widget.updateTimerActiveCallback(false);
+                },
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: SizeConstants.bigPadding,
+          ),
+          if (widget.timerActive == false)
+            InkWell(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Text(
+                "Resend Otp",
+                style: ThemeConfiguration.subHeadingTextStyle(),
+              ),
+            ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+            child: CommonWidgets.otpTextField(
+                inputFieldLength: 4,
+                callBack: (pin) {
+                  widget.callBack(pin);
+                }),
+          ),
+        ],
+      ),
     );
   }
 }

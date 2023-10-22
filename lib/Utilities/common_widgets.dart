@@ -5,6 +5,7 @@ import 'package:dating_app/Utilities/size_constants.dart';
 import 'package:dating_app/Utilities/string_constants.dart';
 import 'package:dating_app/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pinput/pinput.dart';
 
 class CommonWidgets {
@@ -68,7 +69,9 @@ class CommonWidgets {
                   hintText: StringConstants.phoneNumberHint,
                   fillColor: Colors.transparent,
                 ),
+                inputFormatters: [LengthLimitingTextInputFormatter(10)],
               ),
+
             ),
           ],
         ));

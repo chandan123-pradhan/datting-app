@@ -3,6 +3,7 @@ import 'package:dating_app/Models/userdata_model.dart';
 import 'package:dating_app/Pages/Register/Bloc/register_event.dart';
 import 'package:dating_app/Pages/Register/Bloc/register_repository.dart';
 import 'package:dating_app/Pages/Register/Bloc/register_state.dart';
+import 'package:dating_app/Pages/Register/Model/interest_response_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -128,6 +129,23 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
           emit(RegisterFullNameSuccessState(model!));
         } else {
           emit(RegisterErrorState(model?.message ?? ""));
+        }
+      } catch (error, _) {
+        if (kDebugMode) {
+          print(_.toString());
+        }
+        emit(RegisterErrorState(error.toString()));
+      }
+    }
+    if (event is GetInterestEvent) {
+      emit(RegisterLoadingState());
+      try {
+        InterestResponseModel? interestResponseModel =
+        await repository?.getInterestList();
+        if (interestResponseModel?.message == "Success") {
+          emit(GetInterestSuccessState(interestResponseModel!));
+        } else {
+          emit(RegisterErrorState(interestResponseModel?.message ?? ""));
         }
       } catch (error, _) {
         if (kDebugMode) {

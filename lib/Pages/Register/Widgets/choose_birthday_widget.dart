@@ -44,7 +44,9 @@ class _ChooseBirthdayWidgetState extends State<ChooseBirthdayWidget> {
   }
 
   Widget build(BuildContext context) {
-    return Column(children: [
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+        children: [
       const SizedBox(
         height: SizeConstants.mediumPadding,
       ),

@@ -1,3 +1,4 @@
+import 'package:dating_app/Pages/Register/Model/interest_response_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class RegisterEvent extends Equatable {}
@@ -55,6 +56,10 @@ class RegisterJobEvent extends RegisterEvent {
   List<Object?> get props => [aboutJob];
 }
 
+class GetInterestEvent extends RegisterEvent {
+  @override
+  List<Object?> get props => [];
+}
 
 class RegisterStepFourEvent extends RegisterEvent {
   @override

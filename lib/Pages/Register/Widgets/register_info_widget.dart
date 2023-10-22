@@ -10,27 +10,32 @@ class RegisterInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(
-          height: SizeConstants.mediumPadding,
-        ),
-        Text(
-          StringConstants.whatIsYourName,
-          style: ThemeConfiguration.registerHeadingTextStyle(),
-        ),
-        const SizedBox(
-          height: SizeConstants.bigPadding,
-        ),
-        Padding(
-          padding: const EdgeInsets.all(SizeConstants.mainPagePadding),
-          child: CommonWidgets.inputField(
-              textInputType: TextInputType.name,
-              hintText: StringConstants.fullName,
-              context: context,
-              textFieldController: fullNameController),
-        ),
-      ],
+    return Padding(
+      padding:const  EdgeInsets.symmetric(
+          horizontal:  SizeConstants.mainPagePadding,),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SizedBox(
+            height: SizeConstants.mediumPadding,
+          ),
+          Text(
+            StringConstants.whatIsYourName,
+            style: ThemeConfiguration.registerHeadingTextStyle(),
+          ),
+          const SizedBox(
+            height: SizeConstants.bigPadding,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(SizeConstants.mainPagePadding),
+            child: CommonWidgets.inputField(
+                textInputType: TextInputType.name,
+                hintText: StringConstants.fullName,
+                context: context,
+                textFieldController: fullNameController),
+          ),
+        ],
+      ),
     );
   }
 }

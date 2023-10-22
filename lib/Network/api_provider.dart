@@ -4,6 +4,7 @@ import 'package:dating_app/Models/base_model.dart';
 import 'package:dating_app/Models/register_mobilenumber_model.dart';
 import 'package:dating_app/Models/userdata_model.dart';
 import 'package:dating_app/Network/api_urls.dart';
+import 'package:dating_app/Pages/Register/Model/interest_response_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -317,8 +318,8 @@ class ApiProvider {
     }
   }
 
-  Future<UserDataModel?> getInterestList() async {
-    UserDataModel userDataModel;
+  Future<InterestResponseModel?> getInterestList() async {
+    InterestResponseModel interestResponseModel;
     try {
       var  authToken = await SharedPreferencesHelper.getToken();
       final Map<String, String> headers = {
@@ -328,7 +329,6 @@ class ApiProvider {
 
       dynamic response = await http.post(
         Uri.parse(ApiUrls.baseUrl + ApiUrls.getInterestList),
-
         headers: headers,
       );
 
@@ -338,8 +338,8 @@ class ApiProvider {
         print('Response body: ${response.body}');
       }
       final Map<String, dynamic> jsonMap = json.decode(response.body);
-      userDataModel = UserDataModel.fromJson(jsonMap);
-      return userDataModel;
+      interestResponseModel = InterestResponseModel?.fromJson(jsonMap);
+      return interestResponseModel;
     } catch (error, stacktrace) {
       if (kDebugMode) {
         print("Exception occurred: $error stackTrace: $stacktrace");

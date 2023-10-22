@@ -1,14 +1,14 @@
+import 'package:dating_app/CommonWidgets/common_app_bar.dart';
 import 'package:dating_app/Configurations/theme_configuration.dart';
 import 'package:dating_app/Helper/loader_helper.dart';
 import 'package:dating_app/Helper/shared_preference_helper.dart';
 import 'package:dating_app/Helper/toast_helper.dart';
 import 'package:dating_app/Models/userdata_model.dart';
-import 'package:dating_app/Pages/Dashboard/View/dashboard_view.dart';
-import 'package:dating_app/Pages/Login/Widgets/login_body_widget.dart';
 import 'package:dating_app/Pages/Otp/Widgets/otp_header_widget.dart';
 import 'package:dating_app/Pages/Register/Bloc/register_bloc.dart';
 import 'package:dating_app/Pages/Register/Bloc/register_event.dart';
 import 'package:dating_app/Pages/Register/Bloc/register_state.dart';
+import 'package:dating_app/Pages/Register/Model/interest_response_model.dart';
 import 'package:dating_app/Pages/Register/Widgets/choose_birthday_widget.dart';
 import 'package:dating_app/Pages/Register/Widgets/choose_gender_widget.dart';
 import 'package:dating_app/Pages/Register/Widgets/choose_interests_widget.dart';
@@ -108,6 +108,7 @@ class _RegisterViewState extends State<RegisterView> {
   ///Api
   RegisterBloc? registerBloc;
   bool isLoading = false;
+  InterestResponseModel? interestResponseModel;
 
   @override
   void initState() {
@@ -154,8 +155,6 @@ class _RegisterViewState extends State<RegisterView> {
         ToastHelper().showMsg(
             context: context,
             message: currentState.userDataModel?.message ?? '');
-        var authToken = SharedPreferencesHelper.getToken();
-        var isRegister = SharedPreferencesHelper.getIsRegister();
         SharedPreferencesHelper.saveUserData(
             userData: UserData(
                 firstName: currentState.userDataModel?.data?.firstName ?? '',
@@ -174,6 +173,20 @@ class _RegisterViewState extends State<RegisterView> {
                 createdAt: currentState.userDataModel?.data?.createdAt ?? '',
                 updatedAt: currentState.userDataModel?.data?.updatedAt ?? ''));
         registerBloc?.emit(RegisterEmptyState());
+      } else if (currentState is GetInterestSuccessState) {
+        isLoading = false;
+        interestResponseModel = currentState.interestResponseModel;
+        currentstep++;
+        // ToastHelper().showMsg(
+        //     context: context,
+        //     message: currentState.registerMobileNumberModel?.message ?? '');
+        // SharedPreferencesHelper.saveUserInformation(
+        //     isRegister:
+        //     currentState.registerMobileNumberModel?.data.isRegistered == 1
+        //         ? true
+        //         : false,
+        //     token: currentState.registerMobileNumberModel?.data.token ?? '');
+        // registerBloc?.emit(RegisterEmptyState());
       } else if (currentState is RegisterErrorState) {
         isLoading = false;
         ToastHelper()
@@ -187,136 +200,36 @@ class _RegisterViewState extends State<RegisterView> {
   _buildMainUi() {
     return Scaffold(
       backgroundColor: ThemeConfiguration.scaffoldBgColor,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(SizeConstants.mainPagePadding, 0.0,
-              SizeConstants.mainPagePadding, SizeConstants.mainPagePadding),
-          child: Column(
-            children: [
-             Row(
-                children: [
-                  CommonWidgets.backBottonWidget(onTap: () {
-                    if (currentstep == 1) {
-                      Navigator.pop(context);
-                    } else {
-                      currentstep--;
-                      setState(() {});
-                    }
-                  }),
-                ],
-              ),
-                const Spacer(),
-                Visibility(
-                  visible: currentstep == 1,
-                  child: RegisterBodyWidget(
-                    mobileNumberController: mobileNumberController,
-                    onTapLogin: () {
-                      if (mobileNumberController.text.isEmpty) {
-                        ToastHelper().showErrorMsg(
-                            context: context,
-                            message:
-                            StringConstants.phoneNumberRequiredValidationMsg);
-                      } else {
-                        if (kDebugMode) {
-                          print(mobileNumberController.text);
-                        }
-                        registerBloc?.add(OtpRequestEvent(
-                            int.tryParse(mobileNumberController.text)));
-                      }
-                    },
-                  ),
-                ),
-                Visibility(
-                  visible: currentstep == 2,
-                  child: OtpHeaderWidget(
-                    mobileNumber: mobileNumberController.text.toString(),
-                    callBack: (pin) {
-                      setState(() {
-                        otp = int.tryParse(pin);
-                      });
-                    },
-                    updateTimerActiveCallback: (bool isActive) {
-                      setState(() {
-                        timerActive = isActive;
-                      });
-                    },
-                    timerActive: timerActive,
-                  ),
-                ),
-                Visibility(
-                    visible: currentstep == 3,
-                    child: RegisterInfoWidget(
-                        fullNameController: fullNameController)),
-                Visibility(
-                    visible: currentstep == 4,
-                    child: ChooseBirthdayWidget(
-                      selectedDaysValue: selectedDays,
-                      selectedMonthValue: selectedMonth,
-                      selectedYearValue: selectedYear,
-                      yearList: yearList,
-                      isChangedDay: (newValue) {
-                        setState(() {
-                          selectedDays = newValue;
-                        });
-                      },
-                      isChangedMonth: (newValue) {
-                        setState(() {
-                          selectedMonth = newValue;
-                        });
-                      },
-                      isChangedYear: (newValue) {
-                        setState(() {
-                          selectedYear = newValue;
-                        });
-                      },
-                    )),
-                Visibility(
-                    visible: currentstep == 5,
-                    child: ChooseGenderWidget(
-                      selectedGenderValue: selectedGender,
-                    )),
-                Visibility(
-                  visible: currentstep == 6,
-                  child: WriteAboutWidget(
-                    aboutController: aboutController,
-                  ),
-                ),
-                Visibility(
-                  visible: currentstep == 7,
-                  child: JobDescriptionWidget(
-                    jobDescriptionsController: jobDescriptionsController,
-                  ),
-                ),
-                Visibility(
-                    visible: currentstep == 8,
-                    child: const ChooseInterestsWidget()),
-                Visibility(
-                    visible: currentstep == 9, child: const UploadPhotosWidget()),
-
-               _bottomView(),
-            ],
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: ThemeConfiguration.scaffoldBgColor,
+        leading: Padding(
+          padding: const EdgeInsets.fromLTRB(
+            SizeConstants.mainPagePadding,
+            SizeConstants.smallPadding,
+            SizeConstants.smallPadding,
+            SizeConstants.smallPadding,
           ),
+          child: CommonWidgets.backBottonWidget(onTap: () {
+            if (currentstep == 1) {
+              Navigator.pop(context);
+            } else {
+              currentstep--;
+              setState(() {});
+            }
+          }),
         ),
       ),
-    );
-  }
-
-  _bottomView() {
-    return Expanded(
-        child: Padding(
-      padding: const EdgeInsets.all(SizeConstants.mainPagePadding),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              CommonWidgets.showPageNumberWidget(
-                  linkText: '/8', text: '$currentstep', onTap: () {}),
-              InkWell(
-                onTap: () {
-                  if (currentstep == 1) {
+      body: SafeArea(
+          child: Padding(
+          padding: const EdgeInsets.fromLTRB(SizeConstants.mainPagePadding, 0.0,
+              SizeConstants.mainPagePadding, SizeConstants.mainPagePadding),
+          child: Stack(children: [
+              Visibility(
+                visible: currentstep == 1,
+                child: RegisterBodyWidget(
+                  mobileNumberController: mobileNumberController,
+                  onTapLogin: () {
                     if (mobileNumberController.text.isEmpty) {
                       ToastHelper().showErrorMsg(
                           context: context,
@@ -329,112 +242,226 @@ class _RegisterViewState extends State<RegisterView> {
                       registerBloc?.add(OtpRequestEvent(
                           int.tryParse(mobileNumberController.text)));
                     }
-                  } else if (currentstep == 2) {
-                    if (otp == null) {
-                      ToastHelper().showErrorMsg(
-                          context: context,
-                          message: StringConstants.otpRequiredValidationMsg);
-                    } else {
-                      if (kDebugMode) {
-                        print(mobileNumberController.text);
-                        print(otp);
-                      }
-                      registerBloc?.add(VerifyOtpEvent(
-                          int.tryParse(mobileNumberController.text.toString()),
-                          otp));
-                    }
-                  } else if (currentstep == 3) {
-                    if (fullNameController.text.isEmpty) {
-                      ToastHelper().showErrorMsg(
-                          context: context,
-                          message: StringConstants.fullNameValidMsg);
-                    } else {
-                      if (kDebugMode) {
-                        print(fullNameController.text);
-                      }
-
-                      registerBloc
-                          ?.add(RegisterFullNameEvent(fullNameController.text));
-                    }
-                  } else if (currentstep == 4) {
-                    var dob =
-                        "${(selectedDays ?? 0)}/${(selectedMonth ?? 0)}/${selectedYear ?? 0}";
-                    if (kDebugMode) {
-                      print(dob);
-                    }
-                    registerBloc?.add(RegisterDobEvent(dob.toString()));
-                  } else if (currentstep == 5) {
-                    if (kDebugMode) {
-                      print(selectedGender);
-                    }
-                    registerBloc?.add(RegisterGenderEvent(selectedGender.toString()));
-                  }else if (currentstep == 6) {
-                    if (aboutController.text.isEmpty) {
-                      ToastHelper().showErrorMsg(
-                          context: context,
-                          message:
-                          StringConstants.aboutYourSelfValidMsg);
-                    } else {
-                      if (kDebugMode) {
-                        print(aboutController.text);
-                      }
-                      registerBloc?.add(RegisterAboutEvent(
-                         aboutController.text.toString()));
-                    }
-                  } else if (currentstep == 7) {
-                    if (jobDescriptionsController.text.isEmpty) {
-                      ToastHelper().showErrorMsg(
-                          context: context,
-                          message:
-                          StringConstants.jobDescriptionsValidMsg);
-                    } else {
-                      if (kDebugMode) {
-                        print(jobDescriptionsController.text);
-                      }
-                      currentstep++;
-                      // registerBloc?.add(RegisterAboutEvent(
-                      //     jobDescriptionsController.text.toString()));
-                    }
-                  }else if (currentstep == 8) {
-                    // if (jobDescriptionsController.text.isEmpty) {
-                    //   ToastHelper().showErrorMsg(
-                    //       context: context,
-                    //       message:
-                    //       StringConstants.jobDescriptionsValidMsg);
-                    // } else {
-                    //   if (kDebugMode) {
-                    //     print(jobDescriptionsController.text);
-                    //   }
-                      currentstep++;
-                      // registerBloc?.add(RegisterAboutEvent(
-                      //     jobDescriptionsController.text.toString()));
-                    // }
-
-                  }else {
-
-                  }
-                },
-                child: isLoading == true
-                    ? LoaderHelper.pageLoader()
-                    : Image.asset(
-                        ImageConstants.nextBtn,
-                        height: SizeConstants.registerButtonHeight,
-                        width: SizeConstants.registerButtonHeight,
-                      ),
-              )
+                  },
+                ),
+              ),
+              Visibility(
+                visible: currentstep == 2,
+                child: OtpHeaderWidget(
+                  mobileNumber: mobileNumberController.text.toString(),
+                  callBack: (pin) {
+                    setState(() {
+                      otp = int.tryParse(pin);
+                    });
+                  },
+                  updateTimerActiveCallback: (bool isActive) {
+                    setState(() {
+                      timerActive = isActive;
+                    });
+                  },
+                  timerActive: timerActive,
+                ),
+              ),
+              Visibility(
+                  visible: currentstep == 3,
+                  child: RegisterInfoWidget(
+                      fullNameController: fullNameController)),
+              Visibility(
+                  visible: currentstep == 4,
+                  child: ChooseBirthdayWidget(
+                    selectedDaysValue: selectedDays,
+                    selectedMonthValue: selectedMonth,
+                    selectedYearValue: selectedYear,
+                    yearList: yearList,
+                    isChangedDay: (newValue) {
+                      setState(() {
+                        selectedDays = newValue;
+                      });
+                    },
+                    isChangedMonth: (newValue) {
+                      setState(() {
+                        selectedMonth = newValue;
+                      });
+                    },
+                    isChangedYear: (newValue) {
+                      setState(() {
+                        selectedYear = newValue;
+                      });
+                    },
+                  )),
+              Visibility(
+                  visible: currentstep == 5,
+                  child: ChooseGenderWidget(
+                    selectedGenderValue: selectedGender,
+                  )),
+              Visibility(
+                visible: currentstep == 6,
+                child: WriteAboutWidget(
+                  aboutController: aboutController,
+                ),
+              ),
+              Visibility(
+                visible: currentstep == 7,
+                child: JobDescriptionWidget(
+                  jobDescriptionsController: jobDescriptionsController,
+                ),
+              ),
+              Visibility(
+                  visible: currentstep == 8,
+                  child: ChooseInterestsWidget(
+                      interestResponseModel: interestResponseModel)),
+              Visibility(
+                  visible: currentstep == 9, child: const UploadPhotosWidget()),
+            _bottomView(),
             ],
           ),
-          const SizedBox(
-            height: SizeConstants.mediumPadding,
           ),
-          LinearPercentIndicator(
-            percent: currentstep / 8,
-            backgroundColor: ThemeConfiguration.primaryColor.withOpacity(0.2),
-            progressColor: ThemeConfiguration.primaryColor,
-            padding: EdgeInsets.zero,
-          ),
+      ),
+    );
+  }
+
+  _bottomView() {
+    return Padding(
+      padding: const EdgeInsets.all(SizeConstants.mainPagePadding),
+      child: Column(
+    mainAxisAlignment: MainAxisAlignment.end,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          CommonWidgets.showPageNumberWidget(
+              linkText: '/8', text: '$currentstep', onTap: () {}),
+          InkWell(
+            onTap: () {
+              if (kDebugMode) {
+                print(currentstep);
+              }
+              if (currentstep == 1) {
+                if (mobileNumberController.text.isEmpty) {
+                  ToastHelper().showErrorMsg(
+                      context: context,
+                      message:
+                          StringConstants.phoneNumberRequiredValidationMsg);
+                } else {
+                  if (kDebugMode) {
+                    print(mobileNumberController.text);
+                  }
+                  registerBloc?.add(OtpRequestEvent(
+                      int.tryParse(mobileNumberController.text)));
+                }
+              } else if (currentstep == 2) {
+                if (otp == null) {
+                  ToastHelper().showErrorMsg(
+                      context: context,
+                      message: StringConstants.otpRequiredValidationMsg);
+                } else {
+                  if (kDebugMode) {
+                    print(mobileNumberController.text);
+                    print(otp);
+                  }
+                  registerBloc?.add(VerifyOtpEvent(
+                      int.tryParse(mobileNumberController.text.toString()),
+                      otp));
+                }
+              } else if (currentstep == 3) {
+                if (fullNameController.text.isEmpty) {
+                  ToastHelper().showErrorMsg(
+                      context: context,
+                      message: StringConstants.fullNameValidMsg);
+                } else {
+                  if (kDebugMode) {
+                    print(fullNameController.text);
+                  }
+
+                  registerBloc
+                      ?.add(RegisterFullNameEvent(fullNameController.text));
+                }
+              } else if (currentstep == 4) {
+                var dob =
+                    "${(selectedDays ?? 0)}/${(selectedMonth ?? 0)}/${selectedYear ?? 0}";
+                if (kDebugMode) {
+                  print(dob);
+                }
+                registerBloc?.add(RegisterDobEvent(dob.toString()));
+              } else if (currentstep == 5) {
+                if (kDebugMode) {
+                  print(selectedGender);
+                }
+                registerBloc
+                    ?.add(RegisterGenderEvent(selectedGender.toString()));
+              } else if (currentstep == 6) {
+                if (aboutController.text.isEmpty) {
+                  ToastHelper().showErrorMsg(
+                      context: context,
+                      message: StringConstants.aboutYourSelfValidMsg);
+                } else {
+                  if (kDebugMode) {
+                    print(aboutController.text);
+                  }
+                  registerBloc?.add(
+                      RegisterAboutEvent(aboutController.text.toString()));
+                }
+              } else if (currentstep == 7) {
+                if (jobDescriptionsController.text.isEmpty) {
+                  ToastHelper().showErrorMsg(
+                      context: context,
+                      message: StringConstants.jobDescriptionsValidMsg);
+                } else {
+                  if (kDebugMode) {
+                    print(jobDescriptionsController.text);
+                  }
+                  currentstep++;
+                  // registerBloc?.add(RegisterAboutEvent(
+                  //     jobDescriptionsController.text.toString()));
+                }
+              } else if (currentstep == 8) {
+                // if (jobDescriptionsController.text.isEmpty) {
+                //   ToastHelper().showErrorMsg(
+                //       context: context,
+                //       message:
+                //       StringConstants.jobDescriptionsValidMsg);
+                // } else {
+
+                // currentstep++;
+                registerBloc?.add(GetInterestEvent());
+              } else if (currentstep == 9) {
+                // if (jobDescriptionsController.text.isEmpty) {
+                //   ToastHelper().showErrorMsg(
+                //       context: context,
+                //       message:
+                //       StringConstants.jobDescriptionsValidMsg);
+                // } else {
+                //   if (kDebugMode) {
+                //     print(jobDescriptionsController.text);
+                //   }
+                currentstep++;
+                // registerBloc?.add(RegisterAboutEvent(
+                //     jobDescriptionsController.text.toString()));
+                // }
+              } else {}
+            },
+            child: isLoading == true
+                ? LoaderHelper.pageLoader()
+                : Image.asset(
+                    ImageConstants.nextBtn,
+                    height: SizeConstants.registerButtonHeight,
+                    width: SizeConstants.registerButtonHeight,
+                  ),
+          )
         ],
       ),
-    ));
+      const SizedBox(
+        height: SizeConstants.mediumPadding,
+      ),
+      LinearPercentIndicator(
+        percent: currentstep / 9,
+        backgroundColor: ThemeConfiguration.primaryColor.withOpacity(0.2),
+        progressColor: ThemeConfiguration.primaryColor,
+        padding: EdgeInsets.zero,
+      ),
+    ],
+      ),
+    );
   }
 }

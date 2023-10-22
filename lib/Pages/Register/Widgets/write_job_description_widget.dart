@@ -6,11 +6,13 @@ import 'package:flutter/material.dart';
 
 class JobDescriptionWidget extends StatelessWidget {
   final TextEditingController jobDescriptionsController;
-  const JobDescriptionWidget({super.key, required this.jobDescriptionsController});
+  const JobDescriptionWidget(
+      {super.key, required this.jobDescriptionsController});
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const SizedBox(
           height: SizeConstants.mediumPadding,

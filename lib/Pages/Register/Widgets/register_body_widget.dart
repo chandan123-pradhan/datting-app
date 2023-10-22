@@ -16,15 +16,18 @@ class RegisterBodyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(SizeConstants.mainPagePadding),
-        child: Column(
-          children: [
-            LoginHeaderWidget(mobileNumberController: mobileNumberController,isFrom: "signup",),
-            // LoginBottomWidget(onTapLogin: onTapLogin)
-          ],
-        ),
+    return Padding(
+      padding:const  EdgeInsets.symmetric(
+        horizontal: SizeConstants.mainPagePadding,),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          LoginHeaderWidget(
+            mobileNumberController: mobileNumberController,
+            isFrom: "signup",
+          ),
+          // LoginBottomWidget(onTapLogin: onTapLogin)
+        ],
       ),
     );
   }

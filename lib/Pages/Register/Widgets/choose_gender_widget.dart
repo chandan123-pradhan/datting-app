@@ -25,7 +25,9 @@ class _ChooseGenderWidgetState extends State<ChooseGenderWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+        children: [
       const SizedBox(
         height: SizeConstants.mediumPadding,
       ),

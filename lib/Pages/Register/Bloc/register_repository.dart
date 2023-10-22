@@ -2,6 +2,7 @@ import 'package:dating_app/Models/base_model.dart';
 import 'package:dating_app/Models/register_mobilenumber_model.dart';
 import 'package:dating_app/Models/userdata_model.dart';
 import 'package:dating_app/Network/api_provider.dart';
+import 'package:dating_app/Pages/Register/Model/interest_response_model.dart';
 import 'package:flutter/foundation.dart';
 
 abstract class RegisterRepository {
@@ -12,7 +13,7 @@ abstract class RegisterRepository {
   Future<UserDataModel?> registerGender({String? gender});
   Future<UserDataModel?> registerAbout({String? about});
   Future<UserDataModel?> registerAboutJob({String? job});
-  Future<UserDataModel?> getInterestList();
+  Future<InterestResponseModel?> getInterestList();
   Future<UserDataModel?> registerInterest({List? interest});
 }
 
@@ -122,17 +123,17 @@ class RegisterRepositoryImp extends RegisterRepository {
 
 
   @override
-  Future<UserDataModel?> getInterestList() async {
-    UserDataModel? userDataModel;
+  Future<InterestResponseModel?> getInterestList() async {
+    InterestResponseModel? interestResponseModel;
     try {
-      return userDataModel =
+      return interestResponseModel =
       await ApiProvider().getInterestList();
     } catch (e, err) {
       if (kDebugMode) {
         print("$e \n $err");
       }
     }
-    return userDataModel;
+    return interestResponseModel;
   }
 
 
