@@ -41,8 +41,8 @@ class _SplashViewState extends State<SplashView> {
         body: Center(
             child: Image.asset(
       ImageUtils.shieldTickButton,
-      height: SizeConstants.coinSize,
-      width: SizeConstants.coinSize,
+      height: 150,
+      width: 150,
     )));
   }
 }

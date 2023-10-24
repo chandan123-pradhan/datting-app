@@ -1,4 +1,3 @@
-
 import 'package:dating_app/Models/userdata_model.dart';
 import 'package:dating_app/Pages/Register/Bloc/register_event.dart';
 import 'package:dating_app/Pages/Register/Bloc/register_repository.dart';
@@ -21,8 +20,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       emit(RegisterLoadingState());
       try {
         var model =
-        await repository?.requestOtp(mobileNumber: event.mobileNumber);
-        if (model?.success == true||model?.message=="Success") {
+            await repository?.requestOtp(mobileNumber: event.mobileNumber);
+        if (model?.success == true || model?.message == "Success") {
           emit(RegisterSuccessState(model!));
         } else {
           emit(RegisterErrorState(model?.message ?? ""));
@@ -37,8 +36,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     if (event is VerifyOtpEvent) {
       emit(RegisterLoadingState());
       try {
-        var model =
-        await repository?.verifyOtp(mobileNumber: event.mobileNumber,otp: event.otp);
+        var model = await repository?.verifyOtp(
+            mobileNumber: event.mobileNumber, otp: event.otp);
         if (model?.success == true) {
           emit(RegisterMobileNumberSuccessState(model!));
         } else {
@@ -72,8 +71,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     if (event is RegisterDobEvent) {
       emit(RegisterLoadingState());
       try {
-        UserDataModel? model =
-        await repository?.registerDob(dob: event.dob);
+        UserDataModel? model = await repository?.registerDob(dob: event.dob);
         if (model?.success == true) {
           emit(RegisterFullNameSuccessState(model!));
         } else {
@@ -90,7 +88,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       emit(RegisterLoadingState());
       try {
         UserDataModel? model =
-        await repository?.registerGender(gender: event.gender);
+            await repository?.registerGender(gender: event.gender);
         if (model?.success == true) {
           emit(RegisterFullNameSuccessState(model!));
         } else {
@@ -107,7 +105,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       emit(RegisterLoadingState());
       try {
         UserDataModel? model =
-        await repository?.registerAbout(about: event.about);
+            await repository?.registerAbout(about: event.about);
         if (model?.success == true) {
           emit(RegisterFullNameSuccessState(model!));
         } else {
@@ -124,7 +122,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       emit(RegisterLoadingState());
       try {
         UserDataModel? model =
-        await repository?.registerAboutJob(job: event.aboutJob);
+            await repository?.registerAboutJob(job: event.aboutJob);
         if (model?.success == true) {
           emit(RegisterFullNameSuccessState(model!));
         } else {
@@ -141,11 +139,45 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       emit(RegisterLoadingState());
       try {
         InterestResponseModel? interestResponseModel =
-        await repository?.getInterestList();
+            await repository?.getInterestList();
         if (interestResponseModel?.message == "Success") {
           emit(GetInterestSuccessState(interestResponseModel!));
         } else {
           emit(RegisterErrorState(interestResponseModel?.message ?? ""));
+        }
+      } catch (error, _) {
+        if (kDebugMode) {
+          print(_.toString());
+        }
+        emit(RegisterErrorState(error.toString()));
+      }
+    }
+    if (event is RegisterInterestEvent) {
+      emit(RegisterLoadingState());
+      try {
+        UserDataModel? model =
+        await repository?.registerInterest(interest: event.interests);
+        if (model?.success == true) {
+          emit(RegisterFullNameSuccessState(model!));
+        } else {
+          emit(RegisterErrorState(model?.message ?? ""));
+        }
+      } catch (error, _) {
+        if (kDebugMode) {
+          print(_.toString());
+        }
+        emit(RegisterErrorState(error.toString()));
+      }
+    }
+    if (event is RegisterPhotoEvent) {
+      emit(RegisterLoadingState());
+      try {
+        UserDataModel? model =
+        await repository?.registerPhoto(photo: event.photo,fileType: event.fileType);
+        if (model?.success == true) {
+          emit(RegisterFullNameSuccessState(model!));
+        } else {
+          emit(RegisterErrorState(model?.message ?? ""));
         }
       } catch (error, _) {
         if (kDebugMode) {

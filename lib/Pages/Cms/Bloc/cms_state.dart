@@ -2,6 +2,7 @@
 
 import 'package:dating_app/Models/base_model.dart';
 import 'package:dating_app/Models/register_mobilenumber_model.dart';
+import 'package:dating_app/Pages/Cms/Model/cms_response_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class CmsState extends Equatable {}
@@ -17,8 +18,8 @@ class CmsLoadingState extends CmsState {
 }
 
 class CmsSuccessState extends CmsState {
-  final RegisterMobileNumberModel? registerMobileNumberModel;
-  CmsSuccessState(this.registerMobileNumberModel);
+  final CmsResponseModel? cmsResponseModel;
+  CmsSuccessState(this.cmsResponseModel);
 
   @override
   List<Object?> get props => [];

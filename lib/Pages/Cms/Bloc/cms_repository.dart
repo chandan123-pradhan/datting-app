@@ -1,26 +1,27 @@
 import 'package:dating_app/Models/base_model.dart';
 import 'package:dating_app/Models/register_mobilenumber_model.dart';
 import 'package:dating_app/Network/api_provider.dart';
+import 'package:dating_app/Pages/Cms/Model/cms_response_model.dart';
 import 'package:flutter/foundation.dart';
 
 abstract class CmsRepository {
-  Future<RegisterMobileNumberModel?> getCmsData({String? apiName});
+  Future<CmsResponseModel?> getCmsData({String? apiName});
 }
 
 class CmsRepositoryImp extends CmsRepository {
   @override
-  Future<RegisterMobileNumberModel?> getCmsData({String? apiName}) async {
-    RegisterMobileNumberModel? registerMobileNumberModel;
+  Future<CmsResponseModel?> getCmsData({String? apiName}) async {
+    CmsResponseModel? cmsResponseModel;
     try {
-      registerMobileNumberModel =
+      cmsResponseModel =
       await ApiProvider().getCmsData(apiEndPoint: apiName);
-      return registerMobileNumberModel;
+      return cmsResponseModel;
     } catch (e, err) {
       if (kDebugMode) {
         print("$e \n $err");
       }
     }
-    return registerMobileNumberModel;
+    return cmsResponseModel;
   }
 
 }

@@ -6,3 +6,8 @@ class GetAccountData extends AccountEvent {
   @override
   List<Object?> get props => [];
 }
+
+class GetInterestEvent extends AccountEvent {
+  @override
+  List<Object?> get props => [];
+}

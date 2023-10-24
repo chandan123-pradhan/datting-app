@@ -6,7 +6,9 @@ import 'package:dating_app/Pages/Account/Widgets/account_button_widget.dart';
 import 'package:dating_app/Pages/Cms/Bloc/cms_bloc.dart';
 import 'package:dating_app/Pages/Cms/Bloc/cms_event.dart';
 import 'package:dating_app/Pages/Cms/Bloc/cms_state.dart';
+import 'package:dating_app/Pages/Cms/Model/cms_response_model.dart';
 import 'package:dating_app/Utilities/size_constants.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:dating_app/Utilities/string_constants.dart';
 import 'package:dating_app/CommonWidgets/common_app_bar.dart';
 import 'package:flutter/foundation.dart';
@@ -25,7 +27,7 @@ class _CmsViewState extends State<CmsView> {
   bool isToggleOn = true;
   CmsBloc? cmsBloc;
   bool isLoading = false;
-  var apiName = "";
+  CmsResponseModel? cmsResponseModel;
 
   @override
   void initState() {
@@ -35,8 +37,10 @@ class _CmsViewState extends State<CmsView> {
   }
 
   fetchCmsData() {
-    if (apiName == ApiUrls.termsConditionEndPoint) {
-      cmsBloc?.add(GetCmsDataEvent(apiName));
+    if (widget.apiName == ApiUrls.termsConditionEndPoint) {
+      cmsBloc?.add(GetCmsDataEvent(widget.apiName));
+    } else if (widget.apiName == ApiUrls.privacyPolicyEndPoint) {
+      cmsBloc?.add(GetCmsDataEvent(widget.apiName));
     }
   }
 
@@ -55,9 +59,7 @@ class _CmsViewState extends State<CmsView> {
         isLoading = true;
       } else if (currentState is CmsSuccessState) {
         isLoading = false;
-        ToastHelper().showMsg(
-            context: context,
-            message: currentState.registerMobileNumberModel?.message ?? '');
+        cmsResponseModel = currentState.cmsResponseModel;
         cmsBloc?.emit(CmsEmptyState());
       } else if (currentState is CmsErrorState) {
         isLoading = false;
@@ -76,8 +78,10 @@ class _CmsViewState extends State<CmsView> {
             appBar: PreferredSize(
               preferredSize: const Size.fromHeight(50.0),
               child: CommonAppBar(
-                title: apiName == ApiUrls.termsConditionEndPoint
+                title: widget.apiName == ApiUrls.termsConditionEndPoint
                     ? StringConstants.termsAndConditions
+                    : widget.apiName == ApiUrls.privacyPolicyEndPoint
+                    ? StringConstants.privacyPolicy
                     : StringConstants.settings,
                 onEdit: () {},
                 onSetting: () {},
@@ -89,14 +93,36 @@ class _CmsViewState extends State<CmsView> {
             ),
             body: SafeArea(
               child: Column(
-                children:const [
+                children: [
                   const Divider(
                     color: ThemeConfiguration.primaryLightColor,
                   ),
-                  Expanded(
-                      child: SingleChildScrollView(
-                    child: Center(child: Text("Data is not coming from the api"),)
-                  ))
+                  if((cmsResponseModel?.cmsDataList??[]).isNotEmpty)
+                  Padding(
+                    padding:
+                        const EdgeInsets.all(SizeConstants.mainPagePadding),
+                    child: Expanded(
+                        child: SingleChildScrollView(
+                            child: Center(
+                      child: Html(
+                        data: cmsResponseModel?.cmsDataList[0].content ??
+                            StringConstants.noDataFound,
+                      ),
+                    ))),
+                  ),
+
+                  if(((cmsResponseModel?.cmsDataList??[]).isEmpty)||(isLoading=false))
+                    const Padding(
+                      padding:
+                       EdgeInsets.all(SizeConstants.mainPagePadding),
+                      child: Expanded(
+                          child: SingleChildScrollView(
+                              child: Center(
+                                child: Text(
+                                      StringConstants.noDataFound,
+                                ),
+                              ))),
+                    ),
                 ],
               ),
             )),

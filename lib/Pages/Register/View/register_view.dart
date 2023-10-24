@@ -1,6 +1,7 @@
 import 'package:dating_app/CommonWidgets/common_app_bar.dart';
 import 'package:dating_app/Configurations/theme_configuration.dart';
 import 'package:dating_app/Helper/loader_helper.dart';
+import 'package:dating_app/Helper/navigation_helper.dart';
 import 'package:dating_app/Helper/shared_preference_helper.dart';
 import 'package:dating_app/Helper/toast_helper.dart';
 import 'package:dating_app/Models/userdata_model.dart';
@@ -42,8 +43,8 @@ class _RegisterViewState extends State<RegisterView> {
   int currentstep = 1;
   List<int> days = List<int>.generate(31, (index) => index + 1);
   List<int> months = List<int>.generate(12, (index) => index + 1);
-  int selectedDays = 1;
-  int selectedMonth = 1;
+  int? selectedDays;
+  int? selectedMonth;
   List<String> yearList = [
     '1970',
     '1971',
@@ -100,10 +101,12 @@ class _RegisterViewState extends State<RegisterView> {
     '2022',
     '2023',
   ];
-  String? selectedYear = "1970";
+  String? selectedYear;
   String selectedGender = 'women';
   int? otp;
   bool timerActive = true;
+  List<String>? interestList = [];
+  List<String> imageUrls = [];
 
   ///Api
   RegisterBloc? registerBloc;
@@ -151,7 +154,9 @@ class _RegisterViewState extends State<RegisterView> {
         registerBloc?.emit(RegisterEmptyState());
       } else if (currentState is RegisterFullNameSuccessState) {
         isLoading = false;
-        currentstep++;
+       if(currentstep<8){
+         currentstep++;
+       }
         ToastHelper().showMsg(
             context: context,
             message: currentState.userDataModel?.message ?? '');
@@ -171,23 +176,17 @@ class _RegisterViewState extends State<RegisterView> {
                 userReferralCode:
                     currentState.userDataModel?.data?.userReferralCode ?? '',
                 createdAt: currentState.userDataModel?.data?.createdAt ?? '',
-                updatedAt: currentState.userDataModel?.data?.updatedAt ?? ''));
+                updatedAt: currentState.userDataModel?.data?.updatedAt ?? '',
+              fullName: currentState.userDataModel?.data?.fullName??'',
+              birthday: currentState.userDataModel?.data?.birthday??'',
+              gender: currentState.userDataModel?.data?.gender??'',
+              image: currentState.userDataModel?.data?.image??'',
+            ));
         registerBloc?.emit(RegisterEmptyState());
       } else if (currentState is GetInterestSuccessState) {
         isLoading = false;
         interestResponseModel = currentState.interestResponseModel;
-        currentstep++;
-        // ToastHelper().showMsg(
-        //     context: context,
-        //     message: currentState.registerMobileNumberModel?.message ?? '');
-        // SharedPreferencesHelper.saveUserInformation(
-        //     isRegister:
-        //     currentState.registerMobileNumberModel?.data.isRegistered == 1
-        //         ? true
-        //         : false,
-        //     token: currentState.registerMobileNumberModel?.data.token ?? '');
-        // registerBloc?.emit(RegisterEmptyState());
-      } else if (currentState is RegisterErrorState) {
+        } else if (currentState is RegisterErrorState) {
         isLoading = false;
         ToastHelper()
             .showErrorMsg(context: context, message: currentState.errorMessage);
@@ -211,6 +210,9 @@ class _RegisterViewState extends State<RegisterView> {
             SizeConstants.smallPadding,
           ),
           child: CommonWidgets.backBottonWidget(onTap: () {
+            setState(() {
+              interestList?.clear();
+            });
             if (currentstep == 1) {
               Navigator.pop(context);
             } else {
@@ -221,10 +223,11 @@ class _RegisterViewState extends State<RegisterView> {
         ),
       ),
       body: SafeArea(
-          child: Padding(
+        child: Padding(
           padding: const EdgeInsets.fromLTRB(SizeConstants.mainPagePadding, 0.0,
               SizeConstants.mainPagePadding, SizeConstants.mainPagePadding),
-          child: Stack(children: [
+          child: Stack(
+            children: [
               Visibility(
                 visible: currentstep == 1,
                 child: RegisterBodyWidget(
@@ -273,7 +276,7 @@ class _RegisterViewState extends State<RegisterView> {
                     selectedMonthValue: selectedMonth,
                     selectedYearValue: selectedYear,
                     yearList: yearList,
-                    isChangedDay: (newValue) {
+                    isChangedDay: (int? newValue) {
                       setState(() {
                         selectedDays = newValue;
                       });
@@ -293,6 +296,11 @@ class _RegisterViewState extends State<RegisterView> {
                   visible: currentstep == 5,
                   child: ChooseGenderWidget(
                     selectedGenderValue: selectedGender,
+                    onSelectGender: (String? genderValue) {
+                      setState(() {
+                        selectedGender = genderValue ?? 'women';
+                      });
+                    },
                   )),
               Visibility(
                 visible: currentstep == 6,
@@ -300,22 +308,69 @@ class _RegisterViewState extends State<RegisterView> {
                   aboutController: aboutController,
                 ),
               ),
+              // Visibility(
+              //   visible: currentstep == 7,
+              //   child: JobDescriptionWidget(
+              //     jobDescriptionsController: jobDescriptionsController,
+              //   ),
+              // ),
               Visibility(
-                visible: currentstep == 7,
-                child: JobDescriptionWidget(
-                  jobDescriptionsController: jobDescriptionsController,
-                ),
-              ),
-              Visibility(
-                  visible: currentstep == 8,
+                  visible: currentstep == 7,
                   child: ChooseInterestsWidget(
-                      interestResponseModel: interestResponseModel)),
+                    registerBloc: registerBloc,
+                    interestResponseModel: interestResponseModel,
+                    chooseInterest: (choosedIndexValue) {
+                      setState(() {
+                        interestResponseModel?.data?[choosedIndexValue]
+                            .isSelected = !(interestResponseModel
+                                ?.data?[choosedIndexValue].isSelected ??
+                            false);
+                        print(interestResponseModel
+                            ?.data?[choosedIndexValue].isSelected);
+                        if (interestResponseModel
+                                ?.data?[choosedIndexValue].isSelected ==
+                            true) {
+                          if (interestList != []) {
+                            interestList?.add(interestResponseModel
+                                    ?.data?[choosedIndexValue].id ??
+                                "");
+                          } else {
+                            interestList?.forEach((element) {
+                              if (element.toString() ==
+                                  interestResponseModel
+                                      ?.data?[choosedIndexValue].id
+                                      .toString()) {
+                              } else {
+                                interestList?.add(interestResponseModel
+                                        ?.data?[choosedIndexValue].id ??
+                                    "");
+                              }
+                            });
+                          }
+                          print(interestList);
+                        } else {
+                          interestList?.remove(interestResponseModel
+                                  ?.data?[choosedIndexValue].id ??
+                              "");
+                          print(interestList);
+                        }
+                      });
+                    },
+                  )),
               Visibility(
-                  visible: currentstep == 9, child: const UploadPhotosWidget()),
-            _bottomView(),
+                  visible: currentstep == 8, child:  UploadPhotosWidget(
+                registerBloc: registerBloc,
+imageUploaded: (imageList){
+                setState(() {
+                  imageUrls=imageList;
+                });
+  },
+
+              )),
+              _bottomView(),
             ],
           ),
-          ),
+        ),
       ),
     );
   }
@@ -324,143 +379,166 @@ class _RegisterViewState extends State<RegisterView> {
     return Padding(
       padding: const EdgeInsets.all(SizeConstants.mainPagePadding),
       child: Column(
-    mainAxisAlignment: MainAxisAlignment.end,
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CommonWidgets.showPageNumberWidget(
-              linkText: '/8', text: '$currentstep', onTap: () {}),
-          InkWell(
-            onTap: () {
-              if (kDebugMode) {
-                print(currentstep);
-              }
-              if (currentstep == 1) {
-                if (mobileNumberController.text.isEmpty) {
-                  ToastHelper().showErrorMsg(
-                      context: context,
-                      message:
-                          StringConstants.phoneNumberRequiredValidationMsg);
-                } else {
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CommonWidgets.showPageNumberWidget(
+                  linkText: '/8', text: '$currentstep', onTap: () {}),
+              InkWell(
+                onTap: () {
                   if (kDebugMode) {
-                    print(mobileNumberController.text);
+                    print(currentstep);
                   }
-                  registerBloc?.add(OtpRequestEvent(
-                      int.tryParse(mobileNumberController.text)));
-                }
-              } else if (currentstep == 2) {
-                if (otp == null) {
-                  ToastHelper().showErrorMsg(
-                      context: context,
-                      message: StringConstants.otpRequiredValidationMsg);
-                } else {
-                  if (kDebugMode) {
-                    print(mobileNumberController.text);
-                    print(otp);
-                  }
-                  registerBloc?.add(VerifyOtpEvent(
-                      int.tryParse(mobileNumberController.text.toString()),
-                      otp));
-                }
-              } else if (currentstep == 3) {
-                if (fullNameController.text.isEmpty) {
-                  ToastHelper().showErrorMsg(
-                      context: context,
-                      message: StringConstants.fullNameValidMsg);
-                } else {
-                  if (kDebugMode) {
-                    print(fullNameController.text);
-                  }
+                  if (currentstep == 1) {
+                    if (mobileNumberController.text.isEmpty) {
+                      ToastHelper().showErrorMsg(
+                          context: context,
+                          message:
+                              StringConstants.phoneNumberRequiredValidationMsg);
+                    } else {
+                      if (kDebugMode) {
+                        print(mobileNumberController.text);
+                      }
+                      registerBloc?.add(OtpRequestEvent(
+                          int.tryParse(mobileNumberController.text)));
+                    }
+                  } else if (currentstep == 2) {
+                    if (otp == null) {
+                      ToastHelper().showErrorMsg(
+                          context: context,
+                          message: StringConstants.otpRequiredValidationMsg);
+                    } else {
+                      if (kDebugMode) {
+                        print(mobileNumberController.text);
+                        print(otp);
+                      }
+                      registerBloc?.add(VerifyOtpEvent(
+                          int.tryParse(mobileNumberController.text.toString()),
+                          otp));
+                    }
+                  } else if (currentstep == 3) {
+                    if (fullNameController.text.isEmpty) {
+                      ToastHelper().showErrorMsg(
+                          context: context,
+                          message: StringConstants.fullNameValidMsg);
+                    } else {
+                      if (kDebugMode) {
+                        print(fullNameController.text);
+                      }
 
-                  registerBloc
-                      ?.add(RegisterFullNameEvent(fullNameController.text));
-                }
-              } else if (currentstep == 4) {
-                var dob =
-                    "${(selectedDays ?? 0)}/${(selectedMonth ?? 0)}/${selectedYear ?? 0}";
-                if (kDebugMode) {
-                  print(dob);
-                }
-                registerBloc?.add(RegisterDobEvent(dob.toString()));
-              } else if (currentstep == 5) {
-                if (kDebugMode) {
-                  print(selectedGender);
-                }
-                registerBloc
-                    ?.add(RegisterGenderEvent(selectedGender.toString()));
-              } else if (currentstep == 6) {
-                if (aboutController.text.isEmpty) {
-                  ToastHelper().showErrorMsg(
-                      context: context,
-                      message: StringConstants.aboutYourSelfValidMsg);
-                } else {
-                  if (kDebugMode) {
-                    print(aboutController.text);
+                      registerBloc
+                          ?.add(RegisterFullNameEvent(fullNameController.text));
+                    }
+                  } else if (currentstep == 4) {
+                    if ((selectedDays == null)) {
+                      ToastHelper().showErrorMsg(
+                          context: context,
+                          message: StringConstants.whatIsYouBirthdayValidMsg);
+                    } else if ((selectedMonth == null)) {
+                      ToastHelper().showErrorMsg(
+                          context: context,
+                          message: StringConstants.whatIsYouBirthdayValidMsg);
+                    } else if ((selectedYear == null)) {
+                      ToastHelper().showErrorMsg(
+                          context: context,
+                          message: StringConstants.whatIsYouBirthdayValidMsg);
+                    } else {
+                      var dob =
+                          "${(selectedDays)}/${(selectedMonth)}/$selectedYear";
+                      if (kDebugMode) {
+                        print(dob);
+                      }
+                      registerBloc?.add(RegisterDobEvent(dob.toString()));
+                    }
+                  } else if (currentstep == 5) {
+                    if (kDebugMode) {
+                      print(selectedGender);
+                    }
+                    registerBloc
+                        ?.add(RegisterGenderEvent(selectedGender.toString()));
+                  } else if (currentstep == 6) {
+                    if (aboutController.text.isEmpty) {
+                      ToastHelper().showErrorMsg(
+                          context: context,
+                          message: StringConstants.aboutYourSelfValidMsg);
+                    } else {
+                      if (kDebugMode) {
+                        print(aboutController.text);
+                      }
+                      registerBloc?.add(
+                          RegisterAboutEvent(aboutController.text.toString()));
+                    }
                   }
-                  registerBloc?.add(
-                      RegisterAboutEvent(aboutController.text.toString()));
-                }
-              } else if (currentstep == 7) {
-                if (jobDescriptionsController.text.isEmpty) {
-                  ToastHelper().showErrorMsg(
-                      context: context,
-                      message: StringConstants.jobDescriptionsValidMsg);
-                } else {
-                  if (kDebugMode) {
-                    print(jobDescriptionsController.text);
-                  }
-                  currentstep++;
-                  // registerBloc?.add(RegisterAboutEvent(
-                  //     jobDescriptionsController.text.toString()));
-                }
-              } else if (currentstep == 8) {
-                // if (jobDescriptionsController.text.isEmpty) {
-                //   ToastHelper().showErrorMsg(
-                //       context: context,
-                //       message:
-                //       StringConstants.jobDescriptionsValidMsg);
-                // } else {
-
-                // currentstep++;
-                registerBloc?.add(GetInterestEvent());
-              } else if (currentstep == 9) {
-                // if (jobDescriptionsController.text.isEmpty) {
-                //   ToastHelper().showErrorMsg(
-                //       context: context,
-                //       message:
-                //       StringConstants.jobDescriptionsValidMsg);
-                // } else {
-                //   if (kDebugMode) {
-                //     print(jobDescriptionsController.text);
-                //   }
-                currentstep++;
-                // registerBloc?.add(RegisterAboutEvent(
-                //     jobDescriptionsController.text.toString()));
-                // }
-              } else {}
-            },
-            child: isLoading == true
-                ? LoaderHelper.pageLoader()
-                : Image.asset(
-                    ImageConstants.nextBtn,
-                    height: SizeConstants.registerButtonHeight,
-                    width: SizeConstants.registerButtonHeight,
-                  ),
-          )
+                  // else if (currentstep == 7) {
+                  //   if (jobDescriptionsController.text.isEmpty) {
+                  //     ToastHelper().showErrorMsg(
+                  //         context: context,
+                  //         message: StringConstants.jobDescriptionsValidMsg);
+                  //   } else {
+                  //     if (kDebugMode) {
+                  //       print(jobDescriptionsController.text);
+                  //     }
+                  //     currentstep++;
+                  //     // registerBloc?.add(RegisterAboutEvent(
+                  //     //     jobDescriptionsController.text.toString()));
+                  //   }
+                  // }
+                  else if (currentstep == 7) {
+                    if ((interestList ?? []).isEmpty) {
+                      ToastHelper().showErrorMsg(
+                          context: context,
+                          message: StringConstants.chooseInterestValidMsg);
+                    } else {
+                      if (kDebugMode) {
+                        print(interestList?.join(","));
+                      }
+                      registerBloc
+                          ?.add(RegisterInterestEvent(interestList?.join(",")));
+                    }
+                  } else if (currentstep == 8) {
+                    if (imageUrls.isEmpty) {
+                      ToastHelper().showErrorMsg(
+                          context: context,
+                          message:
+                          StringConstants.photoValidationMsg);
+                    } else {
+                      if (kDebugMode) {
+                        print(imageUrls);
+                      }
+                      Future.delayed(Duration.zero, ()
+                      {
+                        Navigator.pushNamed(context, NavigationHelper
+                            .dashboard);
+                        ToastHelper().showMsg(
+                            context: context, message:StringConstants.registerSuccessMsg);
+                        SharedPreferencesHelper.setIsLogin(true);
+                      });
+                     }
+                  } else {}
+                },
+                child: isLoading == true
+                    ? LoaderHelper.pageLoader()
+                    : Image.asset(
+                        ImageConstants.nextBtn,
+                        height: SizeConstants.registerButtonHeight,
+                        width: SizeConstants.registerButtonHeight,
+                      ),
+              )
+            ],
+          ),
+          const SizedBox(
+            height: SizeConstants.mediumPadding,
+          ),
+          LinearPercentIndicator(
+            percent: currentstep / 9,
+            backgroundColor: ThemeConfiguration.primaryColor.withOpacity(0.2),
+            progressColor: ThemeConfiguration.primaryColor,
+            padding: EdgeInsets.zero,
+          ),
         ],
-      ),
-      const SizedBox(
-        height: SizeConstants.mediumPadding,
-      ),
-      LinearPercentIndicator(
-        percent: currentstep / 9,
-        backgroundColor: ThemeConfiguration.primaryColor.withOpacity(0.2),
-        progressColor: ThemeConfiguration.primaryColor,
-        padding: EdgeInsets.zero,
-      ),
-    ],
       ),
     );
   }

@@ -22,11 +22,7 @@ class CmsBloc extends Bloc<CmsEvent, CmsState> {
       try {
         var model =
         await repository?.getCmsData(apiName: event.apiName);
-        if (model?.success == true) {
-          emit(CmsSuccessState(model!));
-        } else {
-          emit(CmsErrorState(model?.message ?? ""));
-        }
+          emit(CmsSuccessState(model));
       } catch (error, _) {
         if (kDebugMode) {
           print(_.toString());

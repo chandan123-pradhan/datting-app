@@ -1,7 +1,11 @@
 import 'package:dating_app/Configurations/theme_configuration.dart';
+import 'package:dating_app/Helper/toast_helper.dart';
+import 'package:dating_app/Pages/Register/Bloc/register_bloc.dart';
+import 'package:dating_app/Pages/Register/Bloc/register_event.dart';
 import 'package:dating_app/Utilities/size_constants.dart';
 import 'package:dating_app/Utilities/string_constants.dart';
 import 'package:dating_app/utils/image_utils.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
@@ -10,7 +14,9 @@ import 'package:image_picker/image_picker.dart';
 // import 'package:cached_network_image/cached_network_image.dart';
 
 class UploadPhotosWidget extends StatefulWidget {
-  const UploadPhotosWidget({super.key});
+  final RegisterBloc? registerBloc;
+  final Function(List<String>)? imageUploaded;
+   UploadPhotosWidget({super.key, this.registerBloc,this.imageUploaded});
 
   @override
   _UploadPhotosWidgetState createState() => _UploadPhotosWidgetState();
@@ -20,12 +26,22 @@ class _UploadPhotosWidgetState extends State<UploadPhotosWidget> {
   final List<String> imageUrls = [];
   final picker = ImagePicker();
 
-  Future<void> _pickImage() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
+  Future<void> _pickImage(String? fileType) async {
+    final XFile? pickedFile =
+        await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile == null) {
+      ToastHelper().showErrorMsg(
+          context: context, message: StringConstants.photoValidationMsg);
+    } else {
+      if (kDebugMode) {
+        print(pickedFile.name);
+      }
+      final File imageFile = File(pickedFile.path);
+      widget.registerBloc?.add(RegisterPhotoEvent(imageFile, fileType));
       setState(() {
         imageUrls.add(pickedFile.path);
       });
+      widget.imageUploaded!(imageUrls);
     }
   }
 
@@ -84,7 +100,9 @@ class _UploadPhotosWidgetState extends State<UploadPhotosWidget> {
                                     fit: BoxFit.cover,
                                   ))
                               : InkWell(
-                                  onTap: _pickImage,
+                                  onTap: () {
+                                    _pickImage("main");
+                                  },
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(
                                         SizeConstants.mainPagePadding),
@@ -101,12 +119,12 @@ class _UploadPhotosWidgetState extends State<UploadPhotosWidget> {
                               height: 32,
                               width: 127,
                             )),
-                         Positioned(
+                        Positioned(
                             top: SizeConstants.smallPadding,
                             right: SizeConstants.smallPadding +
                                 SizeConstants.mainPagePadding,
                             child: InkWell(
-                              onTap: (){
+                              onTap: () {
                                 setState(() {
                                   imageUrls.removeAt(0);
                                 });
@@ -154,7 +172,9 @@ class _UploadPhotosWidgetState extends State<UploadPhotosWidget> {
                                               fit: BoxFit.cover,
                                             ))
                                         : InkWell(
-                                            onTap: _pickImage,
+                                            onTap: () {
+                                              _pickImage("other");
+                                            },
                                             child: Padding(
                                               padding:
                                                   const EdgeInsets.all(35.0),
@@ -172,20 +192,20 @@ class _UploadPhotosWidgetState extends State<UploadPhotosWidget> {
                                           ),
                                   ),
                                 ),
-                                 Positioned(
+                                Positioned(
                                     top: SizeConstants.mainPagePadding +
                                         SizeConstants.altraSmallPadding,
                                     right: SizeConstants.altraSmallPadding,
-                                    child:InkWell(
-                                        onTap: (){
+                                    child: InkWell(
+                                        onTap: () {
                                           setState(() {
                                             imageUrls.removeAt(i);
                                           });
                                         },
                                         child: const Icon(
-                                      Icons.cancel,
-                                      color: ThemeConfiguration.buttonColor,
-                                    )))
+                                          Icons.cancel,
+                                          color: ThemeConfiguration.buttonColor,
+                                        )))
                               ],
                             ),
                         ],
@@ -221,7 +241,9 @@ class _UploadPhotosWidgetState extends State<UploadPhotosWidget> {
                                       fit: BoxFit.cover,
                                     ))
                                 : InkWell(
-                                    onTap: _pickImage,
+                                    onTap: () {
+                                      _pickImage("other");
+                                    },
                                     child: Padding(
                                       padding: const EdgeInsets.all(40.0),
                                       child: Image.asset(
@@ -232,19 +254,19 @@ class _UploadPhotosWidgetState extends State<UploadPhotosWidget> {
                                   ),
                           ),
                         ),
-                         Positioned(
+                        Positioned(
                             top: SizeConstants.altraSmallPadding,
                             right: SizeConstants.altraSmallPadding,
                             child: InkWell(
-                                onTap: (){
+                                onTap: () {
                                   setState(() {
                                     imageUrls.removeAt(i);
                                   });
                                 },
-                                child:const Icon(
-                              Icons.cancel,
-                              color: ThemeConfiguration.buttonColor,
-                            )))
+                                child: const Icon(
+                                  Icons.cancel,
+                                  color: ThemeConfiguration.buttonColor,
+                                )))
                       ],
                     ),
                 ],

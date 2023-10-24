@@ -3,6 +3,7 @@
 import 'package:dating_app/Models/base_model.dart';
 import 'package:dating_app/Models/register_mobilenumber_model.dart';
 import 'package:dating_app/Models/userdata_model.dart';
+import 'package:dating_app/Pages/Settings/Model/setting_response_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class SettingState extends Equatable {}
@@ -18,8 +19,8 @@ class SettingLoadingState extends SettingState {
 }
 
 class SettingSuccessState extends SettingState {
-  final UserDataModel? registerMobileNumberModel;
-  SettingSuccessState(this.registerMobileNumberModel);
+  final SettingResponseModel? settingResponseModel;
+  SettingSuccessState(this.settingResponseModel);
 
   @override
   List<Object?> get props => [];

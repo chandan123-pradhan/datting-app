@@ -18,13 +18,14 @@ class ApiUrls {
   static const getInterestList = "user/get_intrest_list";
   static const registerInterestEndPoint = "user/register_step_six";
   static const uploadImagesEndPoint = "user/register_step_eight";
+  static const getUserProfileEndPoint = "user/get_user_profile";
   static const userProfileUpdateEndPoint = "user/user_profile_update";
   static const fullName = "full_name";
   static const dob = "birth_day";
   static const gender = "gender";
   static const about = "about";
   static const job = "job";
-  static const interest = "interest";
+  static const interest = "intrest";
   static const image = "image";
   static const imageType = "image_type";
   static const firstName = "first_name";

@@ -3,6 +3,7 @@
 import 'package:dating_app/Models/base_model.dart';
 import 'package:dating_app/Models/register_mobilenumber_model.dart';
 import 'package:dating_app/Models/userdata_model.dart';
+import 'package:dating_app/Pages/Register/Model/interest_response_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class AccountState extends Equatable {}
@@ -23,6 +24,14 @@ class AccountSuccessState extends AccountState {
 
   @override
   List<Object?> get props => [];
+}
+
+class GetInterestSuccessState extends AccountState {
+  final InterestResponseModel? interestResponseModel;
+  GetInterestSuccessState(this.interestResponseModel);
+
+  @override
+  List<Object?> get  props => [interestResponseModel];
 }
 
 class AccountErrorState extends AccountState {

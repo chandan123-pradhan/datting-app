@@ -25,6 +25,9 @@ dependencies:
   fluttertoast:
   http:
   shared_preferences:
+  path:
+  share:
+  flutter_html:
 
 dev_dependencies:
   flutter_lints: ^2.0.0

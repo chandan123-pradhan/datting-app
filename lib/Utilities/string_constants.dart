@@ -16,12 +16,14 @@ class StringConstants {
   static const String fullName = "Full Name";
   static const String fullNameValidMsg = "Enter your full name";
   static const String whatIsYouBirthday = "When’s your birthday?";
+  static const String whatIsYouBirthdayValidMsg = "Please tell us! When’s your birthday?";
   static const String birthdayValid = "Enter a valid Birthday";
   static const String whatIsYourGender = "What is your gender?";
   static const String man = "Man";
   static const String women = "Women";
   static const String other = "Other";
   static const String interests = "Interests...";
+  static const String noInterestsFound = "No Interests Found";
   static const String uploadYourphotos = "Upload your photos";
   static const String aboutYourSelf = "About your self...";
   static const String aboutYourSelfHint = "Write here...";
@@ -29,6 +31,10 @@ class StringConstants {
   static const String jobDescriptions= "Job Description...";
   static const String jobDescriptionsHint = "Write here...";
   static const String jobDescriptionsValidMsg = "Write Something About Your Profession!";
+  static const String chooseInterestValidMsg = "Choose your interests";
+  static const String photoValidationMsg = "Please select the image First!";
+  static const String registerSuccessMsg = "Account Created Successfully!";
+
 
   //Message
   static const String messages = "Messages";
@@ -41,6 +47,10 @@ class StringConstants {
   //Profile Detail
   static const String about = "About";
   static const String interest = "Interest";
+  static const String shareReferralCodeTitle = "Share Referral Code";
+  static const String shareReferralCodeSubTitle = "Share referral code to get more rewards.";
+
+
   //Account
   static const String profile = "Profile";
   static const String personalDetail = "Personal Detail";
@@ -88,6 +98,7 @@ class StringConstants {
   static const String deleteAccountDialogSubTitle = "Are you sure? You want to Delete Your Account!";
   static const String yes = "Yes";
   static const String cancel = "Cancel";
+  static const String noDataFound = "No Data Found.";
 
 
 

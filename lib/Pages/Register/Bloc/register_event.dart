@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dating_app/Pages/Register/Model/interest_response_model.dart';
 import 'package:equatable/equatable.dart';
 
@@ -61,17 +63,17 @@ class GetInterestEvent extends RegisterEvent {
   List<Object?> get props => [];
 }
 
-class RegisterStepFourEvent extends RegisterEvent {
+class RegisterInterestEvent extends RegisterEvent {
+  String? interests;
+  RegisterInterestEvent(this.interests);
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [interests];
 }
 
-class RegisterStepFiveEvent extends RegisterEvent {
+class RegisterPhotoEvent extends RegisterEvent {
+  File? photo;
+  String? fileType;
+  RegisterPhotoEvent(this.photo,this.fileType);
   @override
-  List<Object?> get props => [];
-}
-
-class RegisterStepSixEvent extends RegisterEvent {
-  @override
-  List<Object?> get props => [];
+  List<Object?> get props => [photo,fileType];
 }

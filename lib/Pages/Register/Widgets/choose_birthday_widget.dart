@@ -75,7 +75,7 @@ class _ChooseBirthdayWidgetState extends State<ChooseBirthdayWidget> {
                 alignment: Alignment.center,
                 child: DropdownButton<int>(
                   underline: Container(),
-                  value: selectedDays,
+                  value: widget.selectedDaysValue,
                   hint: Text('DD'),
                   items: List<DropdownMenuItem<int>>.generate(31, (int index) {
                     return DropdownMenuItem<int>(
@@ -100,7 +100,7 @@ class _ChooseBirthdayWidgetState extends State<ChooseBirthdayWidget> {
                 alignment: Alignment.center,
                 child: DropdownButton<int>(
                   underline: Container(),
-                  value: selectedMonths,
+                  value: widget.selectedMonthValue,
                   hint: Text('MM'),
                   items: List<DropdownMenuItem<int>>.generate(12, (int index) {
                     return DropdownMenuItem<int>(
@@ -127,7 +127,7 @@ class _ChooseBirthdayWidgetState extends State<ChooseBirthdayWidget> {
                   height: SizeConstants.buttonHeight,
                   child: DropdownButton<String>(
                     underline: Container(),
-                    value: selectedYear,
+                    value: widget.selectedYearValue,
                     hint: Text('YEAR'),
                     items: widget.yearList
                         ?.map<DropdownMenuItem<String>>((String value) {

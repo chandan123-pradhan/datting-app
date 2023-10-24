@@ -1,16 +1,18 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:dating_app/Helper/shared_preference_helper.dart';
 import 'package:dating_app/Models/base_model.dart';
 import 'package:dating_app/Models/register_mobilenumber_model.dart';
 import 'package:dating_app/Models/userdata_model.dart';
 import 'package:dating_app/Network/api_urls.dart';
+import 'package:dating_app/Pages/Cms/Model/cms_response_model.dart';
 import 'package:dating_app/Pages/Register/Model/interest_response_model.dart';
+import 'package:dating_app/Pages/Settings/Model/setting_response_model.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:path/path.dart' as path;
 
 class ApiProvider {
-
   ///Login
 
   Future<BaseModel?> requestOtp({int? mobileNumber}) async {
@@ -39,7 +41,8 @@ class ApiProvider {
     }
   }
 
-  Future<RegisterMobileNumberModel?> otpVerify({int? mobileNumber, int? otp}) async {
+  Future<RegisterMobileNumberModel?> otpVerify(
+      {int? mobileNumber, int? otp}) async {
     RegisterMobileNumberModel registerMobileNumberModel;
     try {
       dynamic response = await http.post(
@@ -65,7 +68,6 @@ class ApiProvider {
       debugPrint(error.toString());
     }
   }
-
 
   ///ForgotPassword
 
@@ -95,7 +97,8 @@ class ApiProvider {
     }
   }
 
-  Future<BaseModel?> resetPassword({String? email,String? forgotPasswordOtp, String? newPassword}) async {
+  Future<BaseModel?> resetPassword(
+      {String? email, String? forgotPasswordOtp, String? newPassword}) async {
     BaseModel baseModel;
     try {
       dynamic response = await http.post(
@@ -122,8 +125,6 @@ class ApiProvider {
       debugPrint(error.toString());
     }
   }
-
-
 
   ///Register
 
@@ -156,7 +157,7 @@ class ApiProvider {
   Future<UserDataModel?> registerFullName({String? fullName}) async {
     UserDataModel userDataModel;
     try {
-    var  authToken = await SharedPreferencesHelper.getToken();
+      var authToken = await SharedPreferencesHelper.getToken();
       final Map<String, String> headers = {
         'Authorization': 'Bearer $authToken',
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -189,7 +190,7 @@ class ApiProvider {
   Future<UserDataModel?> registerDob({String? dob}) async {
     UserDataModel userDataModel;
     try {
-      var  authToken = await SharedPreferencesHelper.getToken();
+      var authToken = await SharedPreferencesHelper.getToken();
       final Map<String, String> headers = {
         'Authorization': 'Bearer $authToken',
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -222,7 +223,7 @@ class ApiProvider {
   Future<UserDataModel?> registerGender({String? gender}) async {
     UserDataModel userDataModel;
     try {
-      var  authToken = await SharedPreferencesHelper.getToken();
+      var authToken = await SharedPreferencesHelper.getToken();
       final Map<String, String> headers = {
         'Authorization': 'Bearer $authToken',
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -255,7 +256,7 @@ class ApiProvider {
   Future<UserDataModel?> registerAbout({String? about}) async {
     UserDataModel userDataModel;
     try {
-      var  authToken = await SharedPreferencesHelper.getToken();
+      var authToken = await SharedPreferencesHelper.getToken();
       final Map<String, String> headers = {
         'Authorization': 'Bearer $authToken',
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -288,7 +289,7 @@ class ApiProvider {
   Future<UserDataModel?> registerAboutJob({String? job}) async {
     UserDataModel userDataModel;
     try {
-      var  authToken = await SharedPreferencesHelper.getToken();
+      var authToken = await SharedPreferencesHelper.getToken();
       final Map<String, String> headers = {
         'Authorization': 'Bearer $authToken',
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -321,7 +322,7 @@ class ApiProvider {
   Future<InterestResponseModel?> getInterestList() async {
     InterestResponseModel interestResponseModel;
     try {
-      var  authToken = await SharedPreferencesHelper.getToken();
+      var authToken = await SharedPreferencesHelper.getToken();
       final Map<String, String> headers = {
         'Authorization': 'Bearer $authToken',
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -348,10 +349,10 @@ class ApiProvider {
     }
   }
 
-  Future<UserDataModel?> registerInterest({List? interest}) async {
+  Future<UserDataModel?> registerInterest({String? interest}) async {
     UserDataModel userDataModel;
     try {
-      var  authToken = await SharedPreferencesHelper.getToken();
+      var authToken = await SharedPreferencesHelper.getToken();
       final Map<String, String> headers = {
         'Authorization': 'Bearer $authToken',
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -381,47 +382,97 @@ class ApiProvider {
     }
   }
 
+  Future<UserDataModel?> registerPhoto({File? photo, String? fileType}) async {
+    UserDataModel? userDataModel;
+    try {
+      var authToken = await SharedPreferencesHelper.getToken();
+
+      final Uri url = Uri.parse(ApiUrls.baseUrl + ApiUrls.uploadImagesEndPoint);
+
+      var request = http.MultipartRequest('POST', url);
+      request.headers['Authorization'] = 'Bearer $authToken';
+      request.fields[ApiUrls.imageType] = fileType ?? '';
+
+      if (photo != null) {
+        String fileName = path.basename(photo.path);
+        request.files.add(
+          http.MultipartFile(
+            ApiUrls.image,
+            photo.readAsBytes().asStream(),
+            photo.lengthSync(),
+            filename: fileName,
+          ),
+        );
+      }
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+
+      if (kDebugMode) {
+        print('URL: $url');
+        print('Response status: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+
+      if (response.statusCode == 201) {
+        final Map<String, dynamic> jsonMap = json.decode(response.body);
+        userDataModel = UserDataModel.fromJson(jsonMap);
+        return userDataModel;
+      } else {
+        debugPrint('Request failed with status: ${response.statusCode}');
+      }
+    } catch (error, stacktrace) {
+      if (kDebugMode) {
+        print("Exception occurred: $error stackTrace: $stacktrace");
+      }
+      debugPrint(error.toString());
+    }
+
+    return null;
+  }
 
   ///Profile
 
-
-Future<UserDataModel?> getUserProfile({List? interest}) async {
-  UserDataModel userDataModel;
-  try {
-    var  authToken = await SharedPreferencesHelper.getToken();
-    final Map<String, String> headers = {
-      'Authorization': 'Bearer $authToken',
-      'Content-Type': 'application/x-www-form-urlencoded',
-    };
-
-    dynamic response = await http.post(
-      Uri.parse(ApiUrls.baseUrl + ApiUrls.registerInterestEndPoint),
-      body: {
-        ApiUrls.interest: interest,
-      },
-      headers: headers,
-    );
-
-    if (kDebugMode) {
-      print('URL: ${ApiUrls.baseUrl + ApiUrls.registerInterestEndPoint}');
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
-    }
-    final Map<String, dynamic> jsonMap = json.decode(response.body);
-    userDataModel = UserDataModel.fromJson(jsonMap);
-    return userDataModel;
-  } catch (error, stacktrace) {
-    if (kDebugMode) {
-      print("Exception occurred: $error stackTrace: $stacktrace");
-    }
-    debugPrint(error.toString());
-  }
-}
-
-  Future<UserDataModel?> updateUserProfile({String? firstName,String? lastName,String? email,String? address,String? interest,String? about, String? notficiation}) async {
+  Future<UserDataModel?> getUserProfile() async {
     UserDataModel userDataModel;
     try {
-      var  authToken = await SharedPreferencesHelper.getToken();
+      var authToken = await SharedPreferencesHelper.getToken();
+      final Map<String, String> headers = {
+        'Authorization': 'Bearer $authToken',
+        'Content-Type': 'application/x-www-form-urlencoded',
+      };
+
+      dynamic response = await http.get(
+        Uri.parse(ApiUrls.baseUrl + ApiUrls.getUserProfileEndPoint),
+        headers: headers,
+      );
+
+      if (kDebugMode) {
+        print('URL: ${ApiUrls.baseUrl + ApiUrls.getUserProfileEndPoint}');
+        print('Response status: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+      final Map<String, dynamic> jsonMap = json.decode(response.body);
+      userDataModel = UserDataModel.fromJson(jsonMap);
+      return userDataModel;
+    } catch (error, stacktrace) {
+      if (kDebugMode) {
+        print("Exception occurred: $error stackTrace: $stacktrace");
+      }
+      debugPrint(error.toString());
+    }
+  }
+
+  Future<UserDataModel?> updateUserProfile(
+      {String? firstName,
+      String? lastName,
+      String? email,
+      String? address,
+      String? interest,
+      String? about,
+      String? notficiation}) async {
+    UserDataModel userDataModel;
+    try {
+      var authToken = await SharedPreferencesHelper.getToken();
       final Map<String, String> headers = {
         'Authorization': 'Bearer $authToken',
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -457,17 +508,16 @@ Future<UserDataModel?> getUserProfile({List? interest}) async {
     }
   }
 
-
-  Future<UserDataModel?> getSettings() async {
-    UserDataModel userDataModel;
+  Future<SettingResponseModel?> getSettings() async {
+    SettingResponseModel settingResponseModel;
     try {
-      var  authToken = await SharedPreferencesHelper.getToken();
+      var authToken = await SharedPreferencesHelper.getToken();
       final Map<String, String> headers = {
         'Authorization': 'Bearer $authToken',
         'Content-Type': 'application/x-www-form-urlencoded',
       };
 
-      dynamic response = await http.post(
+      dynamic response = await http.get(
         Uri.parse(ApiUrls.baseUrl + ApiUrls.getSettingListEndPoint),
         headers: headers,
       );
@@ -478,8 +528,8 @@ Future<UserDataModel?> getUserProfile({List? interest}) async {
         print('Response body: ${response.body}');
       }
       final Map<String, dynamic> jsonMap = json.decode(response.body);
-      userDataModel = UserDataModel.fromJson(jsonMap);
-      return userDataModel;
+      settingResponseModel = SettingResponseModel.fromJson(jsonMap);
+      return settingResponseModel;
     } catch (error, stacktrace) {
       if (kDebugMode) {
         print("Exception occurred: $error stackTrace: $stacktrace");
@@ -490,28 +540,28 @@ Future<UserDataModel?> getUserProfile({List? interest}) async {
 
   ///Cms
 
-  Future<RegisterMobileNumberModel?> getCmsData({String? apiEndPoint}) async {
-    RegisterMobileNumberModel userDataModel;
+  Future<CmsResponseModel?> getCmsData({String? apiEndPoint}) async {
+    CmsResponseModel cmsResponseModel;
     try {
-      var  authToken = await SharedPreferencesHelper.getToken();
+      var authToken = await SharedPreferencesHelper.getToken();
       final Map<String, String> headers = {
         'Authorization': 'Bearer $authToken',
         'Content-Type': 'application/x-www-form-urlencoded',
       };
 
-      dynamic response = await http.post(
-        Uri.parse(ApiUrls.baseUrl + (apiEndPoint??'')),
+      dynamic response = await http.get(
+        Uri.parse(ApiUrls.baseUrl + (apiEndPoint ?? '')),
         headers: headers,
       );
 
       if (kDebugMode) {
-        print('URL: ${ApiUrls.baseUrl + (apiEndPoint??'')}');
+        print('URL: ${ApiUrls.baseUrl + (apiEndPoint ?? '')}');
         print('Response status: ${response.statusCode}');
         print('Response body: ${response.body}');
       }
-      final Map<String, dynamic> jsonMap = json.decode(response.body);
-      userDataModel = RegisterMobileNumberModel.fromJson(jsonMap);
-      return userDataModel;
+      final List<dynamic> jsonMap = json.decode(response.body);
+      cmsResponseModel = CmsResponseModel.fromJson(jsonMap);
+      return cmsResponseModel;
     } catch (error, stacktrace) {
       if (kDebugMode) {
         print("Exception occurred: $error stackTrace: $stacktrace");
@@ -520,14 +570,12 @@ Future<UserDataModel?> getUserProfile({List? interest}) async {
     }
   }
 
-
-
   ///Ads
 
   Future<UserDataModel?> getAdsList() async {
     UserDataModel userDataModel;
     try {
-      var  authToken = await SharedPreferencesHelper.getToken();
+      var authToken = await SharedPreferencesHelper.getToken();
       final Map<String, String> headers = {
         'Authorization': 'Bearer $authToken',
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -557,7 +605,7 @@ Future<UserDataModel?> getUserProfile({List? interest}) async {
   Future<UserDataModel?> getAdsDetails({String? recordId}) async {
     UserDataModel userDataModel;
     try {
-      var  authToken = await SharedPreferencesHelper.getToken();
+      var authToken = await SharedPreferencesHelper.getToken();
       final Map<String, String> headers = {
         'Authorization': 'Bearer $authToken',
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -587,11 +635,10 @@ Future<UserDataModel?> getUserProfile({List? interest}) async {
     }
   }
 
-
   Future<UserDataModel?> viewAds({String? adRecordId}) async {
     UserDataModel userDataModel;
     try {
-      var  authToken = await SharedPreferencesHelper.getToken();
+      var authToken = await SharedPreferencesHelper.getToken();
       final Map<String, String> headers = {
         'Authorization': 'Bearer $authToken',
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -621,14 +668,12 @@ Future<UserDataModel?> getUserProfile({List? interest}) async {
     }
   }
 
-
-
   ///Wallet
 
-  Future<UserDataModel?> addMoneyToWallet({int? amount,String? source}) async {
+  Future<UserDataModel?> addMoneyToWallet({int? amount, String? source}) async {
     UserDataModel userDataModel;
     try {
-      var  authToken = await SharedPreferencesHelper.getToken();
+      var authToken = await SharedPreferencesHelper.getToken();
       final Map<String, String> headers = {
         'Authorization': 'Bearer $authToken',
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -638,7 +683,7 @@ Future<UserDataModel?> getUserProfile({List? interest}) async {
         Uri.parse(ApiUrls.baseUrl + ApiUrls.addMoneyToWalletEndPoint),
         body: {
           ApiUrls.amount: amount,
-          ApiUrls.source:source,
+          ApiUrls.source: source,
         },
         headers: headers,
       );
@@ -659,11 +704,11 @@ Future<UserDataModel?> getUserProfile({List? interest}) async {
     }
   }
 
-
-  Future<UserDataModel?> debitMoneyFromWallet({int? amount,String? source,String? note}) async {
+  Future<UserDataModel?> debitMoneyFromWallet(
+      {int? amount, String? source, String? note}) async {
     UserDataModel userDataModel;
     try {
-      var  authToken = await SharedPreferencesHelper.getToken();
+      var authToken = await SharedPreferencesHelper.getToken();
       final Map<String, String> headers = {
         'Authorization': 'Bearer $authToken',
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -673,8 +718,8 @@ Future<UserDataModel?> getUserProfile({List? interest}) async {
         Uri.parse(ApiUrls.baseUrl + ApiUrls.debitMoneyFromWalletEndPoint),
         body: {
           ApiUrls.amount: amount,
-          ApiUrls.source:source,
-          ApiUrls.note:note,
+          ApiUrls.source: source,
+          ApiUrls.note: note,
         },
         headers: headers,
       );
@@ -695,11 +740,10 @@ Future<UserDataModel?> getUserProfile({List? interest}) async {
     }
   }
 
-
   Future<UserDataModel?> getUserWalletDetails({String? filterDate}) async {
     UserDataModel userDataModel;
     try {
-      var  authToken = await SharedPreferencesHelper.getToken();
+      var authToken = await SharedPreferencesHelper.getToken();
       final Map<String, String> headers = {
         'Authorization': 'Bearer $authToken',
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -729,11 +773,10 @@ Future<UserDataModel?> getUserProfile({List? interest}) async {
     }
   }
 
-
   Future<UserDataModel?> getWithdrawalRequestList() async {
     UserDataModel userDataModel;
     try {
-      var  authToken = await SharedPreferencesHelper.getToken();
+      var authToken = await SharedPreferencesHelper.getToken();
       final Map<String, String> headers = {
         'Authorization': 'Bearer $authToken',
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -748,7 +791,8 @@ Future<UserDataModel?> getUserProfile({List? interest}) async {
       );
 
       if (kDebugMode) {
-        print('URL: ${ApiUrls.baseUrl + ApiUrls.withdrawalRequestListEndPoint}');
+        print(
+            'URL: ${ApiUrls.baseUrl + ApiUrls.withdrawalRequestListEndPoint}');
         print('Response status: ${response.statusCode}');
         print('Response body: ${response.body}');
       }
@@ -763,10 +807,16 @@ Future<UserDataModel?> getUserProfile({List? interest}) async {
     }
   }
 
-  Future<UserDataModel?> withdrawalRequestGenerate({int? amount,String? withDrawalType,int? upiId,int? accountNumber,int? ifscCode,String? accountName}) async {
+  Future<UserDataModel?> withdrawalRequestGenerate(
+      {int? amount,
+      String? withDrawalType,
+      int? upiId,
+      int? accountNumber,
+      int? ifscCode,
+      String? accountName}) async {
     UserDataModel userDataModel;
     try {
-      var  authToken = await SharedPreferencesHelper.getToken();
+      var authToken = await SharedPreferencesHelper.getToken();
       final Map<String, String> headers = {
         'Authorization': 'Bearer $authToken',
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -776,17 +826,18 @@ Future<UserDataModel?> getUserProfile({List? interest}) async {
         Uri.parse(ApiUrls.baseUrl + ApiUrls.withdrawalRequestGenerateEndPoint),
         body: {
           ApiUrls.amount: amount,
-          ApiUrls.withdrawalType:withDrawalType,
-          ApiUrls.upiId:upiId,
-          ApiUrls.accountNumber:accountNumber,
-          ApiUrls.ifscCode:ifscCode,
-          ApiUrls.accountName:accountName,
+          ApiUrls.withdrawalType: withDrawalType,
+          ApiUrls.upiId: upiId,
+          ApiUrls.accountNumber: accountNumber,
+          ApiUrls.ifscCode: ifscCode,
+          ApiUrls.accountName: accountName,
         },
         headers: headers,
       );
 
       if (kDebugMode) {
-        print('URL: ${ApiUrls.baseUrl + ApiUrls.withdrawalRequestGenerateEndPoint}');
+        print(
+            'URL: ${ApiUrls.baseUrl + ApiUrls.withdrawalRequestGenerateEndPoint}');
         print('Response status: ${response.statusCode}');
         print('Response body: ${response.body}');
       }
@@ -801,13 +852,12 @@ Future<UserDataModel?> getUserProfile({List? interest}) async {
     }
   }
 
-
   ///Coins
 
   Future<UserDataModel?> orderWithRazorpay({int? amount}) async {
     UserDataModel userDataModel;
     try {
-      var  authToken = await SharedPreferencesHelper.getToken();
+      var authToken = await SharedPreferencesHelper.getToken();
       final Map<String, String> headers = {
         'Authorization': 'Bearer $authToken',
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -836,10 +886,12 @@ Future<UserDataModel?> getUserProfile({List? interest}) async {
       debugPrint(error.toString());
     }
   }
-  Future<UserDataModel?> checkoutWithRazorpay({int? orderId,paymentData,String? status}) async {
+
+  Future<UserDataModel?> checkoutWithRazorpay(
+      {int? orderId, paymentData, String? status}) async {
     UserDataModel userDataModel;
     try {
-      var  authToken = await SharedPreferencesHelper.getToken();
+      var authToken = await SharedPreferencesHelper.getToken();
       final Map<String, String> headers = {
         'Authorization': 'Bearer $authToken',
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -849,8 +901,8 @@ Future<UserDataModel?> getUserProfile({List? interest}) async {
         Uri.parse(ApiUrls.baseUrl + ApiUrls.checkoutWithRazorpayEndPoint),
         body: {
           ApiUrls.orderId: orderId,
-          ApiUrls.paymentData:paymentData,
-          ApiUrls.status:status,
+          ApiUrls.paymentData: paymentData,
+          ApiUrls.status: status,
         },
         headers: headers,
       );
@@ -876,7 +928,7 @@ Future<UserDataModel?> getUserProfile({List? interest}) async {
   Future<UserDataModel?> checkoutReferralCode({String? code}) async {
     UserDataModel userDataModel;
     try {
-      var  authToken = await SharedPreferencesHelper.getToken();
+      var authToken = await SharedPreferencesHelper.getToken();
       final Map<String, String> headers = {
         'Authorization': 'Bearer $authToken',
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -905,7 +957,4 @@ Future<UserDataModel?> getUserProfile({List? interest}) async {
       debugPrint(error.toString());
     }
   }
-
-
-
 }

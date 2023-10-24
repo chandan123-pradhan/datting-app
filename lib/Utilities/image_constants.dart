@@ -41,4 +41,5 @@ class ImageConstants {
   static const coinsIcon = 'assets/icons/coin.png';
   static const approachBtn = 'assets/images/approach-btn.png';
   static const saveBtn = 'assets/images/save-btn.png';
+  static const refferalCode='assets/icons/referral-code.png';
 }

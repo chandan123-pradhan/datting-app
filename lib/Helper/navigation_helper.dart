@@ -1,11 +1,14 @@
 import 'dart:developer';
-import 'package:dating_app/Pages/Account/View/Bloc/account_bloc.dart';
-import 'package:dating_app/Pages/Account/View/Bloc/account_repository.dart';
+import 'package:dating_app/Pages/Account/Bloc/account_bloc.dart';
+import 'package:dating_app/Pages/Account/Bloc/account_repository.dart';
 import 'package:dating_app/Pages/Account/View/account_view.dart';
 import 'package:dating_app/Pages/Cms/Bloc/cms_bloc.dart';
 import 'package:dating_app/Pages/Cms/Bloc/cms_repository.dart';
 import 'package:dating_app/Pages/Cms/View/cms_view.dart';
 import 'package:dating_app/Pages/Dashboard/View/dashboard_view.dart';
+import 'package:dating_app/Pages/Edit%20Account/Bloc/edit_account_bloc.dart';
+import 'package:dating_app/Pages/Edit%20Account/Bloc/edit_account_repository.dart';
+import 'package:dating_app/Pages/Edit%20Account/Views/edit_account_view.dart';
 import 'package:dating_app/Pages/Otp/Bloc/otp_bloc.dart';
 import 'package:dating_app/Pages/Otp/Bloc/otp_repository.dart';
 import 'package:dating_app/Pages/Otp/View/otp_view.dart';
@@ -34,6 +37,7 @@ class NavigationHelper {
   static const String setting = '/settings';
   static const String cms = "/cms";
   static const String account = '/account';
+  static const String editProfile ='/editProfile';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -89,8 +93,18 @@ class NavigationHelper {
 
       case home:
         return MaterialPageRoute(builder: (context) => const DashboardView());
+
       case profile:
         return MaterialPageRoute(builder: (context) => const ProfileCardView());
+
+      case editProfile:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider<EditAccountBloc>(
+              create: (context) =>
+                  EditAccountBloc(repository: EditAccountRepositoryImp()),
+              child: const EditAccountView()),
+        );
+
       default:
         return MaterialPageRoute(
           builder: (context) => const Scaffold(

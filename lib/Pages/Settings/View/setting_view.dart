@@ -8,6 +8,7 @@ import 'package:dating_app/Pages/Account/Widgets/account_button_widget.dart';
 import 'package:dating_app/Pages/Settings/Bloc/setting_bloc.dart';
 import 'package:dating_app/Pages/Settings/Bloc/setting_event.dart';
 import 'package:dating_app/Pages/Settings/Bloc/setting_state.dart';
+import 'package:dating_app/Pages/Settings/Model/setting_response_model.dart';
 import 'package:dating_app/Utilities/size_constants.dart';
 import 'package:dating_app/Utilities/string_constants.dart';
 import 'package:dating_app/CommonWidgets/common_app_bar.dart';
@@ -27,6 +28,7 @@ class _SettingsViewState extends State<SettingsView> {
   bool isToggleOn = true;
   SettingBloc? settingBloc;
   bool isLoading = false;
+  SettingResponseModel? settingResponseModel;
 
   @override
   void initState() {
@@ -53,7 +55,8 @@ class _SettingsViewState extends State<SettingsView> {
         isLoading = false;
         ToastHelper().showMsg(
             context: context,
-            message: currentState.registerMobileNumberModel?.message ?? '');
+            message: currentState.settingResponseModel?.message ?? '');
+        settingResponseModel = currentState.settingResponseModel;
         settingBloc?.emit(SettingEmptyState());
       } else if (currentState is SettingErrorState) {
         isLoading = false;
@@ -185,7 +188,7 @@ class _SettingsViewState extends State<SettingsView> {
                                     Navigator.pushNamed(
                                         context, NavigationHelper.cms,
                                         arguments:
-                                            ApiUrls.termsConditionEndPoint);
+                                           ApiUrls.termsConditionEndPoint);
                                   });
                                 },
                                 child: Row(
@@ -225,6 +228,4 @@ class _SettingsViewState extends State<SettingsView> {
       ],
     );
   }
-
-
 }

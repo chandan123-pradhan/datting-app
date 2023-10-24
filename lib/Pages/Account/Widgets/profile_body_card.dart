@@ -1,5 +1,7 @@
 import 'package:dating_app/Configurations/theme_configuration.dart';
+import 'package:dating_app/Models/userdata_model.dart';
 import 'package:dating_app/Pages/Account/Widgets/account_button_widget.dart';
+import 'package:dating_app/Pages/Register/Model/interest_response_model.dart';
 import 'package:dating_app/Utilities/size_constants.dart';
 import 'package:dating_app/screens/account/views/button_view.dart';
 import 'package:dating_app/screens/account/views/option_card_view.dart';
@@ -12,17 +14,14 @@ import 'package:flutter/material.dart';
 
 class ProfileBodyCard extends StatelessWidget {
   final bool? isFromEdit;
-  const ProfileBodyCard({super.key, required this.isFromEdit});
+  final UserDataModel? userDataModel;
+  const ProfileBodyCard(
+      {super.key,
+      required this.isFromEdit,
+      required this.userDataModel});
 
   @override
   Widget build(BuildContext context) {
-    List<String> options = [
-      '💃 Dancing',
-      '🎮 Gaming',
-      '🎬 Movie',
-      '🎵 Music',
-      '🍀 Nature',
-    ];
 
     List<String> myBasics = [
       '👩‍🎓 Student',
@@ -43,7 +42,7 @@ class ProfileBodyCard extends StatelessWidget {
               Constant.mainPagePadding + Constant.mediumPadding),
           child: Column(children: [
             OptionCardView(
-              title: 'Kaushiki Kumari',
+              title: userDataModel?.data?.fullName ?? '',
               isWidgetShow: false,
               image: ImageUtils.accountIcon,
               widget: null,
@@ -53,7 +52,7 @@ class ProfileBodyCard extends StatelessWidget {
               height: Constant.maximumPadding + Constant.mediumPadding,
             ),
             OptionCardView(
-              title: '+91 1223344556',
+              title: '+91 ${userDataModel?.data?.mobileNumber ?? ''}',
               isWidgetShow: false,
               image: ImageUtils.callIcon,
               widget: null,
@@ -69,7 +68,7 @@ class ProfileBodyCard extends StatelessWidget {
               isShowEditIcon: isFromEdit ?? false,
               widget: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
                     StringUtils.yourBio,
                     style:
@@ -79,7 +78,7 @@ class ProfileBodyCard extends StatelessWidget {
                     height: Constant.smallPadding,
                   ),
                   Text(
-                    'A good listner. I love having a good talk to know each other\'s side.',
+                    userDataModel?.data?.about ?? '',
                     style: TextStyle(
                         color: ThemeConfiguration.commonAppBarTitleColor),
                   )
@@ -106,7 +105,7 @@ class ProfileBodyCard extends StatelessWidget {
                     height: Constant.mediumPadding,
                   ),
                   GridView.builder(
-                    itemCount: options.length,
+                    itemCount: (userDataModel?.data?.interests??[]).length,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     gridDelegate:
@@ -129,7 +128,7 @@ class ProfileBodyCard extends StatelessWidget {
                               )),
                           child: Center(
                             child: Text(
-                              options[index],
+                              userDataModel?.data?.interests[index].intrest??'',
                               style: const TextStyle(
                                   color: ThemeConfiguration.descriptiveColor,
                                   fontWeight: FontWeight.w500,
@@ -143,154 +142,156 @@ class ProfileBodyCard extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(
-              height: Constant.maximumPadding + Constant.mediumPadding,
-            ),
-            OptionCardView(
-              title: '',
-              isWidgetShow: true,
-              image: ImageUtils.basicIcon,
-              isShowEditIcon: isFromEdit ?? false,
-              widget: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    StringUtils.myBasic,
-                    style:
-                        TextStyle(color: ThemeConfiguration.descriptiveColor),
-                  ),
-                  const SizedBox(
-                    height: Constant.mediumPadding,
-                  ),
-                  GridView.builder(
-                    itemCount: myBasics.length,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            childAspectRatio: 3,
-                            mainAxisSpacing: SizeConstants.mediumPadding,
-                            crossAxisSpacing: SizeConstants.mediumPadding),
-                    itemBuilder: (context, index) {
-                      return Center(
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10.0, vertical: 5.0),
-                          decoration: BoxDecoration(
-                              color: ThemeConfiguration.primaryLightColor
-                                  .withOpacity(0.3),
-                              borderRadius: BorderRadius.circular(35.0),
-                              border: Border.all(
-                                color: ThemeConfiguration.primaryColor,
-                              )),
-                          child: Center(
-                            child: Text(
-                              myBasics[index],
-                              style: const TextStyle(
-                                  color: ThemeConfiguration.descriptiveColor,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 11),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: Constant.maximumPadding + Constant.mediumPadding,
-            ),
-            OptionCardView(
-              title: '',
-              isWidgetShow: true,
-              image: ImageUtils.photoIcon,
-              isShowEditIcon: isFromEdit ?? false,
-              widget: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    StringUtils.photos,
-                    style:
-                        TextStyle(color: ThemeConfiguration.descriptiveColor),
-                  ),
-                  const SizedBox(
-                    height: Constant.mediumPadding,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Container(
-                        decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: ThemeConfiguration.primaryLightColor),
-                              borderRadius: BorderRadius.circular(15)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(50.0),
-                            child: InkWell(
-                              child: Image.asset(ImageUtils.galleryAddIcon),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: SizeConstants.mediumPadding,),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            height: MediaQuery.of(context).size.width / 4.7,
-                            width: MediaQuery.of(context).size.width / 4.7,
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                    color:
-                                        ThemeConfiguration.primaryLightColor),
-                                borderRadius: BorderRadius.circular(15)),
-                            child: InkWell(
-                              // onTap: _pickImage,
-                              child: Padding(
-                                padding: const EdgeInsets.all(35.0),
-                                child: Image.asset(
-                                  ImageUtils.galleryAddIcon,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: SizeConstants.mediumPadding,
-                          ),
-                          Container(
-                            height: MediaQuery.of(context).size.width / 4.7,
-                            width: MediaQuery.of(context).size.width / 4.7,
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                    color:
-                                        ThemeConfiguration.primaryLightColor),
-                                borderRadius: BorderRadius.circular(15)),
-                            child: InkWell(
-                              // onTap: _pickImage,
-                              child: Padding(
-                                padding: const EdgeInsets.all(35.0),
-                                child: Image.asset(
-                                  ImageUtils.galleryAddIcon,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: Constant.maximumPadding + Constant.mediumPadding,
-            ),
+            // const SizedBox(
+            //   height: Constant.maximumPadding + Constant.mediumPadding,
+            // ),
+            // OptionCardView(
+            //   title: '',
+            //   isWidgetShow: true,
+            //   image: ImageUtils.basicIcon,
+            //   isShowEditIcon: widget.isFromEdit ?? false,
+            //   widget: Column(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: [
+            //       const Text(
+            //         StringUtils.myBasic,
+            //         style:
+            //             TextStyle(color: ThemeConfiguration.descriptiveColor),
+            //       ),
+            //       const SizedBox(
+            //         height: Constant.mediumPadding,
+            //       ),
+            //       GridView.builder(
+            //         itemCount: myBasics.length,
+            //         shrinkWrap: true,
+            //         physics: const NeverScrollableScrollPhysics(),
+            //         gridDelegate:
+            //             const SliverGridDelegateWithFixedCrossAxisCount(
+            //                 crossAxisCount: 3,
+            //                 childAspectRatio: 3,
+            //                 mainAxisSpacing: SizeConstants.mediumPadding,
+            //                 crossAxisSpacing: SizeConstants.mediumPadding),
+            //         itemBuilder: (context, index) {
+            //           return Center(
+            //             child: Container(
+            //               padding: const EdgeInsets.symmetric(
+            //                   horizontal: 10.0, vertical: 5.0),
+            //               decoration: BoxDecoration(
+            //                   color: ThemeConfiguration.primaryLightColor
+            //                       .withOpacity(0.3),
+            //                   borderRadius: BorderRadius.circular(35.0),
+            //                   border: Border.all(
+            //                     color: ThemeConfiguration.primaryColor,
+            //                   )),
+            //               child: Center(
+            //                 child: Text(
+            //                   myBasics[index],
+            //                   style: const TextStyle(
+            //                       color: ThemeConfiguration.descriptiveColor,
+            //                       fontWeight: FontWeight.w500,
+            //                       fontSize: 11),
+            //                 ),
+            //               ),
+            //             ),
+            //           );
+            //         },
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // const SizedBox(
+            //   height: Constant.maximumPadding + Constant.mediumPadding,
+            // ),
+            // OptionCardView(
+            //   title: '',
+            //   isWidgetShow: true,
+            //   image: ImageUtils.photoIcon,
+            //   isShowEditIcon: widget.isFromEdit ?? false,
+            //   widget: Column(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: [
+            //       const Text(
+            //         StringUtils.photos,
+            //         style:
+            //             TextStyle(color: ThemeConfiguration.descriptiveColor),
+            //       ),
+            //       const SizedBox(
+            //         height: Constant.mediumPadding,
+            //       ),
+            //       Row(
+            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //         children: [
+            //           Expanded(
+            //             child: Container(
+            //               decoration: BoxDecoration(
+            //                   border: Border.all(
+            //                       color: ThemeConfiguration.primaryLightColor),
+            //                   borderRadius: BorderRadius.circular(15)),
+            //               child: Padding(
+            //                 padding: const EdgeInsets.all(50.0),
+            //                 child: InkWell(
+            //                   child: Image.asset(ImageUtils.galleryAddIcon),
+            //                 ),
+            //               ),
+            //             ),
+            //           ),
+            //           const SizedBox(
+            //             width: SizeConstants.mediumPadding,
+            //           ),
+            //           Column(
+            //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //             children: [
+            //               Container(
+            //                 height: MediaQuery.of(context).size.width / 4.7,
+            //                 width: MediaQuery.of(context).size.width / 4.7,
+            //                 decoration: BoxDecoration(
+            //                     border: Border.all(
+            //                         color:
+            //                             ThemeConfiguration.primaryLightColor),
+            //                     borderRadius: BorderRadius.circular(15)),
+            //                 child: InkWell(
+            //                   // onTap: _pickImage,
+            //                   child: Padding(
+            //                     padding: const EdgeInsets.all(35.0),
+            //                     child: Image.asset(
+            //                       ImageUtils.galleryAddIcon,
+            //                       fit: BoxFit.fill,
+            //                     ),
+            //                   ),
+            //                 ),
+            //               ),
+            //               const SizedBox(
+            //                 height: SizeConstants.mediumPadding,
+            //               ),
+            //               Container(
+            //                 height: MediaQuery.of(context).size.width / 4.7,
+            //                 width: MediaQuery.of(context).size.width / 4.7,
+            //                 decoration: BoxDecoration(
+            //                     border: Border.all(
+            //                         color:
+            //                             ThemeConfiguration.primaryLightColor),
+            //                     borderRadius: BorderRadius.circular(15)),
+            //                 child: InkWell(
+            //                   // onTap: _pickImage,
+            //                   child: Padding(
+            //                     padding: const EdgeInsets.all(35.0),
+            //                     child: Image.asset(
+            //                       ImageUtils.galleryAddIcon,
+            //                       fit: BoxFit.fill,
+            //                     ),
+            //                   ),
+            //                 ),
+            //               ),
+            //             ],
+            //           )
+            //         ],
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // const SizedBox(
+            //   height: Constant.maximumPadding + Constant.mediumPadding,
+            // ),
           ]),
         ),
       ),

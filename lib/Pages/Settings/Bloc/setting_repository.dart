@@ -2,26 +2,27 @@ import 'package:dating_app/Models/base_model.dart';
 import 'package:dating_app/Models/register_mobilenumber_model.dart';
 import 'package:dating_app/Models/userdata_model.dart';
 import 'package:dating_app/Network/api_provider.dart';
+import 'package:dating_app/Pages/Settings/Model/setting_response_model.dart';
 import 'package:flutter/foundation.dart';
 
 abstract class SettingRepository {
-  Future<UserDataModel?> getSettingData();
+  Future<SettingResponseModel?> getSettingData();
 }
 
 class SettingRepositoryImp extends SettingRepository {
   @override
-  Future<UserDataModel?> getSettingData() async {
-    UserDataModel? registerMobileNumberModel;
+  Future<SettingResponseModel?> getSettingData() async {
+    SettingResponseModel? settingResponseModel;
     try {
-      registerMobileNumberModel =
+      settingResponseModel =
       await ApiProvider().getSettings();
-      return registerMobileNumberModel;
+      return settingResponseModel;
     } catch (e, err) {
       if (kDebugMode) {
         print("$e \n $err");
       }
     }
-    return registerMobileNumberModel;
+    return settingResponseModel;
   }
 
 }

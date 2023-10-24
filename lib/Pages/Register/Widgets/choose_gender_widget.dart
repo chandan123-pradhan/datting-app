@@ -9,25 +9,25 @@ import 'package:flutter/material.dart';
 
 class ChooseGenderWidget extends StatefulWidget {
   String? selectedGenderValue;
-  ChooseGenderWidget({super.key, required this.selectedGenderValue});
+  final Function(String)? onSelectGender;
+  ChooseGenderWidget(
+      {super.key,
+      required this.selectedGenderValue,
+      required this.onSelectGender});
 
   @override
   State<ChooseGenderWidget> createState() => _ChooseGenderWidgetState();
 }
 
 class _ChooseGenderWidgetState extends State<ChooseGenderWidget> {
-  var selectedGender;
   @override
   void initState() {
     super.initState();
-    selectedGender = widget.selectedGenderValue;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+    return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
       const SizedBox(
         height: SizeConstants.mediumPadding,
       ),
@@ -63,9 +63,7 @@ class _ChooseGenderWidgetState extends State<ChooseGenderWidget> {
   _genderManView() {
     return InkWell(
       onTap: () {
-        setState(() {
-          selectedGender = 'man';
-        });
+        widget.onSelectGender!('man');
       },
       child: Stack(
         alignment: Alignment.center,
@@ -73,7 +71,7 @@ class _ChooseGenderWidgetState extends State<ChooseGenderWidget> {
           Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
-                  border: selectedGender == "man"
+                  border: widget.selectedGenderValue == "man"
                       ? Border.all(
                           width: 1, color: ThemeConfiguration.descriptiveColor)
                       : Border.all(width: 1, color: Colors.transparent)),
@@ -92,7 +90,7 @@ class _ChooseGenderWidgetState extends State<ChooseGenderWidget> {
                 style: ThemeConfiguration.richText1TextStyle(),
               )),
           Visibility(
-            visible: selectedGender == 'man',
+            visible: widget.selectedGenderValue == 'man',
             child: const Positioned(
                 right: SizeConstants.mainPagePadding,
                 top: SizeConstants.mainPagePadding,
@@ -110,9 +108,7 @@ class _ChooseGenderWidgetState extends State<ChooseGenderWidget> {
   _genderWomenView() {
     return InkWell(
       onTap: () {
-        setState(() {
-          selectedGender = 'women';
-        });
+        widget.onSelectGender!('women');
       },
       child: Stack(
         alignment: Alignment.center,
@@ -120,7 +116,7 @@ class _ChooseGenderWidgetState extends State<ChooseGenderWidget> {
           Container(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
-                border: selectedGender == 'women'
+                border: widget.selectedGenderValue == 'women'
                     ? Border.all(
                         width: 1, color: ThemeConfiguration.descriptiveColor)
                     : Border.all(width: 1, color: Colors.transparent)),
@@ -140,7 +136,7 @@ class _ChooseGenderWidgetState extends State<ChooseGenderWidget> {
                 style: ThemeConfiguration.richText1TextStyle(),
               )),
           Visibility(
-            visible: selectedGender == 'women',
+            visible: widget.selectedGenderValue == 'women',
             child: const Positioned(
                 right: SizeConstants.mainPagePadding,
                 top: SizeConstants.mainPagePadding,
@@ -158,9 +154,8 @@ class _ChooseGenderWidgetState extends State<ChooseGenderWidget> {
   _genderOthersView() {
     return InkWell(
       onTap: () {
-        setState(() {
-          selectedGender = 'others';
-        });
+        widget.onSelectGender!('others');
+
         // showModalBottomSheet(
         //     isScrollControlled: true,
         //     elevation: 0.0,
@@ -180,7 +175,7 @@ class _ChooseGenderWidgetState extends State<ChooseGenderWidget> {
           Container(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
-                border: selectedGender == 'others'
+                border: widget.selectedGenderValue == 'others'
                     ? Border.all(
                         width: 1, color: ThemeConfiguration.descriptiveColor)
                     : Border.all(width: 1, color: Colors.transparent)),
@@ -200,7 +195,7 @@ class _ChooseGenderWidgetState extends State<ChooseGenderWidget> {
                 style: ThemeConfiguration.richText1TextStyle(),
               )),
           Visibility(
-            visible: selectedGender == 'others',
+            visible: widget.selectedGenderValue == 'others',
             child: const Positioned(
                 right: SizeConstants.mainPagePadding,
                 top: SizeConstants.mainPagePadding,

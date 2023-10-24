@@ -1,9 +1,11 @@
 import 'package:dating_app/Models/userdata_model.dart';
 import 'package:dating_app/Network/api_provider.dart';
+import 'package:dating_app/Pages/Register/Model/interest_response_model.dart';
 import 'package:flutter/foundation.dart';
 
 abstract class AccountRepository {
   Future<UserDataModel?> getAccountData();
+  Future<InterestResponseModel?> getInterestList();
 }
 
 class AccountRepositoryImp extends AccountRepository {
@@ -22,4 +24,16 @@ class AccountRepositoryImp extends AccountRepository {
     return registerMobileNumberModel;
   }
 
+  @override
+  Future<InterestResponseModel?> getInterestList() async {
+    InterestResponseModel? interestResponseModel;
+    try {
+      return interestResponseModel = await ApiProvider().getInterestList();
+    } catch (e, err) {
+      if (kDebugMode) {
+        print("$e \n $err");
+      }
+    }
+    return interestResponseModel;
+  }
 }

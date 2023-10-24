@@ -20,9 +20,7 @@ class LoginHeaderWidget extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const SizedBox(
-          height: SizeConstants.mediumPadding,
-        ),
+
         Text(
           isFrom == "signup" ? StringConstants.signup : StringConstants.login,
           style: ThemeConfiguration.headingTextStyle(),
