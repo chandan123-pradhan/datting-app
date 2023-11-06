@@ -32,7 +32,7 @@ class _EditAccountViewState extends State<EditAccountView> {
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController bioController = TextEditingController();
-  List<Interest> interests = [];
+  List<dynamic> interests = [];
   List<String> interestList = [];
   List<String> options = [
     '💃 Dancing',
@@ -51,7 +51,7 @@ class _EditAccountViewState extends State<EditAccountView> {
   bool isLoading = false;
   UserDataModel? userDataModel;
   InterestResponseModel? interestResponseModel;
-
+String imageUrl='';
   @override
   void initState() {
     editAccountBloc = context.read<EditAccountBloc>();
@@ -84,6 +84,7 @@ class _EditAccountViewState extends State<EditAccountView> {
       } else if (currentState is EditAccountSuccessState) {
         isLoading = false;
         userDataModel = currentState.userDataModel;
+        imageUrl=(currentState.userDataModel!.imageUrl!)+(currentState.userDataModel!.data!.image);
         interests = userDataModel?.data?.interests ?? [];
         setInitialValue();
         editAccountBloc?.add(GetInterestEvent());
@@ -130,6 +131,8 @@ class _EditAccountViewState extends State<EditAccountView> {
                   CircleAvatar(
                     radius: SizeConstants.profileAvatarRadius,
                     backgroundColor: ThemeConfiguration.cardShadowColor,
+                    backgroundImage: NetworkImage((
+                    imageUrl))
                   ),
                   const Positioned(
                       right: 0.0,
@@ -164,6 +167,7 @@ class _EditAccountViewState extends State<EditAccountView> {
                     SizeConstants.maximumPadding,
                     0),
                 child: CommonWidgets.mobileNumberInputTextField(
+flag: true,
                     context: context, textFieldController: phoneController),
               ),
               Padding(

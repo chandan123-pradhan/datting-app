@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:dating_app/Helper/shared_preference_helper.dart';
 import 'package:dating_app/Models/base_model.dart';
@@ -6,8 +7,13 @@ import 'package:dating_app/Models/register_mobilenumber_model.dart';
 import 'package:dating_app/Models/userdata_model.dart';
 import 'package:dating_app/Network/api_urls.dart';
 import 'package:dating_app/Pages/Cms/Model/cms_response_model.dart';
+import 'package:dating_app/Pages/InterestedInYou/models/intrested_in_you_api_response.dart';
+import 'package:dating_app/Pages/Map/Model/nearest_user_list_model.dart';
 import 'package:dating_app/Pages/Register/Model/interest_response_model.dart';
 import 'package:dating_app/Pages/Settings/Model/setting_response_model.dart';
+import 'package:dating_app/Pages/YourMatches/Model/add_money_to_wallet.dart';
+import 'package:dating_app/Pages/YourMatches/Model/get_wallet_api_response.dart';
+import 'package:dating_app/Pages/YourMatches/Model/order_with_razorpaymnet_api_response.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as path;
@@ -146,6 +152,39 @@ class ApiProvider {
       final Map<String, dynamic> jsonMap = json.decode(response.body);
       baseModel = BaseModel.fromJson(jsonMap);
       return baseModel;
+    } catch (error, stacktrace) {
+      if (kDebugMode) {
+        print("Exception occurred: $error stackTrace: $stacktrace");
+      }
+      debugPrint(error.toString());
+    }
+  }
+
+  Future<UserDataModel?> checkoutReferralCode({String? code}) async {
+    UserDataModel userDataModel;
+    try {
+      var authToken = await SharedPreferencesHelper.getToken();
+      final Map<String, String> headers = {
+        'Authorization': 'Bearer $authToken',
+        'Content-Type': 'application/x-www-form-urlencoded',
+      };
+
+      dynamic response = await http.post(
+        Uri.parse(ApiUrls.baseUrl + ApiUrls.verifyReferralCodeEndPoint),
+        body: {
+          ApiUrls.userReferralCode: code,
+        },
+        headers: headers,
+      );
+
+      if (kDebugMode) {
+        print('URL: ${ApiUrls.baseUrl + ApiUrls.verifyReferralCodeEndPoint}');
+        print('Response status: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+      final Map<String, dynamic> jsonMap = json.decode(response.body);
+      userDataModel = UserDataModel.fromJson(jsonMap);
+      return userDataModel;
     } catch (error, stacktrace) {
       if (kDebugMode) {
         print("Exception occurred: $error stackTrace: $stacktrace");
@@ -349,6 +388,40 @@ class ApiProvider {
     }
   }
 
+
+  Future<dynamic?> updateUserLocation(params) async {
+    dynamic interestResponseModel;
+    try {
+      var authToken = await SharedPreferencesHelper.getToken();
+      final Map<String, String> headers = {
+        'Authorization': 'Bearer $authToken',
+        'Content-Type': 'application/x-www-form-urlencoded',
+      };
+// debugger();
+      dynamic response = await http.post(
+        Uri.parse(ApiUrls.baseUrl + ApiUrls.updateUserLocation),
+        headers: headers,
+        body: params
+      );
+      
+//  debugger();
+      if (kDebugMode) {
+        print('URL: ${ApiUrls.baseUrl + ApiUrls.getInterestList}');
+        print('Response status: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+     
+      final Map<String, dynamic> jsonMap = json.decode(response.body);
+     
+      return jsonMap;
+    } catch (error, stacktrace) {
+      if (kDebugMode) {
+        print("Exception occurred: $error stackTrace: $stacktrace");
+      }
+      debugPrint(error.toString());
+    }
+  }
+
   Future<UserDataModel?> registerInterest({String? interest}) async {
     UserDataModel userDataModel;
     try {
@@ -392,7 +465,7 @@ class ApiProvider {
       var request = http.MultipartRequest('POST', url);
       request.headers['Authorization'] = 'Bearer $authToken';
       request.fields[ApiUrls.imageType] = fileType ?? '';
-
+// debugger();
       if (photo != null) {
         String fileName = path.basename(photo.path);
         request.files.add(
@@ -406,7 +479,7 @@ class ApiProvider {
       }
       final streamedResponse = await request.send();
       final response = await http.Response.fromStream(streamedResponse);
-
+//  debugger();
       if (kDebugMode) {
         print('URL: $url');
         print('Response status: ${response.statusCode}');
@@ -618,7 +691,6 @@ class ApiProvider {
         },
         headers: headers,
       );
-
       if (kDebugMode) {
         print('URL: ${ApiUrls.baseUrl + ApiUrls.getAdDetailEndPoint}');
         print('Response status: ${response.statusCode}');
@@ -670,8 +742,9 @@ class ApiProvider {
 
   ///Wallet
 
-  Future<UserDataModel?> addMoneyToWallet({int? amount, String? source}) async {
-    UserDataModel userDataModel;
+  Future<AddMoneyToWallet?> addMoneyToWallet(
+      {String? amount, String? source}) async {
+    AddMoneyToWallet userDataModel;
     try {
       var authToken = await SharedPreferencesHelper.getToken();
       final Map<String, String> headers = {
@@ -687,14 +760,13 @@ class ApiProvider {
         },
         headers: headers,
       );
-
       if (kDebugMode) {
         print('URL: ${ApiUrls.baseUrl + ApiUrls.addMoneyToWalletEndPoint}');
         print('Response status: ${response.statusCode}');
         print('Response body: ${response.body}');
       }
       final Map<String, dynamic> jsonMap = json.decode(response.body);
-      userDataModel = UserDataModel.fromJson(jsonMap);
+      userDataModel = AddMoneyToWallet.fromJson(jsonMap);
       return userDataModel;
     } catch (error, stacktrace) {
       if (kDebugMode) {
@@ -740,8 +812,8 @@ class ApiProvider {
     }
   }
 
-  Future<UserDataModel?> getUserWalletDetails({String? filterDate}) async {
-    UserDataModel userDataModel;
+  Future<GetWalletDetailsApiResponse?> getUserWalletDetails() async {
+    GetWalletDetailsApiResponse userDataModel;
     try {
       var authToken = await SharedPreferencesHelper.getToken();
       final Map<String, String> headers = {
@@ -751,9 +823,7 @@ class ApiProvider {
 
       dynamic response = await http.post(
         Uri.parse(ApiUrls.baseUrl + ApiUrls.getUserWalletDetailsEndPoint),
-        body: {
-          ApiUrls.filterDate: filterDate,
-        },
+        body: {},
         headers: headers,
       );
 
@@ -763,7 +833,7 @@ class ApiProvider {
         print('Response body: ${response.body}');
       }
       final Map<String, dynamic> jsonMap = json.decode(response.body);
-      userDataModel = UserDataModel.fromJson(jsonMap);
+      userDataModel = GetWalletDetailsApiResponse.fromJson(jsonMap);
       return userDataModel;
     } catch (error, stacktrace) {
       if (kDebugMode) {
@@ -854,8 +924,9 @@ class ApiProvider {
 
   ///Coins
 
-  Future<UserDataModel?> orderWithRazorpay({int? amount}) async {
-    UserDataModel userDataModel;
+  Future<OrderWithRazorpayApiResponse?> orderWithRazorpay(
+      {String? amount}) async {
+    OrderWithRazorpayApiResponse userDataModel;
     try {
       var authToken = await SharedPreferencesHelper.getToken();
       final Map<String, String> headers = {
@@ -877,7 +948,7 @@ class ApiProvider {
         print('Response body: ${response.body}');
       }
       final Map<String, dynamic> jsonMap = json.decode(response.body);
-      userDataModel = UserDataModel.fromJson(jsonMap);
+      userDataModel = OrderWithRazorpayApiResponse.fromJson(jsonMap);
       return userDataModel;
     } catch (error, stacktrace) {
       if (kDebugMode) {
@@ -887,8 +958,39 @@ class ApiProvider {
     }
   }
 
-  Future<UserDataModel?> checkoutWithRazorpay(
-      {int? orderId, paymentData, String? status}) async {
+  Future<IntrestedInYouApiResponse?> getIntrestedInYou(
+      Map params) async {
+    IntrestedInYouApiResponse userDataModel;
+    try {
+      var authToken = await SharedPreferencesHelper.getToken();
+      final Map<String, String> headers = {
+        'Authorization': 'Bearer $authToken',
+        'Content-Type': 'application/x-www-form-urlencoded',
+      };
+
+      dynamic response = await http.post(
+        Uri.parse(ApiUrls.baseUrl + ApiUrls.intrestedInYou),
+        body: params,
+        headers: headers,
+      );
+
+      if (kDebugMode) {
+        print('URL: ${ApiUrls.baseUrl + ApiUrls.intrestedInYou}');
+        print('Response status: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+      final Map<String, dynamic> jsonMap = json.decode(response.body);
+      userDataModel = IntrestedInYouApiResponse.fromJson(jsonMap);
+      return userDataModel;
+    } catch (error, stacktrace) {
+      if (kDebugMode) {
+        print("Exception occurred: $error stackTrace: $stacktrace");
+      }
+      debugPrint(error.toString());
+    }
+  }
+
+  Future<UserDataModel?> checkoutWithRazorpay({required Map params}) async {
     UserDataModel userDataModel;
     try {
       var authToken = await SharedPreferencesHelper.getToken();
@@ -899,11 +1001,7 @@ class ApiProvider {
 
       dynamic response = await http.post(
         Uri.parse(ApiUrls.baseUrl + ApiUrls.checkoutWithRazorpayEndPoint),
-        body: {
-          ApiUrls.orderId: orderId,
-          ApiUrls.paymentData: paymentData,
-          ApiUrls.status: status,
-        },
+        body: params,
         headers: headers,
       );
 
@@ -923,33 +1021,35 @@ class ApiProvider {
     }
   }
 
-  ///Others
+  ///Map
 
-  Future<UserDataModel?> checkoutReferralCode({String? code}) async {
-    UserDataModel userDataModel;
+  Future<NearestUserListModel?> getNearestUserList(
+      {String? lat, String? lang, String? km}) async {
+    NearestUserListModel nearestUserListModel;
     try {
       var authToken = await SharedPreferencesHelper.getToken();
-      final Map<String, String> headers = {
+      final Map<String, String>  headers = {
         'Authorization': 'Bearer $authToken',
         'Content-Type': 'application/x-www-form-urlencoded',
       };
 
       dynamic response = await http.post(
-        Uri.parse(ApiUrls.baseUrl + ApiUrls.checkReferralCodeEndPoint),
+        Uri.parse(ApiUrls.baseUrl + ApiUrls.getNearestUsersEndPoint),
         body: {
-          ApiUrls.userReferralCode: code,
+          ApiUrls.currentLat: lat,
+          ApiUrls.currentLong:lang,
+          ApiUrls.km:km,
         },
         headers: headers,
       );
-
       if (kDebugMode) {
-        print('URL: ${ApiUrls.baseUrl + ApiUrls.checkReferralCodeEndPoint}');
+        print('URL: ${ApiUrls.baseUrl + ApiUrls.getNearestUsersEndPoint}');
         print('Response status: ${response.statusCode}');
         print('Response body: ${response.body}');
       }
       final Map<String, dynamic> jsonMap = json.decode(response.body);
-      userDataModel = UserDataModel.fromJson(jsonMap);
-      return userDataModel;
+      nearestUserListModel = NearestUserListModel.fromJson(jsonMap);
+      return nearestUserListModel;
     } catch (error, stacktrace) {
       if (kDebugMode) {
         print("Exception occurred: $error stackTrace: $stacktrace");

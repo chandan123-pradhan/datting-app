@@ -1,9 +1,13 @@
 import 'package:dating_app/Configurations/theme_configuration.dart';
+import 'package:dating_app/Pages/YourMatches/Bloc/wallet_bloc.dart';
 import 'package:dating_app/Pages/YourMatches/View/wallet_view.dart';
+import 'package:dating_app/Utilities/common_widgets.dart';
 import 'package:dating_app/Utilities/image_constants.dart';
 import 'package:dating_app/Utilities/size_constants.dart';
 import 'package:dating_app/Utilities/string_constants.dart';
+import 'package:dating_app/utils/color_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
 
 class Dialogs {
   static void insufficientBalanceDialog(BuildContext context) {
@@ -160,7 +164,7 @@ class Dialogs {
                         const SizedBox(
                           width: SizeConstants.mediumPadding,
                         ),
-                         Expanded(
+                        Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -354,7 +358,7 @@ class Dialogs {
                         const SizedBox(
                           width: SizeConstants.mediumPadding,
                         ),
-                         Expanded(
+                        Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -380,6 +384,150 @@ class Dialogs {
                         )
                       ]),
                     ),
+                  ),
+                ])),
+              ),
+            ],
+          ),
+        );
+      },
+      transitionBuilder: (_, anim, __, child) {
+        Tween<Offset> tween;
+        if (anim.status == AnimationStatus.reverse) {
+          tween = Tween(begin: const Offset(-1, 0), end: Offset.zero);
+        } else {
+          tween = Tween(begin: const Offset(1, 0), end: Offset.zero);
+        }
+
+        return SlideTransition(
+          position: tween.animate(anim),
+          child: FadeTransition(
+            opacity: anim,
+            child: child,
+          ),
+        );
+      },
+    );
+  }
+
+  static void addCoinsDeductionDialog(BuildContext context,
+      TextEditingController tcontroller, onBottonPressed) {
+    showGeneralDialog(
+      context: context,
+      barrierLabel: "Barrier",
+      barrierDismissible: true,
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionDuration: const Duration(milliseconds: 700),
+      pageBuilder: (_, __, ___) {
+        return GetBuilder<WalletController>(
+            init: WalletController(),
+            builder: (controller) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    AlertDialog(
+                      scrollable: true,
+                      content: Center(
+                          child: Column(children: [
+                        CommonWidgets.inputField(
+                            hintText: 'Enter Coins',
+                            textInputType: TextInputType.number,
+                            context: context,
+                            textFieldController: tcontroller),
+                        const SizedBox(
+                          height: SizeConstants.maximumPadding,
+                        ),
+                        Text(
+                          '${StringConstants.addCoinDes}',
+                          style: ThemeConfiguration.commonTextStyle(
+                              18.0,
+                              FontWeight.w500,
+                              ThemeConfiguration.descriptiveColor),
+                          overflow: TextOverflow.clip,
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(
+                          height: SizeConstants.maximumPadding,
+                        ),
+                        controller.isloading
+                            ? Container(
+                                width: MediaQuery.of(context).size.width / 1,
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    color: ColorConstant.primaryColor,
+                                  ),
+                                ),
+                              )
+                            : InkWell(
+                                onTap: () {
+                                  onBottonPressed();
+                                },
+                                child: Image.asset(
+                                  ImageConstants.addCoinsBtn,
+                                  height: SizeConstants.buttonHeight,
+                                  width: MediaQuery.of(context).size.width / 1,
+                                ),
+                              ),
+                      ])),
+                    ),
+                  ],
+                ),
+              );
+            });
+      },
+      transitionBuilder: (_, anim, __, child) {
+        Tween<Offset> tween;
+        if (anim.status == AnimationStatus.reverse) {
+          tween = Tween(begin: const Offset(-1, 0), end: Offset.zero);
+        } else {
+          tween = Tween(begin: const Offset(1, 0), end: Offset.zero);
+        }
+
+        return SlideTransition(
+          position: tween.animate(anim),
+          child: FadeTransition(
+            opacity: anim,
+            child: child,
+          ),
+        );
+      },
+    );
+  }
+
+  static void showinfodialog(BuildContext context,Function onPressed) {
+    showGeneralDialog(
+      context: context,
+      barrierLabel: "Barrier",
+      barrierDismissible: true,
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionDuration: const Duration(milliseconds: 700),
+      pageBuilder: (_, __, ___) {
+        return Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AlertDialog(
+                scrollable: true,
+                content: Center(
+                    child: Column(children: [
+                  Text(
+                    'You have to verify your face first!',
+                    style: ThemeConfiguration.commonTextStyle(18.0,
+                        FontWeight.w500, ThemeConfiguration.descriptiveColor),
+                    overflow: TextOverflow.clip,
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                 CommonWidgets.mainBotton(
+                        title: 'OK', context: context, onPressed: () {
+onPressed();
+                        }),
+                  
+                  const SizedBox(
+                    height: SizeConstants.maximumPadding,
                   ),
                 ])),
               ),

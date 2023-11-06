@@ -12,11 +12,13 @@ class ChooseInterestsWidget extends StatefulWidget {
   final InterestResponseModel? interestResponseModel;
   final Function(int)? chooseInterest;
   final RegisterBloc? registerBloc;
+  final bool? isLoading;
   const ChooseInterestsWidget(
       {super.key,
       required this.interestResponseModel,
       required this.chooseInterest,
-      this.registerBloc});
+      this.registerBloc,
+      required this.isLoading});
 
   @override
   _ChooseInterestsWidgetState createState() => _ChooseInterestsWidgetState();
@@ -125,7 +127,7 @@ class _ChooseInterestsWidgetState extends State<ChooseInterestsWidget> {
                   );
                 },
               ),
-            if ((widget.interestResponseModel?.data ?? []).isEmpty)
+            if ((widget.interestResponseModel?.data ?? []).isEmpty&&widget.isLoading==false)
               Padding(
                 padding: EdgeInsets.only(
                     top: MediaQuery.of(context).size.height / 4),

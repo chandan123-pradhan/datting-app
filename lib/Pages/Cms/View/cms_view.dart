@@ -111,7 +111,7 @@ class _CmsViewState extends State<CmsView> {
                     ))),
                   ),
 
-                  if(((cmsResponseModel?.cmsDataList??[]).isEmpty)||(isLoading=false))
+                  if(((cmsResponseModel?.cmsDataList??[]).isEmpty)&&(isLoading=false))
                     const Padding(
                       padding:
                        EdgeInsets.all(SizeConstants.mainPagePadding),

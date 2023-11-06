@@ -40,6 +40,7 @@ class LoginHeaderWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
           child: CommonWidgets.mobileNumberInputTextField(
+            flag: false,
               context: context, textFieldController: mobileNumberController),
         ),
       ],

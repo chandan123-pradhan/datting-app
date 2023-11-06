@@ -1,21 +1,27 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dating_app/Configurations/theme_configuration.dart';
+import 'package:dating_app/Helper/navigation_helper.dart';
+import 'package:dating_app/Pages/InterestedInYou/controller/intrested_in_you_controller.dart';
+import 'package:dating_app/Pages/InterestedInYou/models/intrested_in_you_api_response.dart';
 import 'package:dating_app/Pages/ProfileDetail/View/profile_detail_view.dart';
 import 'package:dating_app/Utilities/image_constants.dart';
 import 'package:dating_app/Utilities/size_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ProfileCardWidget extends StatelessWidget {
-  const ProfileCardWidget({
+  IntrestedPersonData intrestedPersonData;
+   ProfileCardWidget({
     super.key,
+    required this.intrestedPersonData
   });
 
+var controller=Get.put(IntrestedInYouController());
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return const ProfileDetail();
-        }));
+        Navigator.pushNamed(context, NavigationHelper.profileDetail);
       },
       child: Stack(
         children: [
@@ -23,12 +29,7 @@ class ProfileCardWidget extends StatelessWidget {
             decoration: BoxDecoration(
                 borderRadius:
                     BorderRadius.circular(SizeConstants.normalCardBorderRadius),
-                image: const DecorationImage(
-                  image: AssetImage(
-                    ImageConstants.girlDummy,
-                  ),
-                  fit: BoxFit.fill,
-                )),
+               ),
           ),
           Positioned(
             left: 0,
@@ -38,10 +39,36 @@ class ProfileCardWidget extends StatelessWidget {
             child: ClipRRect(
                 borderRadius:
                     BorderRadius.circular(SizeConstants.normalCardBorderRadius),
-                child: Image.asset(
-                  ImageConstants.profileCardBg,
-                  fit: BoxFit.fill,
-                )),
+                child:
+                
+                CachedNetworkImage(
+  imageUrl:controller.intrestedInYouApiResponse!.imgUrl+intrestedPersonData.actionDoneTo.image,
+  imageBuilder: (context, imageProvider) => Container(
+    decoration: BoxDecoration(
+      image: DecorationImage(
+          image: imageProvider,
+          fit: BoxFit.cover,
+        //  colorFilter:
+              ),
+    ),
+  ),
+  placeholder: (context, url) =>  Container(
+    decoration: BoxDecoration(
+      border: Border.all(width: 1,color: Colors.black26),
+      borderRadius: BorderRadius.circular(10)
+,    ),
+ child: Icon(Icons.image,size:25),
+  ),
+  errorWidget: (context, url, error) =>Container(
+    decoration: BoxDecoration(
+      border: Border.all(width: 1,color: Colors.black26),
+      borderRadius: BorderRadius.circular(10)
+,    ),
+ child: Icon(Icons.image,size:40),
+  ),
+),
+                
+               ),
           ),
           Padding(
               padding: const EdgeInsets.all(
@@ -49,7 +76,7 @@ class ProfileCardWidget extends StatelessWidget {
               child: Align(
                 alignment: Alignment.bottomLeft,
                 child: Text(
-                  'Jenny Cruz, 28',
+                 intrestedPersonData.actionDoneBy.fullName,
                   style: ThemeConfiguration.commonTextStyle(
                     13.0,
                     FontWeight.w700,

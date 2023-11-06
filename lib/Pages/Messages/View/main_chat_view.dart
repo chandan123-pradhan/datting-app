@@ -1,4 +1,5 @@
 import 'package:dating_app/Configurations/theme_configuration.dart';
+import 'package:dating_app/Helper/navigation_helper.dart';
 import 'package:dating_app/Pages/Messages/Widgets/other_card_widget.dart';
 import 'package:dating_app/Pages/Messages/Widgets/reply_card_widget.dart';
 import 'package:dating_app/Pages/ProfileDetail/View/profile_detail_view.dart';
@@ -29,9 +30,7 @@ class _MainChatViewState extends State<MainChatView> {
           children: [
             InkWell(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return const ProfileDetail();
-                }));
+                Navigator.pushNamed(context, NavigationHelper.profileDetail);
               },
               child: Image.asset(
                 "assets/icons/person_icon.png",

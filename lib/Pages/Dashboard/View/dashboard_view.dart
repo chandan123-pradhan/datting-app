@@ -3,6 +3,9 @@ import 'package:dating_app/Pages/Account/Bloc/account_bloc.dart';
 import 'package:dating_app/Pages/Account/Bloc/account_repository.dart';
 import 'package:dating_app/Pages/Account/View/account_view.dart';
 import 'package:dating_app/Pages/Dashboard/Widgets/dashboard_widgets.dart';
+import 'package:dating_app/Pages/InterestedInYou/controller/intrested_in_you_controller.dart';
+import 'package:dating_app/Pages/Map/Bloc/map_bloc.dart';
+import 'package:dating_app/Pages/Map/Bloc/map_repository.dart';
 import 'package:dating_app/Pages/Map/View/map_view.dart';
 import 'package:dating_app/Pages/Messages/View/message_view.dart';
 import 'package:dating_app/Pages/YourMatches/View/your_matches_view.dart';
@@ -10,6 +13,7 @@ import 'package:dating_app/Utilities/image_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 
 import '../../InterestedInYou/View/interested_in_you_view.dart';
 
@@ -29,10 +33,29 @@ class _DashboardViewState extends State<DashboardView> {
             AccountBloc(repository: AccountRepositoryImp()),
         child: const AccountView()),
     InterestedInYouView(),
-    MapView(),
+    BlocProvider<MapBloc>(
+        create: (context) =>
+            MapBloc(repository: MapRepositoryImp()),
+        child:  MapView()),
     YourMatchesView(),
     MessageView()
   ];
+  var controller=Get.put(IntrestedInYouController());
+
+
+@override
+  void initState() {
+    AccountBloc().updateLocation(context);
+    controller.getIntrestedInYou();
+    // TODO: implement initState
+    super.initState();
+  }
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

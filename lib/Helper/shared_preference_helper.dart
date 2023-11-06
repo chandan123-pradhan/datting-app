@@ -32,7 +32,10 @@ class SharedPreferencesHelper {
 
   static Future<String?> getToken() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(tokenKey);
+    
+    var v= prefs.getString(tokenKey);
+    print('token= $v');
+    return v;
   }
 
   static Future<UserDataModel?> getUserData() async {

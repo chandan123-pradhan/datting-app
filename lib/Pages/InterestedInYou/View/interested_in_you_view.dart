@@ -1,8 +1,10 @@
 import 'package:dating_app/Configurations/theme_configuration.dart';
 import 'package:dating_app/Pages/InterestedInYou/Widgets/profile_card_widget.dart';
+import 'package:dating_app/Pages/InterestedInYou/controller/intrested_in_you_controller.dart';
 import 'package:dating_app/Utilities/image_constants.dart';
 import 'package:dating_app/Utilities/size_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class InterestedInYouView extends StatefulWidget {
   const InterestedInYouView({super.key});
@@ -57,24 +59,35 @@ class headerWidget extends StatelessWidget {
 Widget bodyWidget(BuildContext context) {
   return Padding(
     padding: const EdgeInsets.all(SizeConstants.mainPagePadding),
-    child: SingleChildScrollView(
-      child: MediaQuery.removePadding(
-        context: context,
-        removeTop: true,
-        child: GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 0.8,
-              mainAxisSpacing: SizeConstants.mediumPadding,
-              crossAxisSpacing: SizeConstants.mediumPadding,
-            ),
-            itemCount: 3,
-            itemBuilder: (BuildContext context, int index) {
-              return const ProfileCardWidget();
-            }),
-      ),
+    child: GetBuilder<IntrestedInYouController>(
+      init: IntrestedInYouController(),
+      builder: (controller) {
+        return 
+        
+      controller.intrestedInYouApiResponse==null?const Center(
+        child: CircularProgressIndicator(),
+      ):  SingleChildScrollView(
+          child: MediaQuery.removePadding(
+            context: context,
+            removeTop: true,
+            child: GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.8,
+                  mainAxisSpacing: SizeConstants.mediumPadding,
+                  crossAxisSpacing: SizeConstants.mediumPadding,
+                ),
+                itemCount: controller.intrestedInYouApiResponse!.data.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return  ProfileCardWidget(
+                    intrestedPersonData: controller.intrestedInYouApiResponse!.data[index],
+                  );
+                }),
+          ),
+        );
+      }
     ),
   );
 }

@@ -10,10 +10,14 @@ class StringConstants {
   static const String requiredValidationMsg = "Required";
   static const String phoneNumberRequiredValidationMsg = "Enter Phone Number First!";
   static const String otpRequiredValidationMsg = "Enter Otp First!";
+
+
   //Register
   static const String signupSubHeading = "Enter your phone number to Signup";
   static const String whatIsYourName = "What is your full name?";
   static const String fullName = "Full Name";
+  static const String refferalCode='Referall Code';
+  static const String refferalCodeEnterHere='Enter Referral Code';
   static const String fullNameValidMsg = "Enter your full name";
   static const String whatIsYouBirthday = "When’s your birthday?";
   static const String whatIsYouBirthdayValidMsg = "Please tell us! When’s your birthday?";
@@ -80,7 +84,7 @@ class StringConstants {
   static const String addCoins = "Add coins";
   static const String coinsDeduct =
       "Coins will be deducted from your wallet to approach ";
-
+  static const String addCoinDes='1 Coins = Rs.1';
   //Wallet and popup
   static const String wallet = "Wallet";
   static const String walletSubtitle =
@@ -99,8 +103,6 @@ class StringConstants {
   static const String yes = "Yes";
   static const String cancel = "Cancel";
   static const String noDataFound = "No Data Found.";
-
-
 
   //otp
   static const String otp = "Verify Login";

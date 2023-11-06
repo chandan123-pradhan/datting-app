@@ -12,6 +12,9 @@ import 'package:dating_app/Pages/Edit%20Account/Views/edit_account_view.dart';
 import 'package:dating_app/Pages/Otp/Bloc/otp_bloc.dart';
 import 'package:dating_app/Pages/Otp/Bloc/otp_repository.dart';
 import 'package:dating_app/Pages/Otp/View/otp_view.dart';
+import 'package:dating_app/Pages/ProfileDetail/Bloc/profile_detail_bloc.dart';
+import 'package:dating_app/Pages/ProfileDetail/Bloc/profile_detail_repository.dart';
+import 'package:dating_app/Pages/ProfileDetail/View/profile_detail_view.dart';
 import 'package:dating_app/Pages/Register/Bloc/register_bloc.dart';
 import 'package:dating_app/Pages/Register/View/register_view.dart';
 import 'package:dating_app/Pages/Login/Bloc/login_bloc.dart';
@@ -37,7 +40,8 @@ class NavigationHelper {
   static const String setting = '/settings';
   static const String cms = "/cms";
   static const String account = '/account';
-  static const String editProfile ='/editProfile';
+  static const String editProfile = '/editProfile';
+  static const String profileDetail = "/profileDetail";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -103,6 +107,14 @@ class NavigationHelper {
               create: (context) =>
                   EditAccountBloc(repository: EditAccountRepositoryImp()),
               child: const EditAccountView()),
+        );
+
+      case profileDetail:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider<ProfileDetailBloc>(
+              create: (context) =>
+                  ProfileDetailBloc(repository: ProfileDetailRepositoryImp()),
+              child: const ProfileDetailView()),
         );
 
       default:

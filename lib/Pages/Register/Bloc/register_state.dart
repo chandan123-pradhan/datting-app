@@ -35,6 +35,15 @@ class RegisterMobileNumberSuccessState extends RegisterState {
   List<Object?> get  props => [];
 }
 
+
+class ReferralCodeSuccessState extends RegisterState {
+  final BaseModel? baseModel;
+  ReferralCodeSuccessState(this.baseModel);
+
+  @override
+  List<Object?> get  props => [];
+}
+
 class RegisterFullNameSuccessState extends RegisterState {
   final UserDataModel? userDataModel;
   RegisterFullNameSuccessState(this.userDataModel);

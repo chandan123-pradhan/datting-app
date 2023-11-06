@@ -1,14 +1,30 @@
 import 'package:dating_app/Configurations/theme_configuration.dart';
 import 'package:dating_app/Models/userdata_model.dart';
+import 'package:dating_app/Pages/YourMatches/Bloc/wallet_bloc.dart';
+import 'package:dating_app/Pages/YourMatches/View/wallet_view.dart';
 import 'package:dating_app/Utilities/image_constants.dart';
 import 'package:dating_app/Utilities/size_constants.dart';
 import 'package:dating_app/Utilities/string_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:share/share.dart';
 
-class ProfileCardWidget extends StatelessWidget {
+class ProfileCardWidget extends StatefulWidget {
   final UserDataModel? userDataModel;
   const ProfileCardWidget({super.key, required this.userDataModel});
+
+  @override
+  State<ProfileCardWidget> createState() => _ProfileCardWidgetState();
+}
+
+class _ProfileCardWidgetState extends State<ProfileCardWidget> {
+var walletController = Get.put(WalletController());
+ @override
+  void initState() {
+    walletController.getWalletApiResponse();
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +36,7 @@ class ProfileCardWidget extends StatelessWidget {
             CircleAvatar(
               radius: SizeConstants.profileAvatarRadius,
               backgroundColor: ThemeConfiguration.cardShadowColor,
-              backgroundImage: NetworkImage(userDataModel?.data?.image ?? ''),
+              backgroundImage: NetworkImage((widget.userDataModel?.imageUrl??'')+(widget.userDataModel?.data?.image??'')),
             ),
             const Positioned(
                 right: 0.0,
@@ -39,13 +55,13 @@ class ProfileCardWidget extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(userDataModel?.data?.fullName ?? '',
+              Text(widget.userDataModel?.data?.fullName ?? '',
                   style: ThemeConfiguration.textFieldInputTextStyle()),
-              if (userDataModel?.data?.approved == true)
+              if (widget.userDataModel?.data?.approved == true)
                 const SizedBox(
                   width: SizeConstants.smallPadding,
                 ),
-              if (userDataModel?.data?.approved == true)
+              if (widget.userDataModel?.data?.approved == true)
                 Image.asset(
                   ImageConstants.shieldTickButton,
                   height: 18,
@@ -60,52 +76,72 @@ class ProfileCardWidget extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              width: deviceSize.width / 2.3,
-              decoration: BoxDecoration(
-                color: ThemeConfiguration.cardBgColor,
-                borderRadius:
-                    BorderRadius.circular(SizeConstants.normalCardBorderRadius),
-                boxShadow: [
-                  BoxShadow(
-                    color: ThemeConfiguration.cardShadowColor,
-                    blurRadius: SizeConstants.normalCardBorderRadius,
-                  )
-                ],
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(
-                    SizeConstants.mainContainerContentPadding),
-                child: Row(children: [
-                  Image.asset(
-                    ImageConstants.walletIcon,
-                    height: 40,
-                    width: 40,
-                    color: ThemeConfiguration.primaryColor,
-                  ),
-                  const SizedBox(
-                    width: SizeConstants.mediumPadding,
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          StringConstants.yourWallet,
-                        ),
-                        const SizedBox(
-                          height: 5.0,
-                        ),
-                        Text(
-                          "${StringConstants.yourWalletSubTitleOne}320 ${StringConstants.yourWalletSubTitleTwo}",
-                          style: ThemeConfiguration.profileTinyTextStyle(),
-                          maxLines: 2,
-                        ),
+GetBuilder<WalletController>(
+          init: WalletController(),
+          builder: (controller) {
+            return InkWell(
+                  onTap: (){
+ Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return const WalletView();
+                          }));
+                  },
+                  child: Container(
+                    width: deviceSize.width / 2.3,
+                    decoration: BoxDecoration(
+                      color: ThemeConfiguration.cardBgColor,
+                      borderRadius:
+                          BorderRadius.circular(SizeConstants.normalCardBorderRadius),
+                      boxShadow: [
+                        BoxShadow(
+                          color: ThemeConfiguration.cardShadowColor,
+                          blurRadius: SizeConstants.normalCardBorderRadius,
+                        )
                       ],
                     ),
-                  )
-                ]),
-              ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(
+                          SizeConstants.mainContainerContentPadding),
+                      child: Row(children: [
+                        Image.asset(
+                          ImageConstants.walletIcon,
+                          height: 40,
+                          width: 40,
+                          color: ThemeConfiguration.primaryColor,
+                        ),
+                        const SizedBox(
+                          width: SizeConstants.mediumPadding,
+                        ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                StringConstants.yourWallet,
+                              ),
+                              const SizedBox(
+                                height: 5.0,
+                              ),
+                             
+                             controller.getWalletDetailsApiResponse==null?
+                             Text(
+                                "${StringConstants.yourWalletSubTitleOne} ${StringConstants.yourWalletSubTitleTwo}",
+                                style: ThemeConfiguration.profileTinyTextStyle(),
+                                maxLines: 2,
+                              ):
+                              Text(
+                                "${StringConstants.yourWalletSubTitleOne}${controller.getWalletDetailsApiResponse!.data.walletBalance} ${StringConstants.yourWalletSubTitleTwo}",
+                                style: ThemeConfiguration.profileTinyTextStyle(),
+                                maxLines: 2,
+                              ),
+                            ],
+                          ),
+                        )
+                      ]),
+                    ),
+                  ),
+                );
+              }
             ),
             const SizedBox(height: SizeConstants.maximumPadding),
             Container(
@@ -168,7 +204,7 @@ class ProfileCardWidget extends StatelessWidget {
         ),
         InkWell(
           onTap: () {
-            String referralCode = userDataModel?.data?.userReferralCode ?? '';
+            String referralCode = widget.userDataModel?.data?.userReferralCode ?? '';
             if (referralCode.isNotEmpty) {
               String message = 'My referral code: $referralCode';
 

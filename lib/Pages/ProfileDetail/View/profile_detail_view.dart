@@ -14,14 +14,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ProfileDetail extends StatefulWidget {
-  const ProfileDetail({super.key});
+class ProfileDetailView extends StatefulWidget {
+  const ProfileDetailView({super.key});
 
   @override
-  State<ProfileDetail> createState() => _ProfileDetailState();
+  State<ProfileDetailView> createState() => _ProfileDetailViewState();
 }
 
-class _ProfileDetailState extends State<ProfileDetail> {
+class _ProfileDetailViewState extends State<ProfileDetailView> {
   List<String> options = [
     '💃 Dancing',
     '🎮 Gaming',
@@ -37,13 +37,13 @@ class _ProfileDetailState extends State<ProfileDetail> {
   List<File> images = [];
 
 
-  ProfileDetailBloc? profileDetailBloc;
+  ProfileDetailBloc? ProfileDetailViewBloc;
   bool isLoading = false;
 
   @override
   void initState() {
-    profileDetailBloc = context.read<ProfileDetailBloc>();
-    profileDetailBloc?.add(GetProfileDetailData());
+    ProfileDetailViewBloc = context.read<ProfileDetailBloc>();
+    ProfileDetailViewBloc?.add(GetProfileDetailData());
     super.initState();
   }
   
@@ -65,7 +65,7 @@ class _ProfileDetailState extends State<ProfileDetail> {
         isLoading = false;
         ToastHelper().showMsg(
             context: context, message: currentState.userDataModel?.message ?? '');
-        profileDetailBloc?.emit(ProfileDetailEmptyState());
+        ProfileDetailViewBloc?.emit(ProfileDetailEmptyState());
        } else if (currentState is ProfileDetailErrorState) {
         isLoading = false;
         ToastHelper()

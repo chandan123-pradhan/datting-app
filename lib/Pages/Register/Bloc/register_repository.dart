@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dating_app/Models/base_model.dart';
@@ -18,6 +19,7 @@ abstract class RegisterRepository {
   Future<InterestResponseModel?> getInterestList();
   Future<UserDataModel?> registerInterest({String? interest});
   Future<UserDataModel?> registerPhoto({File? photo, String? fileType});
+  Future<UserDataModel?> verifyReferralCode({String? referralCode});
 }
 
 class RegisterRepositoryImp extends RegisterRepository {
@@ -65,6 +67,23 @@ class RegisterRepositoryImp extends RegisterRepository {
     }
     return userDataModel;
   }
+
+
+
+  @override
+  Future<UserDataModel?> verifyReferralCode({String? referralCode}) async {
+    UserDataModel? userDataModel;
+    try {
+      return userDataModel =
+      await ApiProvider().checkoutReferralCode(code: referralCode);
+    } catch (e, err) {
+      if (kDebugMode) {
+        print("$e \n $err");
+      }
+    }
+    return userDataModel;
+  }
+
 
   @override
   Future<UserDataModel?> registerDob({String? dob}) async {
@@ -149,6 +168,7 @@ class RegisterRepositoryImp extends RegisterRepository {
   Future<UserDataModel?> registerPhoto({File? photo, String? fileType}) async {
     UserDataModel? userDataModel;
     try {
+      
       return userDataModel =
       await ApiProvider().registerPhoto(photo: photo,fileType: fileType);
     } catch (e, err) {

@@ -3,12 +3,14 @@ class UserDataModel {
   bool? status;
   bool? success;
   UserData? data;
+  String? imageUrl;
 
   UserDataModel({
     this.message,
     this.status,
     this.success,
     this.data,
+    this.imageUrl
   });
 
   factory UserDataModel.fromJson(Map<String, dynamic> json) {
@@ -17,6 +19,7 @@ class UserDataModel {
       status: json['status'],
       success: json['success'],
       data: UserData.fromJson(json['data']),
+      imageUrl: json['img_url']
     );
   }
 }
@@ -25,7 +28,7 @@ class UserData {
   final String firstName;
   final String lastName;
   final int notification;
-  final List<Interest> interests;
+  final List<dynamic> interests;
   final String about;
   final bool approved;
   final double wallet;
@@ -84,9 +87,16 @@ class UserData {
       firstName: json['first_name'] ?? '',
       lastName: json['last_name'] ?? '',
       notification: json['notification'] ?? 0,
-      interests: (json['intrest'] as List<dynamic>)
-          .map((item) => Interest.fromJson(item))
-          .toList(), about: json['about'] ?? '',
+//
+// Update interests based on the 'intrest' key in the JSON
+      interests : (json['intrest'] as List<dynamic>).map((item) {
+        if (item is Map<String, dynamic>) {
+          return Interest.fromJson(item);
+        } else {
+          return item;  // If it's not a Map, keep it as is
+        }
+      }).toList()
+, about: json['about'] ?? '',
       approved: json['approved'] ?? false,
       wallet: json['wallet']?.toDouble() ?? 0.0,
       id: json['_id'] ?? '',

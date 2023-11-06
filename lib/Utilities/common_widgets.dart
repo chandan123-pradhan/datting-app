@@ -13,7 +13,7 @@ class CommonWidgets {
   ///
   static Widget mobileNumberInputTextField(
       {required BuildContext context,
-      required TextEditingController textFieldController}) {
+      required TextEditingController textFieldController,required bool flag}) {
     return Container(
         height: SizeConstants.buttonHeight,
         decoration: BoxDecoration(
@@ -54,6 +54,7 @@ class CommonWidgets {
             ),
             Expanded(
               child: TextFormField(
+                enabled: flag==true?false:true,
                 controller: textFieldController,
                 style: ThemeConfiguration.commonTextStyle(
                     15.0, FontWeight.w500, ThemeConfiguration.darkTextColor),

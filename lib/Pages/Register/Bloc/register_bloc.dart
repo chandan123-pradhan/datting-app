@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dating_app/Models/userdata_model.dart';
 import 'package:dating_app/Pages/Register/Bloc/register_event.dart';
 import 'package:dating_app/Pages/Register/Bloc/register_repository.dart';
@@ -40,6 +42,24 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
             mobileNumber: event.mobileNumber, otp: event.otp);
         if (model?.success == true) {
           emit(RegisterMobileNumberSuccessState(model!));
+        } else {
+          emit(RegisterErrorState(model?.message ?? ""));
+        }
+      } catch (error, _) {
+        if (kDebugMode) {
+          print(_.toString());
+        }
+        emit(RegisterErrorState(error.toString()));
+      }
+    }
+
+    if (event is ReferralCodeEvent) {
+      emit(RegisterLoadingState());
+      try {
+        UserDataModel? model =
+        await repository?.verifyReferralCode(referralCode: event.referralCode);
+        if (model?.success == true) {
+          emit(RegisterFullNameSuccessState(model!));
         } else {
           emit(RegisterErrorState(model?.message ?? ""));
         }
@@ -172,6 +192,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     if (event is RegisterPhotoEvent) {
       emit(RegisterLoadingState());
       try {
+       
         UserDataModel? model =
         await repository?.registerPhoto(photo: event.photo,fileType: event.fileType);
         if (model?.success == true) {

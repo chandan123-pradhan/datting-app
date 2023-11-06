@@ -13,6 +13,7 @@ import 'package:dating_app/Pages/Register/Model/interest_response_model.dart';
 import 'package:dating_app/Pages/Register/Widgets/choose_birthday_widget.dart';
 import 'package:dating_app/Pages/Register/Widgets/choose_gender_widget.dart';
 import 'package:dating_app/Pages/Register/Widgets/choose_interests_widget.dart';
+import 'package:dating_app/Pages/Register/Widgets/referral_info_widget.dart';
 import 'package:dating_app/Pages/Register/Widgets/register_body_widget.dart';
 import 'package:dating_app/Pages/Register/Widgets/register_info_widget.dart';
 import 'package:dating_app/Pages/Register/Widgets/upload_photos_widget.dart';
@@ -38,9 +39,10 @@ class _RegisterViewState extends State<RegisterView> {
   TextEditingController mobileNumberController = TextEditingController();
   TextEditingController otpController = TextEditingController();
   TextEditingController fullNameController = TextEditingController();
+  TextEditingController referalCodeController = TextEditingController();
   TextEditingController aboutController = TextEditingController();
   TextEditingController jobDescriptionsController = TextEditingController();
-  int currentstep = 1;
+  int currentstep = 9;
   List<int> days = List<int>.generate(31, (index) => index + 1);
   List<int> months = List<int>.generate(12, (index) => index + 1);
   int? selectedDays;
@@ -102,7 +104,7 @@ class _RegisterViewState extends State<RegisterView> {
     '2023',
   ];
   String? selectedYear;
-  String selectedGender = 'women';
+  String selectedGender = 'man';
   int? otp;
   bool timerActive = true;
   List<String>? interestList = [];
@@ -139,7 +141,7 @@ class _RegisterViewState extends State<RegisterView> {
         ToastHelper().showMsg(
             context: context, message: currentState.baseModel?.message ?? '');
         registerBloc?.emit(RegisterEmptyState());
-      } else if (currentState is RegisterMobileNumberSuccessState) {
+      }  else if (currentState is RegisterMobileNumberSuccessState) {
         isLoading = false;
         currentstep++;
         ToastHelper().showMsg(
@@ -154,39 +156,37 @@ class _RegisterViewState extends State<RegisterView> {
         registerBloc?.emit(RegisterEmptyState());
       } else if (currentState is RegisterFullNameSuccessState) {
         isLoading = false;
-       if(currentstep<8){
-         currentstep++;
-       }
+        if (currentstep < 9) {
+          currentstep++;
+        }
         ToastHelper().showMsg(
             context: context,
             message: currentState.userDataModel?.message ?? '');
         SharedPreferencesHelper.saveUserData(
             userData: UserData(
-                firstName: currentState.userDataModel?.data?.firstName ?? '',
-                lastName: currentState.userDataModel?.data?.lastName ?? '',
-                notification:
-                    currentState.userDataModel?.data?.notification ?? 0,
-                interests: currentState.userDataModel?.data?.interests ?? [],
-                about: currentState.userDataModel?.data?.about ?? '',
-                approved: currentState.userDataModel?.data?.approved ?? false,
-                wallet: currentState.userDataModel?.data?.wallet ?? 0,
-                id: currentState.userDataModel?.data?.id ?? '',
-                mobileNumber:
-                    currentState.userDataModel?.data?.mobileNumber ?? '',
-                userReferralCode:
-                    currentState.userDataModel?.data?.userReferralCode ?? '',
-                createdAt: currentState.userDataModel?.data?.createdAt ?? '',
-                updatedAt: currentState.userDataModel?.data?.updatedAt ?? '',
-              fullName: currentState.userDataModel?.data?.fullName??'',
-              birthday: currentState.userDataModel?.data?.birthday??'',
-              gender: currentState.userDataModel?.data?.gender??'',
-              image: currentState.userDataModel?.data?.image??'',
-            ));
+          firstName: currentState.userDataModel?.data?.firstName ?? '',
+          lastName: currentState.userDataModel?.data?.lastName ?? '',
+          notification: currentState.userDataModel?.data?.notification ?? 0,
+          interests: currentState.userDataModel?.data?.interests ?? [],
+          about: currentState.userDataModel?.data?.about ?? '',
+          approved: currentState.userDataModel?.data?.approved ?? false,
+          wallet: currentState.userDataModel?.data?.wallet ?? 0,
+          id: currentState.userDataModel?.data?.id ?? '',
+          mobileNumber: currentState.userDataModel?.data?.mobileNumber ?? '',
+          userReferralCode:
+              currentState.userDataModel?.data?.userReferralCode ?? '',
+          createdAt: currentState.userDataModel?.data?.createdAt ?? '',
+          updatedAt: currentState.userDataModel?.data?.updatedAt ?? '',
+          fullName: currentState.userDataModel?.data?.fullName ?? '',
+          birthday: currentState.userDataModel?.data?.birthday ?? '',
+          gender: currentState.userDataModel?.data?.gender ?? '',
+          image: currentState.userDataModel?.data?.image ?? '',
+        ));
         registerBloc?.emit(RegisterEmptyState());
       } else if (currentState is GetInterestSuccessState) {
         isLoading = false;
         interestResponseModel = currentState.interestResponseModel;
-        } else if (currentState is RegisterErrorState) {
+      } else if (currentState is RegisterErrorState) {
         isLoading = false;
         ToastHelper()
             .showErrorMsg(context: context, message: currentState.errorMessage);
@@ -267,10 +267,15 @@ class _RegisterViewState extends State<RegisterView> {
               ),
               Visibility(
                   visible: currentstep == 3,
+                  child: ReferralInfoWidget(
+                      referralCodeController: referalCodeController)),
+
+              Visibility(
+                  visible: currentstep == 4,
                   child: RegisterInfoWidget(
                       fullNameController: fullNameController)),
               Visibility(
-                  visible: currentstep == 4,
+                  visible: currentstep == 5,
                   child: ChooseBirthdayWidget(
                     selectedDaysValue: selectedDays,
                     selectedMonthValue: selectedMonth,
@@ -293,7 +298,7 @@ class _RegisterViewState extends State<RegisterView> {
                     },
                   )),
               Visibility(
-                  visible: currentstep == 5,
+                  visible: currentstep == 6,
                   child: ChooseGenderWidget(
                     selectedGenderValue: selectedGender,
                     onSelectGender: (String? genderValue) {
@@ -303,7 +308,7 @@ class _RegisterViewState extends State<RegisterView> {
                     },
                   )),
               Visibility(
-                visible: currentstep == 6,
+                visible: currentstep == 7,
                 child: WriteAboutWidget(
                   aboutController: aboutController,
                 ),
@@ -315,7 +320,7 @@ class _RegisterViewState extends State<RegisterView> {
               //   ),
               // ),
               Visibility(
-                  visible: currentstep == 7,
+                  visible: currentstep == 8,
                   child: ChooseInterestsWidget(
                     registerBloc: registerBloc,
                     interestResponseModel: interestResponseModel,
@@ -356,17 +361,18 @@ class _RegisterViewState extends State<RegisterView> {
                         }
                       });
                     },
+                    isLoading: isLoading,
                   )),
               Visibility(
-                  visible: currentstep == 8, child:  UploadPhotosWidget(
-                registerBloc: registerBloc,
-imageUploaded: (imageList){
-                setState(() {
-                  imageUrls=imageList;
-                });
-  },
-
-              )),
+                  visible: currentstep == 9,
+                  child: UploadPhotosWidget(
+                    registerBloc: registerBloc,
+                    imageUploaded: (imageList) {
+                      setState(() {
+                        imageUrls = imageList;
+                      });
+                    },
+                  )),
               _bottomView(),
             ],
           ),
@@ -386,7 +392,7 @@ imageUploaded: (imageList){
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CommonWidgets.showPageNumberWidget(
-                  linkText: '/8', text: '$currentstep', onTap: () {}),
+                  linkText: '/9', text: '$currentstep', onTap: () {}),
               InkWell(
                 onTap: () {
                   if (kDebugMode) {
@@ -420,6 +426,18 @@ imageUploaded: (imageList){
                           otp));
                     }
                   } else if (currentstep == 3) {
+                    if (referalCodeController.text.isNotEmpty) {
+                     registerBloc
+                          ?.add(ReferralCodeEvent(referalCodeController.text));
+                    } else {
+                      currentstep++;
+                      setState(() {
+                        
+                      });
+ 
+                      
+                    }
+                  } else if (currentstep == 4) {
                     if (fullNameController.text.isEmpty) {
                       ToastHelper().showErrorMsg(
                           context: context,
@@ -432,7 +450,7 @@ imageUploaded: (imageList){
                       registerBloc
                           ?.add(RegisterFullNameEvent(fullNameController.text));
                     }
-                  } else if (currentstep == 4) {
+                  } else if (currentstep == 5) {
                     if ((selectedDays == null)) {
                       ToastHelper().showErrorMsg(
                           context: context,
@@ -453,13 +471,13 @@ imageUploaded: (imageList){
                       }
                       registerBloc?.add(RegisterDobEvent(dob.toString()));
                     }
-                  } else if (currentstep == 5) {
+                  } else if (currentstep == 6) {
                     if (kDebugMode) {
                       print(selectedGender);
                     }
                     registerBloc
                         ?.add(RegisterGenderEvent(selectedGender.toString()));
-                  } else if (currentstep == 6) {
+                  } else if (currentstep == 7) {
                     if (aboutController.text.isEmpty) {
                       ToastHelper().showErrorMsg(
                           context: context,
@@ -486,7 +504,7 @@ imageUploaded: (imageList){
                   //     //     jobDescriptionsController.text.toString()));
                   //   }
                   // }
-                  else if (currentstep == 7) {
+                  else if (currentstep == 8) {
                     if ((interestList ?? []).isEmpty) {
                       ToastHelper().showErrorMsg(
                           context: context,
@@ -498,25 +516,24 @@ imageUploaded: (imageList){
                       registerBloc
                           ?.add(RegisterInterestEvent(interestList?.join(",")));
                     }
-                  } else if (currentstep == 8) {
+                  } else if (currentstep == 9) {
                     if (imageUrls.isEmpty) {
                       ToastHelper().showErrorMsg(
                           context: context,
-                          message:
-                          StringConstants.photoValidationMsg);
+                          message: StringConstants.photoValidationMsg);
                     } else {
                       if (kDebugMode) {
                         print(imageUrls);
                       }
-                      Future.delayed(Duration.zero, ()
-                      {
-                        Navigator.pushNamed(context, NavigationHelper
-                            .dashboard);
+                      Future.delayed(Duration.zero, () {
+                        Navigator.pushNamed(
+                            context, NavigationHelper.dashboard);
                         ToastHelper().showMsg(
-                            context: context, message:StringConstants.registerSuccessMsg);
+                            context: context,
+                            message: StringConstants.registerSuccessMsg);
                         SharedPreferencesHelper.setIsLogin(true);
                       });
-                     }
+                    }
                   } else {}
                 },
                 child: isLoading == true

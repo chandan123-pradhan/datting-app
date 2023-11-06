@@ -1,0 +1,1689 @@
+{
+	"info": {
+		"_postman_id": "4e36ccc7-734c-4e8e-800c-d68d7dc3390f",
+		"name": "DateApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2334684",
+		"_collection_link": "https://warped-flare-219864.postman.co/workspace/NodeProjects~d2472802-9d90-461e-a0a5-2dc1b63b7f1e/collection/2334684-4e36ccc7-734c-4e8e-800c-d68d7dc3390f?action=share&source=collection_link&creator=2334684"
+	},
+	"item": [
+		{
+			"name": "Pages",
+			"item": [
+				{
+					"name": "privacy policy",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}app/privacypolicy",
+							"host": [
+								"{{base_url}}app"
+							],
+							"path": [
+								"privacypolicy"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "aboutus",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}app/aboutus",
+							"host": [
+								"{{base_url}}app"
+							],
+							"path": [
+								"aboutus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "faq",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}app/faq",
+							"host": [
+								"{{base_url}}app"
+							],
+							"path": [
+								"faq"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "contact us",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}app/contactus",
+							"host": [
+								"{{base_url}}app"
+							],
+							"path": [
+								"contactus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "termscondition",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}app/termscondition",
+							"host": [
+								"{{base_url}}app"
+							],
+							"path": [
+								"termscondition"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Coins",
+			"item": [
+				{
+					"name": "order-with-rozarpay",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "amount",
+									"value": "2695",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}app/payment/order-with-rozorpay",
+							"host": [
+								"{{base_url}}app"
+							],
+							"path": [
+								"payment",
+								"order-with-rozorpay"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "checkout-with-rozarpay",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "order_id",
+									"value": "order_MwMAnSUZ2IV1nk"
+								},
+								{
+									"key": "payment_data",
+									"value": "{\"amount\":\"2695\",\"transaction_id\":\"xyz\"}"
+								},
+								{
+									"key": "status",
+									"value": "paid",
+									"description": "paid,not_paid",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}app/payment/checkout-with-rozorpay",
+							"host": [
+								"{{base_url}}app"
+							],
+							"path": [
+								"payment",
+								"checkout-with-rozorpay"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Wallet",
+			"item": [
+				{
+					"name": "add_money_to_wallet",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "amount",
+									"value": "100",
+									"type": "text"
+								},
+								{
+									"key": "source",
+									"value": "card",
+									"description": "paytm,upi,card",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}app/user/add_money_to_wallet",
+							"host": [
+								"{{base_url}}app"
+							],
+							"path": [
+								"user",
+								"add_money_to_wallet"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_user_wallet_details",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "filter_date",
+									"value": "04-02-2023",
+									"description": "04 is month",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}app/user/get_user_wallet_details",
+							"host": [
+								"{{base_url}}app"
+							],
+							"path": [
+								"user",
+								"get_user_wallet_details"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "withdrawal request list",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}app/user/withdrawl_requests_list",
+							"host": [
+								"{{base_url}}app"
+							],
+							"path": [
+								"user",
+								"withdrawl_requests_list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "withdrawal request generate",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "amount",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "withdrawal_type",
+									"value": "bank",
+									"description": "upi/bank",
+									"type": "text"
+								},
+								{
+									"key": "upi_id",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "account_number",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "ifsc_code",
+									"value": "SBIN0022222",
+									"type": "text"
+								},
+								{
+									"key": "account_name",
+									"value": "Pawan",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}app/user/withdrawl_request_generate",
+							"host": [
+								"{{base_url}}app"
+							],
+							"path": [
+								"user",
+								"withdrawl_request_generate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "registration",
+			"item": [
+				{
+					"name": "register_step_one",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "mobile_number",
+									"value": "9414562898",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}app/user/register_step_one",
+							"host": [
+								"{{base_url}}app"
+							],
+							"path": [
+								"user",
+								"register_step_one"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "otp-verify",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "mobile_number",
+									"value": "9414562898",
+									"type": "text"
+								},
+								{
+									"key": "otp",
+									"value": "1234",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}app/user/otp-verify",
+							"host": [
+								"{{base_url}}app"
+							],
+							"path": [
+								"user",
+								"otp-verify"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register_step_two",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "mobile_number",
+									"value": "9414562898",
+									"type": "text"
+								},
+								{
+									"key": "otp",
+									"value": "1234",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}app/user/register_step_two",
+							"host": [
+								"{{base_url}}app"
+							],
+							"path": [
+								"user",
+								"register_step_two"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register_step_two",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "full_name",
+									"value": "Pawan Jangir",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}app/user/register_step_two",
+							"host": [
+								"{{base_url}}app"
+							],
+							"path": [
+								"user",
+								"register_step_two"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register_step_three",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "birth_day",
+									"value": "15/05/2002",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}app/user/register_step_three",
+							"host": [
+								"{{base_url}}app"
+							],
+							"path": [
+								"user",
+								"register_step_three"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register_step_four",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "gender",
+									"value": "Male",
+									"description": "Male,Female,Other",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}app/user/register_step_four",
+							"host": [
+								"{{base_url}}app"
+							],
+							"path": [
+								"user",
+								"register_step_four"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register_step_five",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "gender_intrest",
+									"value": "Women",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}app/user/register_step_five",
+							"host": [
+								"{{base_url}}app"
+							],
+							"path": [
+								"user",
+								"register_step_five"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_intrest_list",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{base_url}}app/user/get_intrest_list",
+							"host": [
+								"{{base_url}}app"
+							],
+							"path": [
+								"user",
+								"get_intrest_list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register_step_six",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "intrest",
+									"value": "6506cd19d92efa359cb94874,6506cd82d92efa359cb9489f",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}app/user/register_step_six",
+							"host": [
+								"{{base_url}}app"
+							],
+							"path": [
+								"user",
+								"register_step_six"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register_step_seven",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "about",
+									"value": "Hi connect with me",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}app/user/register_step_seven",
+							"host": [
+								"{{base_url}}app"
+							],
+							"path": [
+								"user",
+								"register_step_seven"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register_step_eight",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/lenovo/Downloads/New folder (3)/gold-animate-image.png"
+								},
+								{
+									"key": "image_type",
+									"value": "main",
+									"description": "main,other",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}app/user/register_step_eight",
+							"host": [
+								"{{base_url}}app"
+							],
+							"path": [
+								"user",
+								"register_step_eight"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user_profile_update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "first_name",
+									"value": "Pawan",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "Jangir",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "pawan.jangir2@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "intrest",
+									"value": "6506cd19d92efa359cb94874,6506cd82d92efa359cb9489f",
+									"type": "text"
+								},
+								{
+									"key": "about",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "notification",
+									"value": "1",
+									"description": "1/0",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}app/user/user_profile_update",
+							"host": [
+								"{{base_url}}app"
+							],
+							"path": [
+								"user",
+								"user_profile_update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_user_profile",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "first_name",
+									"value": "Pawan",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "Jangir",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "pawan.jangir2@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "intrest",
+									"value": "6506cd19d92efa359cb94874,6506cd82d92efa359cb9489f",
+									"type": "text"
+								},
+								{
+									"key": "about",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "notification",
+									"value": "1",
+									"description": "1/0",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}app/user/get_user_profile",
+							"host": [
+								"{{base_url}}app"
+							],
+							"path": [
+								"user",
+								"get_user_profile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Location",
+			"item": [
+				{
+					"name": "user_location_update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "location_title",
+									"value": "Vivek Vihar, Jaipur, Rajasthan, India, 302017",
+									"type": "text"
+								},
+								{
+									"key": "location_city",
+									"value": "Jaipur",
+									"type": "text"
+								},
+								{
+									"key": "location_state",
+									"value": "Rajasthan",
+									"type": "text"
+								},
+								{
+									"key": "location_country",
+									"value": "India",
+									"type": "text"
+								},
+								{
+									"key": "location_pincode",
+									"value": "302017",
+									"type": "text"
+								},
+								{
+									"key": "location_lat",
+									"value": "26.9124",
+									"type": "text"
+								},
+								{
+									"key": "location_long",
+									"value": "75.7873",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}app/user/user_location_update",
+							"host": [
+								"{{base_url}}app"
+							],
+							"path": [
+								"user",
+								"user_location_update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_near_users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "current_latitude",
+									"value": "28.4595",
+									"type": "text"
+								},
+								{
+									"key": "current_longitude",
+									"value": "77.0266",
+									"type": "text"
+								},
+								{
+									"key": "km",
+									"value": "240",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}app/user/get_near_users",
+							"host": [
+								"{{base_url}}app"
+							],
+							"path": [
+								"user",
+								"get_near_users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_user_details",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "userId",
+									"value": "6545e46643daca4e9889cb5c",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}app/user/get_user_details",
+							"host": [
+								"{{base_url}}app"
+							],
+							"path": [
+								"user",
+								"get_user_details"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "like_user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "action_done_to",
+									"value": "6545e46643daca4e9889cb5c",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}app/user/like_user",
+							"host": [
+								"{{base_url}}app"
+							],
+							"path": [
+								"user",
+								"like_user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "debit_money_from_wallet",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "amount",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "source",
+									"value": "card",
+									"description": "paytm,upi,card"
+								},
+								{
+									"key": "note",
+									"value": "for swipe",
+									"description": "please mention reason why you are deducting this amount",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}app/user/debit_money_from_wallet",
+							"host": [
+								"{{base_url}}app"
+							],
+							"path": [
+								"user",
+								"debit_money_from_wallet"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "intrested_in_you_page",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{base_url}}app/user/intrested_in_you_page",
+							"host": [
+								"{{base_url}}app"
+							],
+							"path": [
+								"user",
+								"intrested_in_you_page"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "accept_reject_connection_request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "connectionId",
+									"value": "6545ee23a928ed258c1a8347",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "2",
+									"description": "2=> accept, 3 => reject",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}app/user/accept_reject_connection_request",
+							"host": [
+								"{{base_url}}app"
+							],
+							"path": [
+								"user",
+								"accept_reject_connection_request"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "mobile_number",
+							"value": "9024141113",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}app/user/login",
+					"host": [
+						"{{base_url}}app"
+					],
+					"path": [
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login_otp_verify",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "mobile_number",
+							"value": "9024141113",
+							"type": "text"
+						},
+						{
+							"key": "otp",
+							"value": "1234",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}app/user/otp-verify",
+					"host": [
+						"{{base_url}}app"
+					],
+					"path": [
+						"user",
+						"otp-verify"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "check_referral_code",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "user_referral_code",
+							"value": "Q5P6J9",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}app/user/check_referral_code",
+					"host": [
+						"{{base_url}}app"
+					],
+					"path": [
+						"user",
+						"check_referral_code"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "forgot_password",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "pawan@mailinator.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}app/user/forgot_password",
+					"host": [
+						"{{base_url}}app"
+					],
+					"path": [
+						"user",
+						"forgot_password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reset_password",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "dharmendra@mailinator.com",
+							"type": "text"
+						},
+						{
+							"key": "forgot_password_otp",
+							"value": "123456",
+							"type": "text"
+						},
+						{
+							"key": "new_password",
+							"value": "System@12345",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}app/user/reset_password",
+					"host": [
+						"{{base_url}}app"
+					],
+					"path": [
+						"user",
+						"reset_password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "settings",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}app/settings/list",
+					"host": [
+						"{{base_url}}app"
+					],
+					"path": [
+						"settings",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_ad_list",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}app/get_ad_list",
+					"host": [
+						"{{base_url}}app"
+					],
+					"path": [
+						"get_ad_list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_ad_details",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "record_id",
+							"value": "652f5a0b544e0347c8e36b91",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}app/get_ad_details",
+					"host": [
+						"{{base_url}}app"
+					],
+					"path": [
+						"get_ad_details"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "view_ad",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "ad_record_id",
+							"value": "652f5a0b544e0347c8e36b91",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}app/user/view_ad",
+					"host": [
+						"{{base_url}}app"
+					],
+					"path": [
+						"user",
+						"view_ad"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000/",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDE0MDNiMmQxODMwMzBlNDg4ZTdjMjkiLCJpYXQiOjE2NzkwMzM3Njh9.R1reBGRNYt8o2C6EMM4UlvHakql59YxXN2-1Kz4AakQ",
+			"type": "string"
+		},
+		{
+			"key": "local_url",
+			"value": "http://localhost:3061/",
+			"type": "string"
+		}
+	]
+}

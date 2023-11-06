@@ -55,6 +55,12 @@ class _OtpViewState extends State<OtpView> {
         ToastHelper().showMsg(
             context: context, message: currentState.registerMobileNumberModel?.message ?? '');
         SharedPreferencesHelper.setIsLogin(true);
+        SharedPreferencesHelper.saveUserInformation(
+            isRegister:
+            currentState.registerMobileNumberModel?.data.isRegistered == 1
+                ? true
+                : false,
+            token: currentState.registerMobileNumberModel?.data.token ?? '');
         otpBloc?.emit(OtpEmptyState());
         Future.delayed(Duration.zero, () {
           Navigator.pushNamed(context, NavigationHelper.dashboard);

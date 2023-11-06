@@ -10,6 +10,7 @@ class ApiUrls {
   static const registerStepThreeEndPoint = "user/register_step_three";
   static const registerStepFourEndPoint = "user/register_step_four";
   static const registerStepFiveEndPoint = "user/register_step_five";
+  static const verifyReferralCodeEndPoint = "user/check_referral_code";
   static const registerFullNameEndPoint = "user/register_step_two";
   static const registerDobEndPoint = "user/register_step_three";
   static const registerGenderEndPoint = "user/register_step_four";
@@ -20,6 +21,8 @@ class ApiUrls {
   static const uploadImagesEndPoint = "user/register_step_eight";
   static const getUserProfileEndPoint = "user/get_user_profile";
   static const userProfileUpdateEndPoint = "user/user_profile_update";
+  static const updateUserLocation='user/user_location_update';
+  static const String intrestedInYou='user/intrested_in_you_page';
   static const fullName = "full_name";
   static const dob = "birth_day";
   static const gender = "gender";
@@ -34,7 +37,6 @@ class ApiUrls {
   static const address = "address";
   static const intrest = "intrest";
   static const notification = "notification";
-  static const checkReferralCodeEndPoint = "check_referral_code";
   static const userReferralCode = "user_referral_code";
   static const forgotPasswordEndPoint = "forgot_password";
   static const resetPasswordEndPoint = "reset_password";
@@ -46,12 +48,12 @@ class ApiUrls {
   static const recordId = "record_id";
   static const adRecordId="ad_record_id";
   static const viewAdsEndPoint = "view_ad";
-  static const addMoneyToWalletEndPoint = "add_money_to_wallet";
+  static const addMoneyToWalletEndPoint = "user/add_money_to_wallet";
   static const amount = "amount";
   static const source = "source";
   static const debitMoneyFromWalletEndPoint = "debit_money_from_wallet";
   static const note = "note";
-  static const getUserWalletDetailsEndPoint = "get_user_wallet_details";
+  static const getUserWalletDetailsEndPoint = "user/get_user_wallet_details";
   static const filterDate = "filter_date";
   static const withdrawalRequestListEndPoint = "withdrawl_requests_list";
   static const withdrawalRequestGenerateEndPoint = "withdrawl_request_generate";
@@ -70,4 +72,8 @@ class ApiUrls {
   static const faqEndPoint = "faq";
   static const contactusEndPoint="contactus";
   static const termsConditionEndPoint="termscondition";
+  static const getNearestUsersEndPoint = "user/get_near_users";
+  static const currentLat = "current_latitude";
+  static const currentLong = "current_longitude";
+  static const km = "km";
 }

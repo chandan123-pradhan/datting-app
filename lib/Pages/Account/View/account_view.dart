@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dating_app/Configurations/theme_configuration.dart';
 import 'package:dating_app/Helper/loader_helper.dart';
 import 'package:dating_app/Helper/navigation_helper.dart';
@@ -54,6 +56,7 @@ class _AccountViewState extends State<AccountView> {
       } else if (currentState is AccountSuccessState) {
         isLoading = false;
         userDataModel = currentState.userDataModel;
+        // debugger();
         accountBloc?.emit(AccountEmptyState());
       } else if (currentState is AccountErrorState) {
         isLoading = false;

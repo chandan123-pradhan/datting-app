@@ -26,6 +26,12 @@ class RegisterFullNameEvent extends RegisterEvent {
   @override
   List<Object?> get props => [fullName];
 }
+class ReferralCodeEvent extends RegisterEvent {
+  String? referralCode;
+  ReferralCodeEvent(this.referralCode);
+  @override
+  List<Object?> get props => [referralCode];
+}
 
 class RegisterDobEvent extends RegisterEvent {
   String? dob;
