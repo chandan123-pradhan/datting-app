@@ -42,7 +42,7 @@ class _RegisterViewState extends State<RegisterView> {
   TextEditingController referalCodeController = TextEditingController();
   TextEditingController aboutController = TextEditingController();
   TextEditingController jobDescriptionsController = TextEditingController();
-  int currentstep = 9;
+  int currentstep = 1;
   List<int> days = List<int>.generate(31, (index) => index + 1);
   List<int> months = List<int>.generate(12, (index) => index + 1);
   int? selectedDays;

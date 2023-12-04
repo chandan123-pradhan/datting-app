@@ -3,6 +3,7 @@ import 'package:dating_app/Models/userdata_model.dart';
 import 'package:dating_app/Pages/Account/Widgets/account_button_widget.dart';
 import 'package:dating_app/Pages/Register/Model/interest_response_model.dart';
 import 'package:dating_app/Utilities/size_constants.dart';
+import 'package:dating_app/Utilities/string_constants.dart';
 import 'package:dating_app/screens/account/views/button_view.dart';
 import 'package:dating_app/screens/account/views/option_card_view.dart';
 import 'package:dating_app/utils/color_constant.dart';
@@ -16,13 +17,10 @@ class ProfileBodyCard extends StatelessWidget {
   final bool? isFromEdit;
   final UserDataModel? userDataModel;
   const ProfileBodyCard(
-      {super.key,
-      required this.isFromEdit,
-      required this.userDataModel});
+      {super.key, required this.isFromEdit, required this.userDataModel});
 
   @override
   Widget build(BuildContext context) {
-
     List<String> myBasics = [
       '👩‍🎓 Student',
       '👱🏻‍♀️ Women',
@@ -42,6 +40,7 @@ class ProfileBodyCard extends StatelessWidget {
               Constant.mainPagePadding + Constant.mediumPadding),
           child: Column(children: [
             OptionCardView(
+              heading: StringConstants.fullName,
               title: userDataModel?.data?.fullName ?? '',
               isWidgetShow: false,
               image: ImageUtils.accountIcon,
@@ -52,6 +51,7 @@ class ProfileBodyCard extends StatelessWidget {
               height: Constant.maximumPadding + Constant.mediumPadding,
             ),
             OptionCardView(
+              heading: StringConstants.phoneNumberHint,
               title: '+91 ${userDataModel?.data?.mobileNumber ?? ''}',
               isWidgetShow: false,
               image: ImageUtils.callIcon,
@@ -62,33 +62,18 @@ class ProfileBodyCard extends StatelessWidget {
               height: Constant.maximumPadding + Constant.mediumPadding,
             ),
             OptionCardView(
-              title: '',
-              isWidgetShow: true,
+              heading: StringConstants.yourBio,
+              title: userDataModel?.data?.about ?? '',
+              isWidgetShow: false,
               image: ImageUtils.accountEditIcon,
               isShowEditIcon: isFromEdit ?? false,
-              widget: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    StringUtils.yourBio,
-                    style:
-                        TextStyle(color: ThemeConfiguration.descriptiveColor),
-                  ),
-                  SizedBox(
-                    height: Constant.smallPadding,
-                  ),
-                  Text(
-                    userDataModel?.data?.about ?? '',
-                    style: TextStyle(
-                        color: ThemeConfiguration.commonAppBarTitleColor),
-                  )
-                ],
-              ),
+              widget: null,
             ),
             const SizedBox(
               height: Constant.maximumPadding + Constant.mediumPadding,
             ),
             OptionCardView(
+              heading: StringConstants.yourIntrest,
               title: '',
               isWidgetShow: true,
               image: ImageUtils.heartIcon,
@@ -96,16 +81,13 @@ class ProfileBodyCard extends StatelessWidget {
               widget: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    StringUtils.yourIntrest,
-                    style:
-                        TextStyle(color: ThemeConfiguration.descriptiveColor),
+                    const Text(
+                   StringConstants.yourIntrest,
+                    style:  TextStyle(color: ColorConstant.blackColor,fontWeight: FontWeight.bold,fontSize: 14),
                   ),
-                  const SizedBox(
-                    height: Constant.mediumPadding,
-                  ),
+                  const SizedBox(height: 10.0,),              
                   GridView.builder(
-                    itemCount: (userDataModel?.data?.interests??[]).length,
+                    itemCount: (userDataModel?.data?.interests ?? []).length,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     gridDelegate:
@@ -128,11 +110,12 @@ class ProfileBodyCard extends StatelessWidget {
                               )),
                           child: Center(
                             child: Text(
-                              userDataModel?.data?.interests[index].intrest??'',
+                              userDataModel?.data?.interests[index].intrest ??
+                                  '',
                               style: const TextStyle(
                                   color: ThemeConfiguration.descriptiveColor,
                                   fontWeight: FontWeight.w500,
-                                  fontSize: 11),
+                                  fontSize: 14),
                             ),
                           ),
                         ),

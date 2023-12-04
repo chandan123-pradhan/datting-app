@@ -1,7 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dating_app/Configurations/theme_configuration.dart';
 import 'package:dating_app/Helper/navigation_helper.dart';
-import 'package:dating_app/Pages/InterestedInYou/controller/intrested_in_you_controller.dart';
+import 'package:dating_app/Pages/Dashboard/controllers/dashboard_controllers.dart';
+// import 'package:dating_app/Pages/InterestedInYou/controller/intrested_in_you_controller.dart';
 import 'package:dating_app/Pages/InterestedInYou/models/intrested_in_you_api_response.dart';
 import 'package:dating_app/Pages/ProfileDetail/View/profile_detail_view.dart';
 import 'package:dating_app/Utilities/image_constants.dart';
@@ -16,12 +17,19 @@ class ProfileCardWidget extends StatelessWidget {
     required this.intrestedPersonData
   });
 
-var controller=Get.put(IntrestedInYouController());
+var controller=Get.put(DashboardControllers());
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, NavigationHelper.profileDetail);
+        Navigator.pushNamed(context, NavigationHelper.profileDetail,
+                    arguments: {
+                      'user_id':intrestedPersonData.id,
+                      'isForlike':false,
+                      'id':intrestedPersonData.actionDoneBy.id
+                    }).then((value){
+                      controller.getIntrestedInYou();
+                    });
       },
       child: Stack(
         children: [
@@ -57,7 +65,7 @@ var controller=Get.put(IntrestedInYouController());
       border: Border.all(width: 1,color: Colors.black26),
       borderRadius: BorderRadius.circular(10)
 ,    ),
- child: Icon(Icons.image,size:25),
+ child: Icon(Icons.image,size:50),
   ),
   errorWidget: (context, url, error) =>Container(
     decoration: BoxDecoration(

@@ -8,12 +8,14 @@ import 'package:dating_app/Pages/Map/Bloc/map_state.dart';
 import 'package:dating_app/Pages/Map/Bloc/map_bloc.dart';
 import 'package:dating_app/Pages/Map/Bloc/map_event.dart';
 import 'package:dating_app/Pages/Map/Model/nearest_user_list_model.dart';
+import 'package:dating_app/Pages/Map/controllers/GetOtherUserProfileController.dart';
 import 'package:dating_app/services/get_location_services.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/services.dart' show NetworkAssetBundle, rootBundl;
 import 'dart:ui' as ui;
@@ -34,13 +36,14 @@ class _MapViewState extends State<MapView> {
   MapBloc? mapBloc;
   bool isLoading = false;
   NearestUserListModel? nearestUserListModel;
-
+  var controller = Get.put(GetOtherUserProfileController());
   @override
   void initState() {
     mapBloc = context.read<MapBloc>();
     getCurrentLocation();
     // mapBloc?.add(FetchUserEvent('','', '10'));
     nearestUserListModel = NearestUserListModel();
+    // debugger();
     super.initState();
     // addImage();
   }
@@ -62,6 +65,8 @@ class _MapViewState extends State<MapView> {
   }
 
   void addMarker(profileIcon) async {
+    print(nearestUserListModel);
+    // debugger();
     for (int i = 0; i < nearestUserListModel!.data!.length; i++) {
       // debugger();
 
@@ -97,36 +102,41 @@ class _MapViewState extends State<MapView> {
       //   }
       // });
 
-        Uint8List bytes = (
-          await NetworkAssetBundle(
-            Uri.parse(
-                    //'${nearestUserListModel!.imagePath}${nearestUserListModel!.data![i].image!}'
-                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpd4mJRIUwqgE8D_Z2znANEbtiz4GhI4M8NQ&usqp=CAU'
-                    ))
-                .load(
-                   // '${nearestUserListModel!.imagePath}${nearestUserListModel!.data![i].image!}'
-                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpd4mJRIUwqgE8D_Z2znANEbtiz4GhI4M8NQ&usqp=CAU'
-                    ))
-            .buffer
-            .asUint8List();
-        markers.add(
-          Marker(
-              // anchor: const Offset(0.5, 0.5),
-              markerId: MarkerId('${i + 1}'),
-              position: LatLng(
-                  nearestUserListModel!.data![i].loc!.coordinates![0],
-                  nearestUserListModel!
-                      .data![i].loc!.coordinates![1]), // Sample coordinates
-              flat: true,
-              infoWindow: InfoWindow(
-                title: nearestUserListModel!.data![i].fullName,
-                onTap: () {
-                  Navigator.pushNamed(context, NavigationHelper.profileDetail);
-                },
-              ),
-              icon: BitmapDescriptor.fromBytes(bytes,
-                  size: const Size.fromHeight(30))!),
-        );
+      Uint8List bytes = (await NetworkAssetBundle(Uri.parse(
+                  //'${nearestUserListModel!.imagePath}${nearestUserListModel!.data![i].image!}'
+                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpd4mJRIUwqgE8D_Z2znANEbtiz4GhI4M8NQ&usqp=CAU'))
+              .load(
+                  // '${nearestUserListModel!.imagePath}${nearestUserListModel!.data![i].image!}'
+                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpd4mJRIUwqgE8D_Z2znANEbtiz4GhI4M8NQ&usqp=CAU'))
+          .buffer
+          .asUint8List();
+      markers.add(
+        Marker(
+            // anchor: const Offset(0.5, 0.5),
+            markerId: MarkerId('${i + 1}'),
+            position: LatLng(
+                nearestUserListModel!.data![i].loc!.coordinates![0],
+                nearestUserListModel!
+                    .data![i].loc!.coordinates![1]), // Sample coordinates
+            flat: true,
+            infoWindow: InfoWindow(
+              title: nearestUserListModel!.data![i].fullName,
+              onTap: () {
+                
+                Navigator.pushNamed(context, NavigationHelper.profileDetail,
+                    arguments: 
+                    {
+                      'id':nearestUserListModel!.data![i].sId!,
+                      'isForlike':true,
+                      'user_id':nearestUserListModel!.data![i].sId!
+                    }
+                    );
+                // controller.getOtherUserProfile(nearestUserListModel!.data![i].sId!, context);
+              },
+            ),
+            icon: BitmapDescriptor.fromBytes(bytes,
+                size: const Size.fromHeight(30))!),
+      );
     }
 
     setState(() {

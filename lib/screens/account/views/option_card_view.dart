@@ -1,8 +1,10 @@
+import 'package:dating_app/Utilities/string_constants.dart';
 import 'package:dating_app/utils/color_constant.dart';
 import 'package:dating_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class OptionCardView extends StatelessWidget {
+  final String? heading;
   final String? image;
   final String? title;
   final Widget? widget;
@@ -12,6 +14,7 @@ class OptionCardView extends StatelessWidget {
 
   const OptionCardView({
     super.key,
+     this.heading,
     required this.image,
     required this.title,
     required this.widget,
@@ -29,17 +32,27 @@ class OptionCardView extends StatelessWidget {
           children: [
             Image.asset(
               image ?? '',
-              height: 25,
-              width: 25,
+              height: 20,
+              width: 20,
               color: ColorConstant.descriptiveColor,
             ),
             const SizedBox(
               width: Constant.maximumPadding,
             ),
             if (isWidgetShow == false)
-              Text(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    heading??'',
+                    style:const  TextStyle(color: ColorConstant.blackColor,fontWeight: FontWeight.bold,fontSize: 14),
+                  ),
+                  const SizedBox(height: 2.0,),
+                  Text(
                 title ?? '',
-                style: const TextStyle(color: ColorConstant.descriptiveColor),
+                style: const TextStyle(color: ColorConstant.descriptiveColor,fontSize: 16),
+              ),
+                ],
               ),
             if (isWidgetShow == true)
               Expanded(

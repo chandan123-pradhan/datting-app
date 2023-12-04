@@ -3,7 +3,8 @@ import 'package:dating_app/Pages/Account/Bloc/account_bloc.dart';
 import 'package:dating_app/Pages/Account/Bloc/account_repository.dart';
 import 'package:dating_app/Pages/Account/View/account_view.dart';
 import 'package:dating_app/Pages/Dashboard/Widgets/dashboard_widgets.dart';
-import 'package:dating_app/Pages/InterestedInYou/controller/intrested_in_you_controller.dart';
+import 'package:dating_app/Pages/Dashboard/controllers/dashboard_controllers.dart';
+// import 'package:dating_app/Pages/InterestedInYou/controller/intrested_in_you_controller.dart';
 import 'package:dating_app/Pages/Map/Bloc/map_bloc.dart';
 import 'package:dating_app/Pages/Map/Bloc/map_repository.dart';
 import 'package:dating_app/Pages/Map/View/map_view.dart';
@@ -27,6 +28,10 @@ class DashboardView extends StatefulWidget {
 class _DashboardViewState extends State<DashboardView> {
   int currentIndex = 0;
 
+
+
+  var dashboardController=Get.put(DashboardControllers());
+
   List<Widget> pages = [
     BlocProvider<AccountBloc>(
         create: (context) =>
@@ -40,13 +45,15 @@ class _DashboardViewState extends State<DashboardView> {
     YourMatchesView(),
     MessageView()
   ];
-  var controller=Get.put(IntrestedInYouController());
+  // var controller=Get.put(IntrestedInYouController());
 
 
 @override
   void initState() {
     AccountBloc().updateLocation(context);
-    controller.getIntrestedInYou();
+    dashboardController.getIntrestedInYou();
+    dashboardController.getMessageList();
+
     // TODO: implement initState
     super.initState();
   }
@@ -102,7 +109,9 @@ class _DashboardViewState extends State<DashboardView> {
                         },
                         child: bottomBarItemWidget(
                             isSelected: currentIndex == 0 ? true : false,
-                            img: ImageConstants.firstTabIcon),
+                            img: ImageConstants.firstTabIcon,
+                            index: 0
+                            ),
                       ),
                       InkWell(
                         onTap: () {
@@ -112,7 +121,9 @@ class _DashboardViewState extends State<DashboardView> {
                         },
                         child: bottomBarItemWidget(
                             isSelected: currentIndex == 1 ? true : false,
-                            img: ImageConstants.secondTabIcon),
+                            img: ImageConstants.heartIcon,
+                            index: 1
+                            ),
                       ),
                       InkWell(
                         onTap: () {
@@ -122,7 +133,9 @@ class _DashboardViewState extends State<DashboardView> {
                         },
                         child: bottomBarItemWidget(
                             isSelected: currentIndex == 2 ? true : false,
-                            img: ImageConstants.thirdTabIcon),
+                            img: ImageConstants.thirdTabIcon,
+                            index: 2
+                            ),
                       ),
                       InkWell(
                         onTap: () {
@@ -132,7 +145,9 @@ class _DashboardViewState extends State<DashboardView> {
                         },
                         child: bottomBarItemWidget(
                             isSelected: currentIndex == 3 ? true : false,
-                            img: ImageConstants.fourthTabIcon),
+                            img: ImageConstants.fourthTabIcon,
+                            index: 3
+                            ),
                       ),
                       InkWell(
                         onTap: () {
@@ -142,7 +157,9 @@ class _DashboardViewState extends State<DashboardView> {
                         },
                         child: bottomBarItemWidget(
                             isSelected: currentIndex == 4 ? true : false,
-                            img: ImageConstants.fifthTabIcon),
+                            img: ImageConstants.fifthTabIcon,
+                            index: 4
+                            ),
                       ),
                     ],
                   ),

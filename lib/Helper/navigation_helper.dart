@@ -114,7 +114,9 @@ class NavigationHelper {
           builder: (_) => BlocProvider<ProfileDetailBloc>(
               create: (context) =>
                   ProfileDetailBloc(repository: ProfileDetailRepositoryImp()),
-              child: const ProfileDetailView()),
+              child:  ProfileDetailView(
+              params: settings.arguments as dynamic,
+              )),
         );
 
       default:

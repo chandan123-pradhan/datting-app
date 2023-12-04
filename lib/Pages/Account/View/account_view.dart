@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:dating_app/CommonWidgets/profile_screen_loading_widget.dart';
 import 'package:dating_app/Configurations/theme_configuration.dart';
 import 'package:dating_app/Helper/loader_helper.dart';
 import 'package:dating_app/Helper/navigation_helper.dart';
@@ -77,7 +78,7 @@ class _AccountViewState extends State<AccountView> {
               child: CommonAppBar(
                 title: StringConstants.profile,
                 onEdit: () {
-                Navigator.pushNamed(context, NavigationHelper.editProfile);
+                  Navigator.pushNamed(context, NavigationHelper.editProfile);
                 },
                 onSetting: () {
                   Future.delayed(Duration.zero, () {
@@ -88,31 +89,33 @@ class _AccountViewState extends State<AccountView> {
                 settingShow: true,
               ),
             ),
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(SizeConstants.mainPagePadding),
-                child: Column(children: [
-                  ProfileCardWidget(userDataModel: userDataModel),
-                  const SizedBox(height: SizeConstants.maximumPadding),
-                  ProfileBodyCard(
-                      isFromEdit: false,
-                      userDataModel: userDataModel),
-                  const SizedBox(
-                    height: SizeConstants.maximumPadding +
-                        SizeConstants.maximumPadding +
-                        SizeConstants.maximumPadding +
-                        SizeConstants.maximumPadding +
-                        SizeConstants.maximumPadding+
-                        SizeConstants.maximumPadding +
-                        SizeConstants.maximumPadding,
-                  ),
-                ]),
-              ),
-            )),
-        Visibility(
-          visible: isLoading == true,
-          child: LoaderHelper.pageLoader(),
-        )
+            body: isLoading == true
+                ? const ProfileScreenShimer()
+                : SingleChildScrollView(
+                    child: Padding(
+                      padding:
+                          const EdgeInsets.all(SizeConstants.mainPagePadding),
+                      child: Column(children: [
+                        ProfileCardWidget(userDataModel: userDataModel),
+                        const SizedBox(height: SizeConstants.maximumPadding),
+                        ProfileBodyCard(
+                            isFromEdit: false, userDataModel: userDataModel),
+                        const SizedBox(
+                          height: SizeConstants.maximumPadding +
+                              SizeConstants.maximumPadding +
+                              SizeConstants.maximumPadding +
+                              SizeConstants.maximumPadding +
+                              SizeConstants.maximumPadding +
+                              SizeConstants.maximumPadding +
+                              SizeConstants.maximumPadding,
+                        ),
+                      ]),
+                    ),
+                  )),
+        // Visibility(
+        //   visible: isLoading == true,
+        //   child: LoaderHelper.pageLoader(),
+        // )
       ],
     );
   }

@@ -1,5 +1,5 @@
-class IntrestedInYouApiResponse {
-  IntrestedInYouApiResponse({
+class GetMessageListApiResponse {
+  GetMessageListApiResponse({
     required this.message,
     required this.status,
     required this.success,
@@ -9,14 +9,14 @@ class IntrestedInYouApiResponse {
   late final String message;
   late final bool status;
   late final bool success;
-  late final List<IntrestedPersonData> data;
+  late final List<MessagedUser> data;
   late final String imgUrl;
   
-  IntrestedInYouApiResponse.fromJson(Map<String, dynamic> json){
+  GetMessageListApiResponse.fromJson(Map<String, dynamic> json){
     message = json['message'];
     status = json['status'];
     success = json['success'];
-    data = List.from(json['data']).map((e)=>IntrestedPersonData.fromJson(e)).toList();
+    data = List.from(json['data']).map((e)=>MessagedUser.fromJson(e)).toList();
     imgUrl = json['img_url'];
   }
 
@@ -31,49 +31,58 @@ class IntrestedInYouApiResponse {
   }
 }
 
-class IntrestedPersonData {
-  IntrestedPersonData({
-    required this.status,
+class MessagedUser {
+  MessagedUser({
     required this.id,
+    required this.status,
     required this.actionDoneBy,
     required this.actionDoneTo,
     required this.createdAt,
     required this.updatedAt,
-    required this.V,
+    required this.actionDoneToUser,
+    required this.actionDoneByUser,
+    required this.unreadEmailsCount,
   });
-  late final int status;
   late final String id;
-  late final ActionDoneBy actionDoneBy;
-  late final ActionDoneTo actionDoneTo;
+  late final int status;
+  late final String actionDoneBy;
+  late final String actionDoneTo;
   late final String createdAt;
   late final String updatedAt;
-  late final int V;
+  late final List<ActionDoneToUser> actionDoneToUser;
+  late final List<ActionDoneByUser> actionDoneByUser;
+  late final int unreadEmailsCount;
   
-  IntrestedPersonData.fromJson(Map<String, dynamic> json){
-    status = json['status'];
+  MessagedUser.fromJson(Map<String, dynamic> json){
     id = json['_id'];
-    actionDoneBy = ActionDoneBy.fromJson(json['action_done_by']);
-    actionDoneTo = ActionDoneTo.fromJson(json['action_done_to']);
+    status = json['status'];
+    actionDoneBy = json['action_done_by'];
+    actionDoneTo = json['action_done_to'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
-    V = json['__v'];
+    actionDoneToUser = List.from(json['action_done_to_user']).map((e)=>ActionDoneToUser.fromJson(e)).toList();
+    actionDoneByUser = List.from(json['action_done_by_user']).map((e)=>ActionDoneByUser.fromJson(e)).toList();
+    unreadEmailsCount = json['unreadEmailsCount'];
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
-    _data['status'] = status;
     _data['_id'] = id;
-    _data['action_done_by'] = actionDoneBy.toJson();
-    _data['action_done_to'] = actionDoneTo.toJson();
+    _data['status'] = status;
+    _data['action_done_by'] = actionDoneBy;
+    _data['action_done_to'] = actionDoneTo;
     _data['createdAt'] = createdAt;
     _data['updatedAt'] = updatedAt;
-    _data['__v'] = V;
+    _data['action_done_to_user'] = actionDoneToUser.map((e)=>e.toJson()).toList();
+    _data['action_done_by_user'] = actionDoneByUser.map((e)=>e.toJson()).toList();
+    _data['unreadEmailsCount'] = unreadEmailsCount;
     return _data;
   }
 }
 
-class ActionDoneBy {
-  ActionDoneBy({
+class ActionDoneToUser {
+  ActionDoneToUser({
+    required this.id,
     required this.firstName,
     required this.lastName,
     required this.notification,
@@ -84,12 +93,8 @@ class ActionDoneBy {
     required this.locationState,
     required this.locationCountry,
     required this.locationPincode,
-    required this.image,
-    required this.age,
-     this.imageType,
     required this.approved,
     required this.wallet,
-    required this.id,
     required this.mobileNumber,
     required this.userReferralCode,
     required this.createdAt,
@@ -100,8 +105,11 @@ class ActionDoneBy {
     required this.fullName,
     required this.birthDay,
     required this.gender,
+    required this.image,
+    required this.age,
     required this.loc,
   });
+  late final String id;
   late final String firstName;
   late final String lastName;
   late final int notification;
@@ -112,12 +120,8 @@ class ActionDoneBy {
   late final String locationState;
   late final String locationCountry;
   late final String locationPincode;
-  late final String image;
-  late final int age;
-  late final Null imageType;
   late final bool approved;
   late final int wallet;
-  late final String id;
   late final String mobileNumber;
   late final String userReferralCode;
   late final String createdAt;
@@ -128,9 +132,12 @@ class ActionDoneBy {
   late final String fullName;
   late final String birthDay;
   late final String gender;
+  late final String image;
+  late final int age;
   late final Loc loc;
   
-  ActionDoneBy.fromJson(Map<String, dynamic> json){
+  ActionDoneToUser.fromJson(Map<String, dynamic> json){
+    id = json['_id'];
     firstName = json['first_name'];
     lastName = json['last_name'];
     notification = json['notification'];
@@ -141,12 +148,8 @@ class ActionDoneBy {
     locationState = json['location_state'];
     locationCountry = json['location_country'];
     locationPincode = json['location_pincode'];
-    image = json['image'].toString();
-    age = json['age'];
-    imageType = null;
     approved = json['approved'];
     wallet = json['wallet'];
-    id = json['_id'];
     mobileNumber = json['mobile_number'];
     userReferralCode = json['user_referral_code'];
     createdAt = json['created_at'];
@@ -154,14 +157,17 @@ class ActionDoneBy {
     createdAt2 = json['createdAt'];
     updatedAt2 = json['updatedAt'];
     V = json['__v'];
-    fullName = json['full_name'].toString();
-    birthDay = json['birth_day'].toString();
-    gender = json['gender'].toString();
+    fullName = json['full_name'];
+    birthDay = json['birth_day'];
+    gender = json['gender'];
+    image = json['image'];
+    age = json['age'];
     loc = Loc.fromJson(json['loc']);
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
+    _data['_id'] = id;
     _data['first_name'] = firstName;
     _data['last_name'] = lastName;
     _data['notification'] = notification;
@@ -172,12 +178,8 @@ class ActionDoneBy {
     _data['location_state'] = locationState;
     _data['location_country'] = locationCountry;
     _data['location_pincode'] = locationPincode;
-    _data['image'] = image;
-    _data['age'] = age;
-    _data['image_type'] = imageType;
     _data['approved'] = approved;
     _data['wallet'] = wallet;
-    _data['_id'] = id;
     _data['mobile_number'] = mobileNumber;
     _data['user_referral_code'] = userReferralCode;
     _data['created_at'] = createdAt;
@@ -188,6 +190,8 @@ class ActionDoneBy {
     _data['full_name'] = fullName;
     _data['birth_day'] = birthDay;
     _data['gender'] = gender;
+    _data['image'] = image;
+    _data['age'] = age;
     _data['loc'] = loc.toJson();
     return _data;
   }
@@ -214,8 +218,9 @@ class Loc {
   }
 }
 
-class ActionDoneTo {
-  ActionDoneTo({
+class ActionDoneByUser {
+  ActionDoneByUser({
+    required this.id,
     required this.firstName,
     required this.lastName,
     required this.notification,
@@ -226,12 +231,8 @@ class ActionDoneTo {
     required this.locationState,
     required this.locationCountry,
     required this.locationPincode,
-    required this.image,
-    required this.age,
-     this.imageType,
     required this.approved,
     required this.wallet,
-    required this.id,
     required this.mobileNumber,
     required this.userReferralCode,
     required this.createdAt,
@@ -242,8 +243,11 @@ class ActionDoneTo {
     required this.fullName,
     required this.birthDay,
     required this.gender,
+    required this.image,
+    required this.age,
     required this.loc,
   });
+  late final String id;
   late final String firstName;
   late final String lastName;
   late final int notification;
@@ -254,12 +258,8 @@ class ActionDoneTo {
   late final String locationState;
   late final String locationCountry;
   late final String locationPincode;
-  late final String image;
-  late final int age;
-  late final Null imageType;
   late final bool approved;
   late final int wallet;
-  late final String id;
   late final String mobileNumber;
   late final String userReferralCode;
   late final String createdAt;
@@ -270,9 +270,12 @@ class ActionDoneTo {
   late final String fullName;
   late final String birthDay;
   late final String gender;
+  late final String image;
+  late final int age;
   late final Loc loc;
   
-  ActionDoneTo.fromJson(Map<String, dynamic> json){
+  ActionDoneByUser.fromJson(Map<String, dynamic> json){
+    id = json['_id'];
     firstName = json['first_name'];
     lastName = json['last_name'];
     notification = json['notification'];
@@ -283,12 +286,8 @@ class ActionDoneTo {
     locationState = json['location_state'];
     locationCountry = json['location_country'];
     locationPincode = json['location_pincode'];
-    image = json['image'].toString();
-    age = json['age'];
-    imageType = null;
     approved = json['approved'];
     wallet = json['wallet'];
-    id = json['_id'];
     mobileNumber = json['mobile_number'];
     userReferralCode = json['user_referral_code'];
     createdAt = json['created_at'];
@@ -296,14 +295,17 @@ class ActionDoneTo {
     createdAt2 = json['createdAt'];
     updatedAt2 = json['updatedAt'];
     V = json['__v'];
-    fullName = json['full_name'].toString();
-    birthDay = json['birth_day'].toString();
-    gender = json['gender'].toString();
+    fullName = json['full_name'];
+    birthDay = json['birth_day'];
+    gender = json['gender'];
+    image = json['image'].toString();
+    age = json['age'];
     loc = Loc.fromJson(json['loc']);
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
+    _data['_id'] = id;
     _data['first_name'] = firstName;
     _data['last_name'] = lastName;
     _data['notification'] = notification;
@@ -314,22 +316,20 @@ class ActionDoneTo {
     _data['location_state'] = locationState;
     _data['location_country'] = locationCountry;
     _data['location_pincode'] = locationPincode;
-    _data['image'] = image;
-    _data['age'] = age;
-    _data['image_type'] = imageType;
     _data['approved'] = approved;
     _data['wallet'] = wallet;
-    _data['_id'] = id;
     _data['mobile_number'] = mobileNumber;
     _data['user_referral_code'] = userReferralCode;
     _data['created_at'] = createdAt;
     _data['updated_at'] = updatedAt;
     _data['createdAt'] = createdAt2;
     _data['updatedAt'] = updatedAt2;
-    _data['__v'] =V;
+    _data['__v'] = V;
     _data['full_name'] = fullName;
     _data['birth_day'] = birthDay;
     _data['gender'] = gender;
+    _data['image'] = image;
+    _data['age'] = age;
     _data['loc'] = loc.toJson();
     return _data;
   }

@@ -23,6 +23,10 @@ class ApiUrls {
   static const userProfileUpdateEndPoint = "user/user_profile_update";
   static const updateUserLocation='user/user_location_update';
   static const String intrestedInYou='user/intrested_in_you_page';
+  static const String getOtherUserProfile='user/get_user_details';
+  static const String likeUser='user/like_user';
+  static const String get_message_list='user/messages_history';
+  static const String acceptOrReject='user/accept_reject_connection_request';
   static const fullName = "full_name";
   static const dob = "birth_day";
   static const gender = "gender";
@@ -76,4 +80,5 @@ class ApiUrls {
   static const currentLat = "current_latitude";
   static const currentLong = "current_longitude";
   static const km = "km";
+  static const String messageList='user/messages_list';
 }

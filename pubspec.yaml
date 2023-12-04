@@ -36,6 +36,9 @@ dependencies:
   camera: ^0.10.5+5
   flutter_cache_manager: ^3.3.1
   cached_network_image:
+  flutter_svg:
+  lottie:
+  shimmer:
 
 dev_dependencies:
   flutter_lints: ^2.0.0
@@ -47,6 +50,7 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
+    - assets/json/
   fonts:
     - family: Nunito
       fonts:

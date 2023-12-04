@@ -47,7 +47,7 @@ class Data {
   String? locationPincode;
   String? image;
   int? age;
-  Null? imageType;
+  String? imageType;
   bool? approved;
   int? wallet;
   String? sId;
@@ -101,7 +101,7 @@ class Data {
     locationPincode = json['location_pincode'];
     image = json['image'];
     age = json['age'];
-    imageType = json['image_type'];
+    imageType = json['image_type'].toString();
     approved = json['approved'];
     wallet = json['wallet'];
     sId = json['_id'];

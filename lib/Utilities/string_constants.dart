@@ -16,8 +16,8 @@ class StringConstants {
   static const String signupSubHeading = "Enter your phone number to Signup";
   static const String whatIsYourName = "What is your full name?";
   static const String fullName = "Full Name";
-  static const String refferalCode='Referall Code';
-  static const String refferalCodeEnterHere='Enter Referral Code';
+  static const String refferalCode='Referrel Code';
+  static const String refferalCodeEnterHere='Enter Referrel Code';
   static const String fullNameValidMsg = "Enter your full name";
   static const String whatIsYouBirthday = "When’s your birthday?";
   static const String whatIsYouBirthdayValidMsg = "Please tell us! When’s your birthday?";
@@ -38,7 +38,9 @@ class StringConstants {
   static const String chooseInterestValidMsg = "Choose your interests";
   static const String photoValidationMsg = "Please select the image First!";
   static const String registerSuccessMsg = "Account Created Successfully!";
-
+  static const String gender = "Gender";
+  static const String birthday= "Birthday";
+  static const String interestedinYou = "Interested In You";
 
   //Message
   static const String messages = "Messages";
@@ -59,7 +61,7 @@ class StringConstants {
   static const String profile = "Profile";
   static const String personalDetail = "Personal Detail";
   static const String yourIntrest = "Your interests";
-  static const String yourBio = "Your Bio";
+  static const String yourBio = "My Bio";
   static const String notificationSetting = "Notification Setting";
   static const String privacyPolicy = "Privacy Policy";
   static const String termsAndConditions = "Terms & Conditions";
@@ -74,6 +76,9 @@ class StringConstants {
   static const String editName = "Edit Name";
   static const String editNumber = "Edit Number";
   static const String editBio = "Edit Bio";
+  static const String editGender = "Edit Gender";
+  static const String editBirthday = "Edit Birthday";
+      static const String submit="Submit";
 
   //Wallet and popup
   static const String availableCoins = "Available coins in the wallet";

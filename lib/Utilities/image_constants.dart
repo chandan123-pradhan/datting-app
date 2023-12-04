@@ -42,4 +42,6 @@ class ImageConstants {
   static const approachBtn = 'assets/images/approach-btn.png';
   static const saveBtn = 'assets/images/save-btn.png';
   static const refferalCode='assets/icons/referral-code.png';
+  static const genderIcon='assets/icons/gender.png';
+  static const dobIcon='assets/icons/dob.png';
 }

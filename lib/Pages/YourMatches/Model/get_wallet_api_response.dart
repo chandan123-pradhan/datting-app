@@ -198,9 +198,9 @@ class UserId {
     createdAt2 = json['createdAt'];
     updatedAt2 = json['updatedAt'];
     v = json['__v'];
-    fullName = json['full_name'];
-    birthDay = json['birth_day'];
-    gender = json['gender'];
+    fullName = json['full_name'].toString();
+    birthDay = json['birth_day'].toString();
+    gender = json['gender'].toString();
     image = (json['image']??'');
   }
 

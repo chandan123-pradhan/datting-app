@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dating_app/CommonWidgets/common_btn.dart';
 import 'package:dating_app/Configurations/theme_configuration.dart';
 import 'package:dating_app/Helper/global_data_helper.dart';
 import 'package:dating_app/Helper/toast_helper.dart';
@@ -16,6 +18,8 @@ import 'package:dating_app/Utilities/image_constants.dart';
 import 'package:dating_app/Utilities/size_constants.dart';
 import 'package:dating_app/Utilities/string_constants.dart';
 import 'package:dating_app/CommonWidgets/common_app_bar.dart';
+import 'package:dating_app/utils/color_constant.dart';
+import 'package:dating_app/utils/constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,6 +36,8 @@ class _EditAccountViewState extends State<EditAccountView> {
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController bioController = TextEditingController();
+  TextEditingController genderController = TextEditingController();
+  TextEditingController birthdayController = TextEditingController();
   List<dynamic> interests = [];
   List<String> interestList = [];
   List<String> options = [
@@ -51,7 +57,7 @@ class _EditAccountViewState extends State<EditAccountView> {
   bool isLoading = false;
   UserDataModel? userDataModel;
   InterestResponseModel? interestResponseModel;
-String imageUrl='';
+  String imageUrl = '';
   @override
   void initState() {
     editAccountBloc = context.read<EditAccountBloc>();
@@ -65,6 +71,8 @@ String imageUrl='';
     nameController.text = userDataModel?.data?.fullName ?? "";
     phoneController.text = userDataModel?.data?.mobileNumber ?? "";
     bioController.text = userDataModel?.data?.about ?? "";
+    genderController.text = userDataModel?.data?.gender ?? "";
+    birthdayController.text = userDataModel?.data?.birthday ?? '';
   }
 
   @override
@@ -84,7 +92,8 @@ String imageUrl='';
       } else if (currentState is EditAccountSuccessState) {
         isLoading = false;
         userDataModel = currentState.userDataModel;
-        imageUrl=(currentState.userDataModel!.imageUrl!)+(currentState.userDataModel!.data!.image);
+        imageUrl = (currentState.userDataModel!.imageUrl!) +
+            (currentState.userDataModel!.data!.image);
         interests = userDataModel?.data?.interests ?? [];
         setInitialValue();
         editAccountBloc?.add(GetInterestEvent());
@@ -125,35 +134,91 @@ String imageUrl='';
           padding: const EdgeInsets.all(SizeConstants.mainPagePadding),
           child: SingleChildScrollView(
               child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Stack(
-                children: [
-                  CircleAvatar(
-                    radius: SizeConstants.profileAvatarRadius,
-                    backgroundColor: ThemeConfiguration.cardShadowColor,
-                    backgroundImage: NetworkImage((
-                    imageUrl))
-                  ),
-                  const Positioned(
-                      right: 0.0,
-                      bottom: 5.0,
-                      child: CircleAvatar(
-                        radius: SizeConstants.profileAvatarEditRadius,
-                        backgroundImage:
-                            AssetImage(ImageConstants.profilePicEditButton),
-                      ))
-                ],
+              Center(
+                child: Stack(
+                  children: [
+                    CircleAvatar(
+                      radius: SizeConstants.profileAvatarRadius,
+                      backgroundColor: ThemeConfiguration.cardShadowColor,
+                      child: ClipOval(
+                        child: CachedNetworkImage(
+                          imageUrl: imageUrl,
+                          placeholder: (context, url) => Image.asset(ImageConstants.accountIcon,height: 40,color: ColorConstant.primaryColor,),
+                          errorWidget: (context, url, error) => Image.asset(
+                            ImageConstants.accountIcon,
+                            height: 40,
+                            color: ColorConstant.primaryColor,
+                          ),
+                          imageBuilder: (context, imageProvider) => Container(
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade100,
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: imageProvider,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned.fill(
+                      child: CircularProgressIndicator(
+                        value: 0.8, // Provide the completion percentage here,
+                        strokeWidth: 5,
+                        valueColor: const AlwaysStoppedAnimation<Color>(
+                          ThemeConfiguration.primaryColor,
+                        ),
+                        backgroundColor: ThemeConfiguration.greyColor.withOpacity(
+                            0.5), // Background color of the progress indicator
+                      ),
+                    ),
+                    const Positioned(
+                        right: 0.0,
+                        bottom: 5.0,
+                        child: CircleAvatar(
+                          radius: SizeConstants.profileAvatarEditRadius,
+                          backgroundImage:
+                              AssetImage(ImageConstants.profilePicEditButton),
+                        ))
+                  ],
+                ),
               ),
               const SizedBox(
                 height: SizeConstants.maximumPadding,
               ),
-              const SizedBox(height: SizeConstants.maximumPadding),
+              Padding(
+                padding: const EdgeInsets.all(SizeConstants.maximumPadding),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      ImageConstants.accountIcon,
+                      height: 20,
+                      width: 20,
+                      color: ColorConstant.descriptiveColor,
+                    ),
+                    const SizedBox(
+                      width: Constant.maximumPadding,
+                    ),
+                    const Text(
+                      StringConstants.fullName,
+                      style: TextStyle(
+                          color: ColorConstant.blackColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15),
+                    ),
+                  ],
+                ),
+              ),
               Padding(
                   padding: const EdgeInsets.fromLTRB(
-                      SizeConstants.maximumPadding,
-                      SizeConstants.maximumPadding,
-                      SizeConstants.maximumPadding,
-                      0),
+                    SizeConstants.maximumPadding,
+                    0,
+                    SizeConstants.maximumPadding,
+                    SizeConstants.maximumPadding,
+                  ),
                   child: CommonWidgets.inputField(
                     context: context,
                     textFieldController: nameController,
@@ -161,30 +226,76 @@ String imageUrl='';
                     textInputType: TextInputType.text,
                   )),
               Padding(
+                padding: const EdgeInsets.all(SizeConstants.maximumPadding),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      ImageConstants.callIcon,
+                      height: 20,
+                      width: 20,
+                      color: ColorConstant.descriptiveColor,
+                    ),
+                    const SizedBox(
+                      width: Constant.maximumPadding,
+                    ),
+                    const Text(
+                      StringConstants.phoneNumberHint,
+                      style: TextStyle(
+                          color: ColorConstant.blackColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15),
+                    ),
+                  ],
+                ),
+              ),
+
+              Padding(
                 padding: const EdgeInsets.fromLTRB(
-                    SizeConstants.maximumPadding,
-                    SizeConstants.maximumPadding,
-                    SizeConstants.maximumPadding,
-                    0),
+                  SizeConstants.maximumPadding,
+                  0,
+                  SizeConstants.maximumPadding,
+                  SizeConstants.maximumPadding,
+                ),
                 child: CommonWidgets.mobileNumberInputTextField(
-flag: true,
-                    context: context, textFieldController: phoneController),
+                    flag: true,
+                    context: context,
+                    textFieldController: phoneController),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(SizeConstants.maximumPadding),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      ImageConstants.accountEditIcon,
+                      height: 20,
+                      width: 20,
+                      color: ColorConstant.descriptiveColor,
+                    ),
+                    const SizedBox(
+                      width: Constant.maximumPadding,
+                    ),
+                    const Text(
+                      StringConstants.yourBio,
+                      style: TextStyle(
+                          color: ColorConstant.blackColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15),
+                    ),
+                  ],
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(
                     SizeConstants.maximumPadding,
+                    0,
                     SizeConstants.maximumPadding,
-                    SizeConstants.maximumPadding,
-                    0),
-                child: CommonWidgets.inputField(
+                    SizeConstants.maximumPadding),
+                child: CommonWidgets.bigInputField(
                   context: context,
                   textFieldController: bioController,
                   hintText: StringConstants.editBio,
                   textInputType: TextInputType.text,
                 ),
-              ),
-              const SizedBox(
-                height: SizeConstants.smallPadding,
               ),
               Padding(
                 padding: const EdgeInsets.all(SizeConstants.mainPagePadding),
@@ -227,10 +338,12 @@ flag: true,
                       const Text(
                         StringConstants.yourIntrest,
                         style: TextStyle(
-                            color: ThemeConfiguration.descriptiveColor),
+                            color: ThemeConfiguration.blackColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15),
                       ),
                       const SizedBox(
-                        height: SizeConstants.mediumPadding,
+                        height: SizeConstants.maximumPadding,
                       ),
                       GridView.builder(
                         itemCount: (interests ?? []).length,
@@ -261,7 +374,7 @@ flag: true,
                                       color:
                                           ThemeConfiguration.descriptiveColor,
                                       fontWeight: FontWeight.w500,
-                                      fontSize: 11),
+                                      fontSize: 14),
                                 ),
                               ),
                             ),
@@ -272,6 +385,83 @@ flag: true,
                   ),
                 ),
               ),
+
+              Padding(
+                padding: const EdgeInsets.all(SizeConstants.maximumPadding),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      ImageConstants.genderIcon,
+                      height: 20,
+                      width: 20,
+                      color: ColorConstant.descriptiveColor,
+                    ),
+                    const SizedBox(
+                      width: Constant.maximumPadding,
+                    ),
+                    const Text(
+                      StringConstants.gender,
+                      style: TextStyle(
+                          color: ColorConstant.blackColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                  padding: const EdgeInsets.fromLTRB(
+                    SizeConstants.maximumPadding,
+                    0,
+                    SizeConstants.maximumPadding,
+                    SizeConstants.maximumPadding,
+                  ),
+                  child: CommonWidgets.inputField(
+                    enabled: false,
+                    context: context,
+                    textFieldController: genderController,
+                    hintText: StringConstants.editGender,
+                    textInputType: TextInputType.text,
+                  )),
+
+              Padding(
+                padding: const EdgeInsets.all(SizeConstants.maximumPadding),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      ImageConstants.dobIcon,
+                      height: 20,
+                      width: 20,
+                      color: ColorConstant.descriptiveColor,
+                    ),
+                    const SizedBox(
+                      width: Constant.maximumPadding,
+                    ),
+                    const Text(
+                      StringConstants.birthday,
+                      style: TextStyle(
+                          color: ColorConstant.blackColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                  padding: const EdgeInsets.fromLTRB(
+                    SizeConstants.maximumPadding,
+                    0,
+                    SizeConstants.maximumPadding,
+                    SizeConstants.maximumPadding,
+                  ),
+                  child: CommonWidgets.inputField(
+                    enabled: false,
+                    context: context,
+                    textFieldController: birthdayController,
+                    hintText: StringConstants.editBirthday,
+                    textInputType: TextInputType.text,
+                  )),
+
               // Padding(
               //   padding: const EdgeInsets.all(SizeConstants.maximumPadding),
               //   child: OptionCardView(
@@ -437,26 +627,21 @@ flag: true,
               //   ),
               // ),
               const SizedBox(
-                height:
-                    SizeConstants.maximumPadding + SizeConstants.mediumPadding,
+                height: SizeConstants.mediumPadding,
               ),
-              InkWell(
-                onTap: () {
-                setState(() {
-                  GlobalDataHelper().editAccountRequestModel?.firstName =
-                      nameController.text;
-                  GlobalDataHelper().editAccountRequestModel?.lastName =
-                      nameController.text;
-                  GlobalDataHelper().editAccountRequestModel?.interest =
-                      interestList.join(",");
-                });
+              commonButton(
+                onButtonTap: () {
+                  setState(() {
+                    GlobalDataHelper().editAccountRequestModel?.firstName =
+                        nameController.text;
+                    GlobalDataHelper().editAccountRequestModel?.lastName =
+                        nameController.text;
+                    GlobalDataHelper().editAccountRequestModel?.interest =
+                        interestList.join(",");
+                  });
                   print(GlobalDataHelper().editAccountRequestModel?.firstName);
                 },
-                child: Image.asset(
-                  ImageConstants.saveBtn,
-                  height: SizeConstants.buttonHeight,
-                  width: MediaQuery.of(context).size.width / 1,
-                ),
+                context: context,
               ),
               const SizedBox(
                 height: SizeConstants.maximumPadding +

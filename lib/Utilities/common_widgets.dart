@@ -41,6 +41,7 @@ class CommonWidgets {
                   showOnlyCountryWhenClosed: false,
                   alignLeft: false,
                   flagWidth: 20,
+                  enabled: false,
                 ),
                 const Icon(
                   Icons.keyboard_arrow_down_rounded,
@@ -123,7 +124,8 @@ class CommonWidgets {
       {required BuildContext context,
       required String hintText,
       required TextInputType textInputType,
-      required TextEditingController textFieldController}) {
+      required TextEditingController textFieldController,
+      bool? enabled}) {
     return Container(
       height: SizeConstants.buttonHeight,
       decoration: BoxDecoration(
@@ -152,6 +154,7 @@ class CommonWidgets {
             hintStyle: ThemeConfiguration.hintTextStyle(),
             hintText: hintText,
             fillColor: Colors.transparent,
+            enabled: enabled??true,
           ),
         ),
       ),

@@ -1,5 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'package:dating_app/CommonWidgets/common_btn.dart';
 import 'package:dating_app/Configurations/theme_configuration.dart';
 import 'package:dating_app/Pages/Edit%20Account/Bloc/edit_account_bloc.dart';
 import 'package:dating_app/Pages/Register/Model/interest_response_model.dart';
@@ -155,16 +156,11 @@ class _EditInterestWidgetState extends State<EditInterestWidget> {
                 height:
                     SizeConstants.maximumPadding + SizeConstants.mediumPadding,
               ),
-              InkWell(
-                onTap: () {
-                  // widget.chooseInterest!(widget.interestList);
+              commonButton(
+                onButtonTap: () {
                   Navigator.pop(context, widget.interestList);
                 },
-                child: Image.asset(
-                  ImageConstants.saveBtn,
-                  height: SizeConstants.buttonHeight,
-                  width: MediaQuery.of(context).size.width / 1,
-                ),
+                context: context,
               ),
               const SizedBox(
                 height: SizeConstants.maximumPadding +

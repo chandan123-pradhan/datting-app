@@ -13,7 +13,7 @@ class ThemeConfiguration {
   static const Color blackColor = Color.fromARGB(255, 10, 10, 10);
   static const Color descriptiveColor = Color(0xff89667B);
   static const Color borderColor = Color(0xffBDB9BF);
-  static const Color hintTextColor = Color(0xff9D99A1);
+  static const Color hintTextColor = Color.fromARGB(255, 21, 21, 21);
   static const Color buttonTextColor = Color(0xffFFFFFF);
   static const Color buttonColor = Color(0xffB14E92);
   static const Color primaryLightColor = Color(0xffE485C6);
@@ -56,7 +56,7 @@ class ThemeConfiguration {
 
   static TextStyle hintTextStyle() {
     return const TextStyle(
-        fontSize: 14,
+        fontSize: 15,
         fontWeight: FontWeight.w400,
         color: hintTextColor,
         fontFamily: mainFont);
@@ -121,7 +121,7 @@ class ThemeConfiguration {
   static TextStyle profileTinyTextStyle() {
     return const TextStyle(
         color: ThemeConfiguration.primaryColor,
-        fontSize: 11.0,
+        fontSize: 14.0,
         overflow: TextOverflow.clip);
   }
 

@@ -8,7 +8,9 @@ import 'package:dating_app/Models/userdata_model.dart';
 import 'package:dating_app/Network/api_urls.dart';
 import 'package:dating_app/Pages/Cms/Model/cms_response_model.dart';
 import 'package:dating_app/Pages/InterestedInYou/models/intrested_in_you_api_response.dart';
+import 'package:dating_app/Pages/Map/Model/get_other_user_model.dart';
 import 'package:dating_app/Pages/Map/Model/nearest_user_list_model.dart';
+import 'package:dating_app/Pages/Messages/models/get_message_list_api_response.dart';
 import 'package:dating_app/Pages/Register/Model/interest_response_model.dart';
 import 'package:dating_app/Pages/Settings/Model/setting_response_model.dart';
 import 'package:dating_app/Pages/YourMatches/Model/add_money_to_wallet.dart';
@@ -40,6 +42,7 @@ class ApiProvider {
       baseModel = BaseModel.fromJson(jsonMap);
       return baseModel;
     } catch (error, stacktrace) {
+      debugger();
       if (kDebugMode) {
         print("Exception occurred: $error stackTrace: $stacktrace");
       }
@@ -455,6 +458,109 @@ class ApiProvider {
     }
   }
 
+
+
+Future<GetOthersUserProfileApiResponse?> getOthersUserProfile({String? id}) async {
+    GetOthersUserProfileApiResponse userDataModel;
+    try {
+      var authToken = await SharedPreferencesHelper.getToken();
+      final Map<String, String> headers = {
+        'Authorization': 'Bearer $authToken',
+        'Content-Type': 'application/x-www-form-urlencoded',
+      };
+
+      dynamic response = await http.post(
+        Uri.parse(ApiUrls.baseUrl + ApiUrls.getOtherUserProfile),
+        body: {
+          'userId': id,
+        },
+        headers: headers,
+      );
+// debugger();
+      if (kDebugMode) {
+        print('URL: ${ApiUrls.baseUrl + ApiUrls.getOtherUserProfile}');
+        print('Response status: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+      final Map<String, dynamic> jsonMap = json.decode(response.body);
+      userDataModel = GetOthersUserProfileApiResponse.fromJson(jsonMap);
+      //debugger();
+      return userDataModel;
+    } catch (error, stacktrace) {
+      if (kDebugMode) {
+        print("Exception occurred: $error stackTrace: $stacktrace");
+      }
+      debugPrint(error.toString());
+    }
+  }
+
+
+
+Future<dynamic> likeUser({String? id}) async {
+    dynamic userDataModel;
+    try {
+      var authToken = await SharedPreferencesHelper.getToken();
+      final Map<String, String> headers = {
+        'Authorization': 'Bearer $authToken',
+        'Content-Type': 'application/x-www-form-urlencoded',
+      };
+
+      dynamic response = await http.post(
+        Uri.parse(ApiUrls.baseUrl + ApiUrls.likeUser),
+        body: {
+          'action_done_to': id,
+        },
+        headers: headers,
+      );
+
+      if (kDebugMode) {
+        print('URL: ${ApiUrls.baseUrl + ApiUrls.getOtherUserProfile}');
+        print('Response status: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+      final Map<String, dynamic> jsonMap = json.decode(response.body);
+     
+      return jsonMap;
+    } catch (error, stacktrace) {
+      if (kDebugMode) {
+        print("Exception occurred: $error stackTrace: $stacktrace");
+      }
+      debugPrint(error.toString());
+    }
+  }
+
+  Future<dynamic> acceptOrReject({params}) async {
+    dynamic userDataModel;
+    try {
+      var authToken = await SharedPreferencesHelper.getToken();
+      final Map<String, String> headers = {
+        'Authorization': 'Bearer $authToken',
+        'Content-Type': 'application/x-www-form-urlencoded',
+      };
+
+      dynamic response = await http.post(
+        Uri.parse(ApiUrls.baseUrl + ApiUrls.acceptOrReject),
+        body: params,
+        headers: headers,
+      );
+    //  debugger();
+
+      if (kDebugMode) {
+        print('URL: ${ApiUrls.baseUrl + ApiUrls.acceptOrReject}');
+        print('Response status: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+      final Map<String, dynamic> jsonMap = json.decode(response.body);
+     
+      return jsonMap;
+    } catch (error, stacktrace) {
+      if (kDebugMode) {
+        print("Exception occurred: $error stackTrace: $stacktrace");
+      }
+      debugPrint(error.toString());
+    }
+  }
+
   Future<UserDataModel?> registerPhoto({File? photo, String? fileType}) async {
     UserDataModel? userDataModel;
     try {
@@ -698,6 +804,40 @@ class ApiProvider {
       }
       final Map<String, dynamic> jsonMap = json.decode(response.body);
       userDataModel = UserDataModel.fromJson(jsonMap);
+      return userDataModel;
+    } catch (error, stacktrace) {
+      if (kDebugMode) {
+        print("Exception occurred: $error stackTrace: $stacktrace");
+      }
+      debugPrint(error.toString());
+    }
+  }
+
+
+
+   Future<GetMessageListApiResponse?> getMessageListApiResponse() async {
+    GetMessageListApiResponse userDataModel;
+    try {
+      var authToken = await SharedPreferencesHelper.getToken();
+      final Map<String, String> headers = {
+        'Authorization': 'Bearer $authToken',
+        'Content-Type': 'application/x-www-form-urlencoded',
+      };
+
+      dynamic response = await http.post(
+        Uri.parse(ApiUrls.baseUrl + ApiUrls.messageList),
+        body: {
+          
+        },
+        headers: headers,
+      );
+      if (kDebugMode) {
+        print('URL: ${ApiUrls.baseUrl + ApiUrls.messageList}');
+        print('Response status: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+      final Map<String, dynamic> jsonMap = json.decode(response.body);
+      userDataModel = GetMessageListApiResponse.fromJson(jsonMap);
       return userDataModel;
     } catch (error, stacktrace) {
       if (kDebugMode) {

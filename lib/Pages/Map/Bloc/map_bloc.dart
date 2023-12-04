@@ -1,4 +1,6 @@
 
+import 'dart:developer';
+
 import 'package:dating_app/Pages/Map/Bloc/map_event.dart';
 import 'package:dating_app/Pages/Map/Bloc/map_repository.dart';
 import 'package:dating_app/Pages/Map/Bloc/map_state.dart';
@@ -24,6 +26,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
           lang: event.lang,
           km: '1000',
         );
+        // debugger();
         if (model?.success == true) {
           emit(GetUserListSuccessState(model!));
         } else {

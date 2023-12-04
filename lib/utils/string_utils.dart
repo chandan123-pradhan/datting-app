@@ -38,12 +38,12 @@ class StringUtils {
   //Profile
   static const String profile = "Profile";
   static const String personalDetail = "Personal Detail";
-  static const String yourIntrest = "Your interests";
-  static const String yourBio = "Your Bio";
+  static const String yourIntrest = "My interests";
+  static const String yourBio = "My Bio";
   static const String notificationSetting = "Notification Setting";
   static const String privacyPolicy = "Privacy Policy";
   static const String termsAndConditions = "Terms & Conditions";
-  static const String yourWallet = "Your Wallet";
+  static const String yourWallet = "My Wallet";
   static const String yourWalletSubTitleOne = "You have ";
   static const String yourWalletSubTitleTwo = "coins in your wallet";
   static const String getFreeCoins = "Get free coins";

@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 
 class Dialogs {
-  static void insufficientBalanceDialog(BuildContext context) {
+  static void insufficientBalanceDialog(BuildContext context,String availableCoins,String entryfee, Function onPressed) {
     showGeneralDialog(
       context: context,
       barrierLabel: "Barrier",
@@ -60,7 +60,7 @@ class Dialogs {
                               const SizedBox(
                                   height: SizeConstants.smallPadding),
                               Text(
-                                '29',
+                                availableCoins,
                                 style: ThemeConfiguration.commonTextStyle(
                                     22.0,
                                     FontWeight.w500,
@@ -91,7 +91,7 @@ class Dialogs {
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        '21',
+                        (double.parse(entryfee)-double.parse(availableCoins)).toStringAsFixed(0)  ,
                         style: ThemeConfiguration.commonTextStyle(18.0,
                             FontWeight.w500, ThemeConfiguration.primaryColor),
                         overflow: TextOverflow.ellipsis,
@@ -129,12 +129,13 @@ class Dialogs {
                   ),
                   InkWell(
                     onTap: () {
+                      onPressed();
                       // Navigator.push(context,
                       //     MaterialPageRoute(builder: (context) {
                       //   return const MainChatView();
                       // }));
 
-                      Dialogs.insufficientBalanceDialog(context);
+                    //  Dialogs.insufficientBalanceDialog(context);
                     },
                     child: Image.asset(
                       ImageConstants.addCoinsBtn,
@@ -167,7 +168,7 @@ class Dialogs {
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
+                            children: const [
                               Text(
                                 StringConstants.getFreeCoins,
                                 style: TextStyle(
@@ -216,7 +217,7 @@ class Dialogs {
     );
   }
 
-  static void coinsDeductionDialog(BuildContext context) {
+  static void coinsDeductionDialog(BuildContext context,availableCoins,entryFee,Function onPressed) {
     showGeneralDialog(
       context: context,
       barrierLabel: "Barrier",
@@ -276,7 +277,7 @@ class Dialogs {
                                     width: SizeConstants.smallPadding,
                                   ),
                                   Text(
-                                    '29',
+                                    availableCoins,
                                     style: ThemeConfiguration.commonTextStyle(
                                         20.0,
                                         FontWeight.w500,
@@ -306,7 +307,7 @@ class Dialogs {
                         width: SizeConstants.smallPadding,
                       ),
                       Text(
-                        '50',
+                        entryFee,
                         style: ThemeConfiguration.commonTextStyle(25.0,
                             FontWeight.w900, ThemeConfiguration.primaryColor),
                       ),
@@ -325,10 +326,11 @@ class Dialogs {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return const WalletView();
-                      }));
+onPressed();
+                      // Navigator.push(context,
+                      //     MaterialPageRoute(builder: (context) {
+                      //   return const WalletView();
+                      // }));
                     },
                     child: Image.asset(
                       ImageConstants.approachBtn,
@@ -451,9 +453,9 @@ class Dialogs {
                           height: SizeConstants.maximumPadding,
                         ),
                         controller.isloading
-                            ? Container(
+                            ?  Container(
                                 width: MediaQuery.of(context).size.width / 1,
-                                child: Center(
+                                child: const Center(
                                   child: CircularProgressIndicator(
                                     color: ColorConstant.primaryColor,
                                   ),

@@ -65,7 +65,7 @@ class _ItsMatchViewState extends State<ItsMatchView> {
                             //   return const MainChatView();
                             // }));
 
-                            Dialogs.coinsDeductionDialog(context);
+                           // Dialogs.coinsDeductionDialog(context,'','');
                           },
                           child: Image.asset(
                             ImageConstants.chatNowBtn,
