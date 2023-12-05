@@ -9,9 +9,12 @@ import 'package:dating_app/Pages/Edit%20Account/Bloc/edit_account_event.dart';
 import 'package:dating_app/Pages/Edit%20Account/Bloc/edit_account_state.dart';
 import 'package:dating_app/Pages/Edit%20Account/Model/edit_account_request_model.dart';
 import 'package:dating_app/Pages/Edit%20Account/Widgets/edit_basic_widget.dart';
+import 'package:dating_app/Pages/Edit%20Account/Widgets/edit_dob_widget.dart';
 import 'package:dating_app/Pages/Edit%20Account/Widgets/edit_intrests_widget.dart';
 import 'package:dating_app/Pages/Edit%20Account/Widgets/edit_photos_widget.dart';
 import 'package:dating_app/Pages/Register/Model/interest_response_model.dart';
+import 'package:dating_app/Pages/Register/Widgets/choose_birthday_widget.dart';
+import 'package:dating_app/Pages/Register/Widgets/choose_gender_widget.dart';
 import 'package:dating_app/Pages/Register/Widgets/choose_interests_widget.dart';
 import 'package:dating_app/Utilities/common_widgets.dart';
 import 'package:dating_app/Utilities/image_constants.dart';
@@ -58,6 +61,68 @@ class _EditAccountViewState extends State<EditAccountView> {
   UserDataModel? userDataModel;
   InterestResponseModel? interestResponseModel;
   String imageUrl = '';
+  String? selectedGender;
+  List<int> days = List<int>.generate(31, (index) => index + 1);
+  List<int> months = List<int>.generate(12, (index) => index + 1);
+  int? selectedDays;
+  int? selectedMonth;
+  List<String> yearList = [
+    '1970',
+    '1971',
+    '1972',
+    '1973',
+    '1974',
+    '1975',
+    '1976',
+    '1977',
+    '1978',
+    '1979',
+    '1980',
+    '1981',
+    '1982',
+    '1983',
+    '1984',
+    '1985',
+    '1986',
+    '1987',
+    '1988',
+    '1989',
+    '1990',
+    '1991',
+    '1992',
+    '1993',
+    '1994',
+    '1995',
+    '1996',
+    '1997',
+    '1998',
+    '1999',
+    '2000',
+    '2001',
+    '2002',
+    '2003',
+    '2004',
+    '2005',
+    '2006',
+    '2007',
+    '2008',
+    '2009',
+    '2010',
+    '2011',
+    '2012',
+    '2013',
+    '2014',
+    '2015',
+    '2016',
+    '2017',
+    '2018',
+    '2019',
+    '2020',
+    '2021',
+    '2022',
+    '2023',
+  ];
+  String? selectedYear;
   @override
   void initState() {
     editAccountBloc = context.read<EditAccountBloc>();
@@ -297,6 +362,7 @@ class _EditAccountViewState extends State<EditAccountView> {
                   textInputType: TextInputType.text,
                 ),
               ),
+              if(interests.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.all(SizeConstants.mainPagePadding),
                 child: OptionCardView(
@@ -410,19 +476,43 @@ class _EditAccountViewState extends State<EditAccountView> {
                 ),
               ),
               Padding(
-                  padding: const EdgeInsets.fromLTRB(
-                    SizeConstants.maximumPadding,
-                    0,
-                    SizeConstants.maximumPadding,
-                    SizeConstants.maximumPadding,
+                padding: const EdgeInsets.fromLTRB(
+                  SizeConstants.maximumPadding,
+                  0,
+                  SizeConstants.maximumPadding,
+                  SizeConstants.maximumPadding,
+                ),
+                child: Container(
+                  width: MediaQuery.of(context).size.width / 1,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(SizeConstants.textFieldCardBorderRadius),
+                    border: Border.all(width: 0.5, color: ThemeConfiguration.borderColor),
                   ),
-                  child: CommonWidgets.inputField(
-                    enabled: false,
-                    context: context,
-                    textFieldController: genderController,
-                    hintText: StringConstants.editGender,
-                    textInputType: TextInputType.text,
-                  )),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        isExpanded: true, // Ensure the dropdown fills the width of the container
+                        value: selectedGender,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedGender = newValue;
+                          });
+                        },
+                        hint:const Text('Select Gender',style: TextStyle(fontSize: 14),),
+                        items: <String>['Male', 'Female', 'Other']
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
 
               Padding(
                 padding: const EdgeInsets.all(SizeConstants.maximumPadding),
@@ -447,20 +537,41 @@ class _EditAccountViewState extends State<EditAccountView> {
                   ],
                 ),
               ),
-              Padding(
-                  padding: const EdgeInsets.fromLTRB(
-                    SizeConstants.maximumPadding,
-                    0,
-                    SizeConstants.maximumPadding,
-                    SizeConstants.maximumPadding,
-                  ),
-                  child: CommonWidgets.inputField(
-                    enabled: false,
-                    context: context,
-                    textFieldController: birthdayController,
-                    hintText: StringConstants.editBirthday,
-                    textInputType: TextInputType.text,
-                  )),
+              EditDobWidget(
+                selectedDaysValue: selectedDays,
+                selectedMonthValue: selectedMonth,
+                selectedYearValue: selectedYear,
+                yearList: yearList,
+                isChangedDay: (int? newValue) {
+                  setState(() {
+                    selectedDays = newValue;
+                  });
+                },
+                isChangedMonth: (newValue) {
+                  setState(() {
+                    selectedMonth = newValue;
+                  });
+                },
+                isChangedYear: (newValue) {
+                  setState(() {
+                    selectedYear = newValue;
+                  });
+                },
+              ),
+              // Padding(
+              //     padding: const EdgeInsets.fromLTRB(
+              //       SizeConstants.maximumPadding,
+              //       0,
+              //       SizeConstants.maximumPadding,
+              //       SizeConstants.maximumPadding,
+              //     ),
+              //     child: CommonWidgets.inputField(
+              //       enabled: false,
+              //       context: context,
+              //       textFieldController: birthdayController,
+              //       hintText: StringConstants.editBirthday,
+              //       textInputType: TextInputType.text,
+              //     )),
 
               // Padding(
               //   padding: const EdgeInsets.all(SizeConstants.maximumPadding),

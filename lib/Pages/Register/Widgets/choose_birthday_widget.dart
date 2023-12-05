@@ -9,6 +9,7 @@ import 'package:dating_app/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 
 class ChooseBirthdayWidget extends StatefulWidget {
+  bool? isFromEdit=false;
   int? selectedDaysValue;
   int? selectedMonthValue;
   String? selectedYearValue;
@@ -18,6 +19,7 @@ class ChooseBirthdayWidget extends StatefulWidget {
   List<String>? yearList;
   ChooseBirthdayWidget({
     super.key,
+    this.isFromEdit,
     required this.selectedDaysValue,
     required this.selectedMonthValue,
     required this.selectedYearValue,
@@ -47,13 +49,16 @@ class _ChooseBirthdayWidgetState extends State<ChooseBirthdayWidget> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          if(widget.isFromEdit==false)
       const SizedBox(
         height: SizeConstants.mediumPadding,
       ),
+          if(widget.isFromEdit==false)
       Text(
         StringConstants.whatIsYouBirthday,
         style: ThemeConfiguration.registerHeadingTextStyle(),
       ),
+          if(widget.isFromEdit==false)
       const SizedBox(
         height: SizeConstants.bigPadding,
       ),
