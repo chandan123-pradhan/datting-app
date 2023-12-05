@@ -50,10 +50,12 @@ Widget CardWidget(
                     ),
                      InkWell(
                       onTap: (){
-                          Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return const MainChatView();
-                        }));
+                        //   Navigator.push(context,
+                        //     MaterialPageRoute(builder: (context) {
+                        //   return  MainChatView(
+
+                        //   );
+                        // }));
                       },
                        child: Image.asset(
                      ImageConstants.chatIcon,

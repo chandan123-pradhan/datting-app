@@ -33,7 +33,7 @@ Widget MessageBoxWidget(
          CachedNetworkImage(
           height: 52,
           width: 52,
-  imageUrl:   imagePath+user.actionDoneToUser[0].image,
+  imageUrl:   imagePath+user.actionDoneByUser[0].image,
   imageBuilder: (context, imageProvider) => Container(
     decoration: BoxDecoration(
       shape: BoxShape.circle,
@@ -60,7 +60,7 @@ Widget MessageBoxWidget(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      user.actionDoneToUser[0].fullName,
+                      user.actionDoneByUser[0].fullName,
                       style: ThemeConfiguration.msgNameTextStyle(),
                     ),
                     Text(

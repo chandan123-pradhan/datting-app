@@ -65,7 +65,9 @@ var dashboardController=Get.put(DashboardControllers());
                           onTap: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-                              return const MainChatView();
+                              return  MainChatView(
+                                messagedUser:controller.messageListApiResponse!.data[index]
+                              );
                             }));
                           },
                           child: MessageBoxWidget(

@@ -4,8 +4,9 @@ import 'package:dating_app/Utilities/size_constants.dart';
 import 'package:flutter/material.dart';
 
 class OtherCardWidget extends StatelessWidget {
-  const OtherCardWidget({
-    super.key,
+  String msg;
+   OtherCardWidget({
+    required this.msg
   });
 
   @override
@@ -15,29 +16,22 @@ class OtherCardWidget extends StatelessWidget {
       children: [
         Stack(
           children: [
-            Image.asset(
-              ImageConstants.otherChat,
-              width: MediaQuery.of(context).size.width / 1.2,
-            ),
-            Positioned(
-                bottom: SizeConstants.mediumPadding,
-                right: SizeConstants.mediumPadding,
-                child: Text(
-                  "3:02 pm",
-                  style: ThemeConfiguration.commonTextStyle(
-                    10.0,
-                    FontWeight.w400,
-                    ThemeConfiguration.dullTextColor,
-                  ),
-                )),
-            Positioned(
-                top: SizeConstants.mediumPadding,
-                left: SizeConstants.mainContainerContentPadding +
-                    SizeConstants.mediumPadding,
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width / 1.5,
-                  child: Text(
-                    "Lorem ipsum dolor sit amet. Et excepturi numq.  sit amet. Et excepturi numquam.",
+            Container(
+          // ImageConstants.myChat,
+          //  height: 100,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(30),
+              )),
+          width: MediaQuery.of(context).size.width / 1.2,
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child:
+
+
+Text(
+                    msg,
                     style: ThemeConfiguration.commonTextStyle(
                       12.0,
                       FontWeight.w400,
@@ -45,7 +39,21 @@ class OtherCardWidget extends StatelessWidget {
                     ),
                     overflow: TextOverflow.clip,
                   ),
-                ))
+
+
+          )),
+            Positioned(
+                bottom: SizeConstants.mediumPadding,
+                right: SizeConstants.mediumPadding,
+                child: Text(
+                  "",
+                  style: ThemeConfiguration.commonTextStyle(
+                    10.0,
+                    FontWeight.w400,
+                    ThemeConfiguration.dullTextColor,
+                  ),
+                )),
+          
           ],
         ),
         const SizedBox(

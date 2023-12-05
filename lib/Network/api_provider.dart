@@ -847,6 +847,36 @@ Future<dynamic> likeUser({String? id}) async {
     }
   }
 
+
+ Future<dynamic?> getMessageHistoryApiResponse(Map params) async {
+    try {
+      var authToken = await SharedPreferencesHelper.getToken();
+      final Map<String, String> headers = {
+        'Authorization': 'Bearer $authToken',
+        'Content-Type': 'application/x-www-form-urlencoded',
+      };
+
+      dynamic response = await http.post(
+        Uri.parse(ApiUrls.baseUrl + ApiUrls.get_message_list),
+        body: params,
+        headers: headers,
+      );
+      if (kDebugMode) {
+        print('URL: ${ApiUrls.baseUrl + ApiUrls.messageList}');
+        print('Response status: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+      final Map<String, dynamic> jsonMap = json.decode(response.body);
+      return jsonMap;
+     
+    } catch (error, stacktrace) {
+      if (kDebugMode) {
+        print("Exception occurred: $error stackTrace: $stacktrace");
+      }
+      debugPrint(error.toString());
+    }
+  }
+
   Future<UserDataModel?> viewAds({String? adRecordId}) async {
     UserDataModel userDataModel;
     try {

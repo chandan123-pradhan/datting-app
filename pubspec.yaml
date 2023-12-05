@@ -39,6 +39,8 @@ dependencies:
   flutter_svg:
   lottie:
   shimmer:
+  socket_io_client:
+  event_bus:
 
 dev_dependencies:
   flutter_lints: ^2.0.0
