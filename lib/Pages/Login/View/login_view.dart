@@ -1,17 +1,11 @@
-import 'dart:developer';
-
 import 'package:dating_app/Configurations/theme_configuration.dart';
 import 'package:dating_app/Helper/loader_helper.dart';
 import 'package:dating_app/Helper/navigation_helper.dart';
-import 'package:dating_app/Helper/shared_preference_helper.dart';
 import 'package:dating_app/Helper/toast_helper.dart';
-import 'package:dating_app/Models/base_model.dart';
 import 'package:dating_app/Pages/Login/Bloc/login_bloc.dart';
 import 'package:dating_app/Pages/Login/Bloc/login_event.dart';
-import 'package:dating_app/Pages/Login/Bloc/login_repository.dart';
 import 'package:dating_app/Pages/Login/Bloc/login_state.dart';
 import 'package:dating_app/Pages/Login/Widgets/login_body_widget.dart';
-import 'package:dating_app/Pages/Otp/View/otp_view.dart';
 import 'package:dating_app/Utilities/string_constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

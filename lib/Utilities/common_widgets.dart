@@ -170,7 +170,7 @@ class CommonWidgets {
       height: SizeConstants.aboutFieldHeight,
       decoration: BoxDecoration(
           borderRadius:
-              BorderRadius.circular(SizeConstants.mainContainerContentPadding),
+              BorderRadius.circular(SizeConstants.textFieldCardBorderRadius),
           border:
               Border.all(width: 0.5, color: ThemeConfiguration.borderColor)),
       alignment: Alignment.center,

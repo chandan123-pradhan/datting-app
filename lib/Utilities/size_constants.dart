@@ -1,8 +1,8 @@
 class SizeConstants {
   static const double customAppBarHeight = 50.0;
   static const double customAppBarTitleSize = 22.0;
-  static const double normalCardBorderRadius = 10.0;
-  static const double textFieldCardBorderRadius = 35.0;
+  static const double normalCardBorderRadius = 5.0;
+  static const double textFieldCardBorderRadius = 5.0;
   static const double profileAvatarRadius = 65.0;
   static const double mainPagePadding = 15.0;
   static const double mainContainerContentPadding = 15.0;
